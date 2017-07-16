@@ -1,0 +1,838 @@
+[2017-01-22 00:59:47,824] INFO - main: com.deathfrog.npc.NpcPersistor.parse(53) | Loading default NPC definition file.
+[2017-01-22 00:59:47,896] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(89) | Loading globals.
+[2017-01-22 00:59:47,918] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Barbarian
+[2017-01-22 00:59:47,932] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bard
+[2017-01-22 00:59:47,936] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Cleric
+[2017-01-22 00:59:47,946] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Druid
+[2017-01-22 00:59:47,951] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Fighter
+[2017-01-22 00:59:47,955] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Mageslayer
+[2017-01-22 00:59:47,959] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Monk
+[2017-01-22 00:59:47,963] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Paladin
+[2017-01-22 00:59:47,968] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Ranger
+[2017-01-22 00:59:47,975] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Rogue
+[2017-01-22 00:59:47,980] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Sorcerer
+[2017-01-22 00:59:48,006] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Wizard
+[2017-01-22 00:59:48,015] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Wizard
+[2017-01-22 00:59:48,031] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Arcanist
+[2017-01-22 00:59:48,046] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bloodrager
+[2017-01-22 00:59:48,056] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Brawler
+[2017-01-22 00:59:48,061] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Hunter
+[2017-01-22 00:59:48,077] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Investigator
+[2017-01-22 00:59:48,082] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Shaman
+[2017-01-22 00:59:48,086] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Skald
+[2017-01-22 00:59:48,090] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Slayer
+[2017-01-22 00:59:48,096] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Swashbuckler
+[2017-01-22 00:59:48,100] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Warpriest
+[2017-01-22 00:59:48,130] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Aasimar
+[2017-01-22 00:59:48,135] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Catfolk
+[2017-01-22 00:59:48,139] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Changeling
+[2017-01-22 00:59:48,143] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dhampir
+[2017-01-22 00:59:48,147] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Drow
+[2017-01-22 00:59:48,151] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Duergar
+[2017-01-22 00:59:48,154] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dwarf
+[2017-01-22 00:59:48,160] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Elf
+[2017-01-22 00:59:48,165] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Fetchling
+[2017-01-22 00:59:48,170] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gillman
+[2017-01-22 00:59:48,174] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gnome
+[2017-01-22 00:59:48,178] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Goblin
+[2017-01-22 00:59:48,182] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Grippli
+[2017-01-22 00:59:48,186] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Elf
+[2017-01-22 00:59:48,190] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Orc
+[2017-01-22 00:59:48,194] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Hobgoblin
+[2017-01-22 00:59:48,198] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Human
+[2017-01-22 00:59:48,202] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ifrit
+[2017-01-22 00:59:48,206] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ixen
+[2017-01-22 00:59:48,210] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kitsune
+[2017-01-22 00:59:48,214] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kobold
+[2017-01-22 00:59:48,218] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Korthjach
+[2017-01-22 00:59:48,222] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Merfolk
+[2017-01-22 00:59:48,226] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Morphic
+[2017-01-22 00:59:48,230] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Nagaji
+[2017-01-22 00:59:48,241] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Orc
+[2017-01-22 00:59:48,246] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Oread
+[2017-01-22 00:59:48,250] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ratfolk
+[2017-01-22 00:59:48,254] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Strix
+[2017-01-22 00:59:48,258] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Suli
+[2017-01-22 00:59:48,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Sylph
+[2017-01-22 00:59:48,268] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vanaras
+[2017-01-22 00:59:48,273] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tengu
+[2017-01-22 00:59:48,277] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tiefling
+[2017-01-22 00:59:48,281] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Undine
+[2017-01-22 00:59:48,285] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vishkanyas
+[2017-01-22 00:59:48,317] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: default
+[2017-01-22 00:59:48,327] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: celestial
+[2017-01-22 00:59:48,342] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: elven
+[2017-01-22 00:59:48,351] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: exotic
+[2017-01-22 00:59:48,358] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: draconic
+[2017-01-22 00:59:48,373] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: korthjach
+[2017-01-22 00:59:48,378] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: aquatic
+[2017-01-22 00:59:48,383] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome man
+[2017-01-22 00:59:48,387] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome woman
+[2017-01-22 00:59:48,391] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: simple
+[2017-01-22 00:59:48,395] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: sibilant
+[2017-01-22 00:59:48,400] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk men
+[2017-01-22 00:59:48,405] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk women
+[2017-01-22 00:59:48,425] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Sigil
+[2017-01-22 00:59:48,430] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl
+[2017-01-22 00:59:48,435] INFO - main: com.deathfrog.npc.NpcPersistor.parse(76) | Document loaded.
+[2017-07-15 17:16:37,607] INFO - main: com.deathfrog.npc.NpcPersistor.parse(53) | Loading default NPC definition file.
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(89) | Loading globals.
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Barbarian
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bard
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Cleric
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Druid
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Fighter
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Mageslayer
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Monk
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Paladin
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Ranger
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Rogue
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Sorcerer
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Wizard
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Wizard
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Arcanist
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bloodrager
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Brawler
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Hunter
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Investigator
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Shaman
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Skald
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Slayer
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Swashbuckler
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Warpriest
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Aasimar
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Catfolk
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Changeling
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dhampir
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Drow
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Duergar
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dwarf
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Elf
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Fetchling
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gillman
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gnome
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Goblin
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Grippli
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Elf
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Orc
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Hobgoblin
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Human
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ifrit
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ixen
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kitsune
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kobold
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Korthjach
+[2017-07-15 17:16:37,628] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Merfolk
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Morphic
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Nagaji
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Orc
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Oread
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ratfolk
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Strix
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Suli
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Sylph
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vanaras
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tengu
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tiefling
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Undine
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vishkanyas
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: default
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: celestial
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: elven
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: exotic
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: draconic
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: korthjach
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: aquatic
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome man
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome woman
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: simple
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: sibilant
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk men
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk women
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Sigil
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl
+[2017-07-15 17:16:37,644] INFO - main: com.deathfrog.npc.NpcPersistor.parse(76) | Document loaded.
+[2017-07-15 17:28:29,451] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 17:28:29,476] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 17:28:29,476] ERROR - main: deathfrog.utils.ui.LaunchPad.main(153) | For input string: "
+			"
+Caused by:(null)
+Stack:java.io.PrintStream@43d7741f
+[2017-07-15 17:33:22,141] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 17:33:22,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 17:33:22,172] ERROR - main: deathfrog.utils.ui.LaunchPad.main(153) | For input string: "
+			"
+Caused by:(null)
+Stack:java.io.PrintStream@43d7741f
+[2017-07-15 17:34:15,457] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 17:34:15,487] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 17:34:15,488] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 17:34:15,488] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 17:34:15,488] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 17:34:15,488] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 17:34:15,488] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 17:34:15,489] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 17:34:15,489] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 17:34:15,489] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 17:34:15,489] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 17:34:15,490] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 17:34:15,490] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 17:34:15,490] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:34:15,490] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:34:15,491] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 17:34:15,491] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 17:34:15,491] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 17:34:15,491] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 17:34:15,491] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 17:34:15,492] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 17:34:15,492] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 17:34:15,492] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 17:34:15,492] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 17:34:15,492] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 17:34:15,492] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 17:34:15,493] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Aasimar
+[2017-07-15 17:34:15,494] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Catfolk
+[2017-07-15 17:34:15,494] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Changeling
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dhampir
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Drow
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Duergar
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dwarf
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Elf
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Fetchling
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gillman
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gnome
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Goblin
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Grippli
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Elf
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Orc
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Hobgoblin
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Human
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ifrit
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ixen
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kitsune
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kobold
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Korthjach
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Merfolk
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Morphic
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Nagaji
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Orc
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Oread
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ratfolk
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Strix
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Suli
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Sylph
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vanaras
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tengu
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tiefling
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Undine
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vishkanyas
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: default
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: celestial
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: elven
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: exotic
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: draconic
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: korthjach
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: aquatic
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome man
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome woman
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: simple
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: sibilant
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk men
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk women
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Sigil
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Merisyl
+[2017-07-15 17:34:15,495] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
+[2017-07-15 17:55:20,730] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Aasimar
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Catfolk
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Changeling
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dhampir
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Drow
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Duergar
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dwarf
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Elf
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Fetchling
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gillman
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gnome
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Goblin
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Grippli
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Elf
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Orc
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Hobgoblin
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Human
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ifrit
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ixen
+[2017-07-15 17:55:20,760] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kitsune
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kobold
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Korthjach
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Merfolk
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Morphic
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Nagaji
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Orc
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Oread
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ratfolk
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Strix
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Suli
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Sylph
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vanaras
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tengu
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tiefling
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Undine
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vishkanyas
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: default
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: celestial
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: elven
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: exotic
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: draconic
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: korthjach
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: aquatic
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome man
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome woman
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: simple
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: sibilant
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk men
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk women
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Sigil
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Merisyl
+[2017-07-15 17:55:20,776] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
+[2017-07-15 17:58:35,632] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Aasimar
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Catfolk
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Changeling
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dhampir
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Drow
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Duergar
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dwarf
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Elf
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Fetchling
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gillman
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gnome
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Goblin
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Grippli
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Elf
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Orc
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Hobgoblin
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Human
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ifrit
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ixen
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kitsune
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kobold
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Korthjach
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Merfolk
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Morphic
+[2017-07-15 17:58:35,654] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Nagaji
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Orc
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Oread
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ratfolk
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Strix
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Suli
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Sylph
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vanaras
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tengu
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tiefling
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Undine
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vishkanyas
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: default
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: celestial
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: elven
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: exotic
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: draconic
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: korthjach
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: aquatic
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome man
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome woman
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: simple
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: sibilant
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk men
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk women
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Sigil
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Merisyl
+[2017-07-15 17:58:35,670] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
+[2017-07-15 18:02:08,123] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Aasimar
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Catfolk
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Changeling
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dhampir
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Drow
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Duergar
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dwarf
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Elf
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Fetchling
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gillman
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gnome
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Goblin
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Grippli
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Elf
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Orc
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Hobgoblin
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Human
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ifrit
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ixen
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kitsune
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kobold
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Korthjach
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Merfolk
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Morphic
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Nagaji
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Orc
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Oread
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ratfolk
+[2017-07-15 18:02:08,155] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Strix
+[2017-07-15 18:02:08,170] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Suli
+[2017-07-15 18:02:08,171] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Sylph
+[2017-07-15 18:02:08,171] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vanaras
+[2017-07-15 18:02:08,171] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tengu
+[2017-07-15 18:02:08,171] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tiefling
+[2017-07-15 18:02:08,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Undine
+[2017-07-15 18:02:08,172] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vishkanyas
+[2017-07-15 18:02:08,173] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: default
+[2017-07-15 18:02:08,173] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: celestial
+[2017-07-15 18:02:08,173] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: elven
+[2017-07-15 18:02:08,174] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: exotic
+[2017-07-15 18:02:08,174] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: draconic
+[2017-07-15 18:02:08,174] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: korthjach
+[2017-07-15 18:02:08,174] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: aquatic
+[2017-07-15 18:02:08,175] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome man
+[2017-07-15 18:02:08,175] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome woman
+[2017-07-15 18:02:08,175] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: simple
+[2017-07-15 18:02:08,175] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: sibilant
+[2017-07-15 18:02:08,176] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk men
+[2017-07-15 18:02:08,176] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk women
+[2017-07-15 18:02:08,178] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Sigil
+[2017-07-15 18:02:08,179] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Merisyl
+[2017-07-15 18:02:08,180] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
+[2017-07-15 18:06:38,981] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Aasimar
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Catfolk
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Changeling
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dhampir
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Drow
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Duergar
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dwarf
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Elf
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Fetchling
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gillman
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gnome
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Goblin
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Grippli
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Elf
+[2017-07-15 18:06:39,004] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Orc
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Hobgoblin
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Human
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ifrit
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ixen
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kitsune
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kobold
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Korthjach
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Merfolk
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Morphic
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Nagaji
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Orc
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Oread
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ratfolk
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Strix
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Suli
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Sylph
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vanaras
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tengu
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tiefling
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Undine
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vishkanyas
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: default
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: celestial
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: elven
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: exotic
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: draconic
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: korthjach
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: aquatic
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome man
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome woman
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: simple
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: sibilant
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk men
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk women
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Sigil
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Merisyl
+[2017-07-15 18:06:39,019] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
+[2017-07-15 18:25:17,788] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Barbarian
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bard
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Cleric
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Druid
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Fighter
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Mageslayer
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Monk
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Paladin
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Ranger
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Rogue
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Sorcerer
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Wizard
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Arcanist
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Bloodrager
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Brawler
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Hunter
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Investigator
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Shaman
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Skald
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Slayer
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Swashbuckler
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Warpriest
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(136) | Loaded global class: Juggernaut
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Aasimar
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Catfolk
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Changeling
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dhampir
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Drow
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Duergar
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Dwarf
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Elf
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Fetchling
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gillman
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Gnome
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Goblin
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Grippli
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Elf
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Half-Orc
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Hobgoblin
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Human
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ifrit
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ixen
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kitsune
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Kobold
+[2017-07-15 18:25:17,811] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Korthjach
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Merfolk
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Morphic
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Nagaji
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Orc
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Oread
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Ratfolk
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Strix
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Suli
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Sylph
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vanaras
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tengu
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Tiefling
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Undine
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(132) | Loaded global race: Vishkanyas
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: default
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: celestial
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: elven
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: exotic
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: draconic
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: korthjach
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: aquatic
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome man
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: gnome woman
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: simple
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: sibilant
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk men
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(127) | Loaded global namegenerator: ratfolk women
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Sigil
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(199) | Loading context Merisyl
+[2017-07-15 18:25:17,827] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
+[2017-07-15 23:15:10,690] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 23:15:10,710] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 23:15:10,711] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Barbarian
+[2017-07-15 23:15:10,711] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Bard
+[2017-07-15 23:15:10,712] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Cleric
+[2017-07-15 23:15:10,712] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Druid
+[2017-07-15 23:15:10,712] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Fighter
+[2017-07-15 23:15:10,712] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Mageslayer
+[2017-07-15 23:15:10,712] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Monk
+[2017-07-15 23:15:10,712] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Paladin
+[2017-07-15 23:15:10,713] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Ranger
+[2017-07-15 23:15:10,713] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Rogue
+[2017-07-15 23:15:10,713] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Sorcerer
+[2017-07-15 23:15:10,713] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Wizard
+[2017-07-15 23:15:10,713] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Wizard
+[2017-07-15 23:15:10,713] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Arcanist
+[2017-07-15 23:15:10,714] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Bloodrager
+[2017-07-15 23:15:10,714] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Brawler
+[2017-07-15 23:15:10,714] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Hunter
+[2017-07-15 23:15:10,714] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Investigator
+[2017-07-15 23:15:10,714] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Shaman
+[2017-07-15 23:15:10,714] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Skald
+[2017-07-15 23:15:10,714] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Slayer
+[2017-07-15 23:15:10,715] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Swashbuckler
+[2017-07-15 23:15:10,715] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Warpriest
+[2017-07-15 23:15:10,715] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Juggernaut
+[2017-07-15 23:15:10,716] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Aasimar
+[2017-07-15 23:15:10,717] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Catfolk
+[2017-07-15 23:15:10,717] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Changeling
+[2017-07-15 23:15:10,717] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Dhampir
+[2017-07-15 23:15:10,717] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Drow
+[2017-07-15 23:15:10,718] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Duergar
+[2017-07-15 23:15:10,718] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Dwarf
+[2017-07-15 23:15:10,718] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Elf
+[2017-07-15 23:15:10,719] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Fetchling
+[2017-07-15 23:15:10,719] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Gillman
+[2017-07-15 23:15:10,719] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Gnome
+[2017-07-15 23:15:10,719] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Goblin
+[2017-07-15 23:15:10,720] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Grippli
+[2017-07-15 23:15:10,720] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Half-Elf
+[2017-07-15 23:15:10,720] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Half-Orc
+[2017-07-15 23:15:10,720] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Hobgoblin
+[2017-07-15 23:15:10,721] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Human
+[2017-07-15 23:15:10,721] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Ifrit
+[2017-07-15 23:15:10,721] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Ixen
+[2017-07-15 23:15:10,721] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Kitsune
+[2017-07-15 23:15:10,722] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Kobold
+[2017-07-15 23:15:10,722] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Korthjach
+[2017-07-15 23:15:10,722] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Merfolk
+[2017-07-15 23:15:10,722] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Morphic
+[2017-07-15 23:15:10,723] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Nagaji
+[2017-07-15 23:15:10,723] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Orc
+[2017-07-15 23:15:10,723] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Oread
+[2017-07-15 23:15:10,723] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Ratfolk
+[2017-07-15 23:15:10,724] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Strix
+[2017-07-15 23:15:10,724] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Suli
+[2017-07-15 23:15:10,724] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Sylph
+[2017-07-15 23:15:10,724] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Vanaras
+[2017-07-15 23:15:10,725] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Tengu
+[2017-07-15 23:15:10,725] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Tiefling
+[2017-07-15 23:15:10,725] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Undine
+[2017-07-15 23:15:10,725] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Vishkanyas
+[2017-07-15 23:15:10,726] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: default
+[2017-07-15 23:15:10,727] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: celestial
+[2017-07-15 23:15:10,727] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: elven
+[2017-07-15 23:15:10,727] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: exotic
+[2017-07-15 23:15:10,727] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: draconic
+[2017-07-15 23:15:10,727] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: korthjach
+[2017-07-15 23:15:10,727] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: aquatic
+[2017-07-15 23:15:10,728] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: gnome man
+[2017-07-15 23:15:10,728] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: gnome woman
+[2017-07-15 23:15:10,728] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: simple
+[2017-07-15 23:15:10,728] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: sibilant
+[2017-07-15 23:15:10,728] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: ratfolk men
+[2017-07-15 23:15:10,728] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: ratfolk women
+[2017-07-15 23:15:10,730] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(197) | Loading context Sigil
+[2017-07-15 23:15:10,731] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(197) | Loading context Merisyl
+[2017-07-15 23:15:10,732] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
+[2017-07-15 23:51:12,485] INFO - main: com.deathfrog.npc.NpcPersistor.parse(54) | Loading default NPC definition file.
+[2017-07-15 23:51:12,506] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(90) | Loading globals.
+[2017-07-15 23:51:12,507] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Barbarian
+[2017-07-15 23:51:12,507] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Bard
+[2017-07-15 23:51:12,507] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Cleric
+[2017-07-15 23:51:12,507] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Druid
+[2017-07-15 23:51:12,507] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Fighter
+[2017-07-15 23:51:12,508] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Mageslayer
+[2017-07-15 23:51:12,508] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Monk
+[2017-07-15 23:51:12,508] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Paladin
+[2017-07-15 23:51:12,508] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Ranger
+[2017-07-15 23:51:12,508] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Rogue
+[2017-07-15 23:51:12,508] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Sorcerer
+[2017-07-15 23:51:12,508] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Wizard
+[2017-07-15 23:51:12,509] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Wizard
+[2017-07-15 23:51:12,509] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Arcanist
+[2017-07-15 23:51:12,509] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Bloodrager
+[2017-07-15 23:51:12,509] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Brawler
+[2017-07-15 23:51:12,509] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Hunter
+[2017-07-15 23:51:12,509] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Investigator
+[2017-07-15 23:51:12,509] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Shaman
+[2017-07-15 23:51:12,510] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Skald
+[2017-07-15 23:51:12,510] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Slayer
+[2017-07-15 23:51:12,510] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Swashbuckler
+[2017-07-15 23:51:12,510] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Warpriest
+[2017-07-15 23:51:12,510] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(134) | Loaded global class: Juggernaut
+[2017-07-15 23:51:12,512] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Aasimar
+[2017-07-15 23:51:12,512] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Catfolk
+[2017-07-15 23:51:12,512] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Changeling
+[2017-07-15 23:51:12,513] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Dhampir
+[2017-07-15 23:51:12,513] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Drow
+[2017-07-15 23:51:12,513] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Duergar
+[2017-07-15 23:51:12,513] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Dwarf
+[2017-07-15 23:51:12,514] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Elf
+[2017-07-15 23:51:12,514] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Fetchling
+[2017-07-15 23:51:12,514] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Gillman
+[2017-07-15 23:51:12,514] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Gnome
+[2017-07-15 23:51:12,515] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Goblin
+[2017-07-15 23:51:12,515] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Grippli
+[2017-07-15 23:51:12,515] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Half-Elf
+[2017-07-15 23:51:12,515] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Half-Orc
+[2017-07-15 23:51:12,515] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Hobgoblin
+[2017-07-15 23:51:12,516] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Human
+[2017-07-15 23:51:12,516] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Ifrit
+[2017-07-15 23:51:12,516] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Ixen
+[2017-07-15 23:51:12,516] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Kitsune
+[2017-07-15 23:51:12,517] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Kobold
+[2017-07-15 23:51:12,517] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Korthjach
+[2017-07-15 23:51:12,517] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Merfolk
+[2017-07-15 23:51:12,517] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Morphic
+[2017-07-15 23:51:12,518] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Nagaji
+[2017-07-15 23:51:12,518] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Orc
+[2017-07-15 23:51:12,518] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Oread
+[2017-07-15 23:51:12,519] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Ratfolk
+[2017-07-15 23:51:12,519] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Strix
+[2017-07-15 23:51:12,519] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Suli
+[2017-07-15 23:51:12,519] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Sylph
+[2017-07-15 23:51:12,519] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Vanaras
+[2017-07-15 23:51:12,520] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Tengu
+[2017-07-15 23:51:12,520] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Tiefling
+[2017-07-15 23:51:12,520] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Undine
+[2017-07-15 23:51:12,520] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(130) | Loaded global race: Vishkanyas
+[2017-07-15 23:51:12,521] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: default
+[2017-07-15 23:51:12,522] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: celestial
+[2017-07-15 23:51:12,522] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: elven
+[2017-07-15 23:51:12,522] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: exotic
+[2017-07-15 23:51:12,522] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: draconic
+[2017-07-15 23:51:12,522] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: korthjach
+[2017-07-15 23:51:12,523] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: aquatic
+[2017-07-15 23:51:12,523] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: gnome man
+[2017-07-15 23:51:12,523] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: gnome woman
+[2017-07-15 23:51:12,523] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: simple
+[2017-07-15 23:51:12,523] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: sibilant
+[2017-07-15 23:51:12,524] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: ratfolk men
+[2017-07-15 23:51:12,524] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(125) | Loaded global namegenerator: ratfolk women
+[2017-07-15 23:51:12,526] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(197) | Loading context Sigil
+[2017-07-15 23:51:12,526] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(197) | Loading context Merisyl
+[2017-07-15 23:51:12,527] INFO - main: com.deathfrog.npc.NpcPersistor.parse(77) | Document loaded.
