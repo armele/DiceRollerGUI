@@ -12,7 +12,7 @@ public class TestNaming {
 	public void testNaming() {
 		NameGenerator ng = new NameGenerator();
 		
-		String name = ng.generate();
+		NameDetails name = ng.generate();
 		logger.info(name);
 		
 		name = ng.generate();
@@ -31,7 +31,7 @@ public class TestNaming {
 		ng.setVowelList(new String[]{"3"});
 		ng.setPatternList(new String[]{"c(b)v"});
 		
-		String name = ng.generate();
+		NameDetails name = ng.generate();
 		logger.info(name);
 		
 		Assert.assertEquals("2113", name);

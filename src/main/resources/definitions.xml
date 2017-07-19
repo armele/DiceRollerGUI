@@ -171,30 +171,75 @@
 			
 	</contextlist>
 	
-	<class name="Barbarian"></class>
-	<class name="Bard"></class>
-	<class name="Cleric"></class>
-	<class name="Druid"></class>
-	<class name="Fighter"></class>
-	<class name="Mageslayer"></class>				
-	<class name="Monk"></class>
-	<class name="Paladin"></class>
-	<class name="Ranger"></class>
-	<class name="Rogue"></class>
-	<class name="Sorcerer"></class>
-	<class name="Wizard"></class>
-	<class name="Wizard"></class>
-	<class name="Arcanist"></class>
-	<class name="Bloodrager"></class>
-	<class name="Brawler"></class>
-	<class name="Hunter"></class>
-	<class name="Investigator"></class>
-	<class name="Shaman"></class>				
-	<class name="Skald"></class>
-	<class name="Slayer"></class>
-	<class name="Swashbuckler"></class>
-	<class name="Warpriest"></class>				
-	<class name="Juggernaut"></class>	
+	<class name="Barbarian">
+		<statpriority>str,con,dex,cha,wis,int</statpriority>
+	</class>
+	<class name="Bard">
+		<statpriority>cha,int,dex,str,con,wis</statpriority>
+	</class>
+	<class name="Cleric">
+		<statpriority>wis,cha,con,dex,str,int</statpriority>	
+	</class>
+	<class name="Druid">
+		<statpriority>wis,dex,cha,con,int,str</statpriority>	
+	</class>
+	<class name="Fighter">
+		<statpriority>str,con,dex,cha,int,wis</statpriority>	
+	</class>
+	<class name="Mageslayer">
+		<statpriority>dex,str,con,wis,int,cha</statpriority>	
+	</class>				
+	<class name="Monk">
+		<statpriority>dex,wis,con,int,str,cha</statpriority>	
+	</class>
+	<class name="Paladin">
+		<statpriority>cha,str,con,dex,wis,int</statpriority>	
+	</class>
+	<class name="Ranger">
+		<statpriority>dex,str,wis,cha,con,int</statpriority>	
+	</class>
+	<class name="Rogue">
+		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+	</class>
+	<class name="Sorcerer">
+		<statpriority>cha,dex,int,str,con,wis</statpriority>	
+	</class>
+	<class name="Wizard">
+		<statpriority>int,dex,con,wis,str,cha</statpriority>	
+	</class>
+	<class name="Arcanist">
+		<statpriority>int,dex,con,wis,str,cha</statpriority>		
+	</class>
+	<class name="Bloodrager">
+		<statpriority>con,cha,dex,str,wis,int</statpriority>		
+	</class>
+	<class name="Brawler">
+		<statpriority>str,con,dex,cha,int,wis</statpriority>	
+	</class>
+	<class name="Hunter">
+		<statpriority>dex,str,wis,cha,con,int</statpriority>		
+	</class>
+	<class name="Investigator">
+		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+	</class>
+	<class name="Shaman">
+		<statpriority>wis,dex,cha,con,int,str</statpriority>	
+	</class>				
+	<class name="Skald">
+		<statpriority>cha,str,dex,con,int,wis</statpriority>	
+	</class>
+	<class name="Slayer">
+		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+	</class>
+	<class name="Swashbuckler">
+		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+	</class>
+	<class name="Warpriest">
+		<statpriority>wis,cha,con,dex,str,int</statpriority>	
+	</class>				
+	<class name="Juggernaut">
+		<statpriority>con,int,str,dex,wis,cha</statpriority>	
+	</class>	
 
 	<race name="Aasimar">
 		<gender namegenerator="celestial" chance="50">Male</gender>
@@ -728,7 +773,7 @@
 		<vowelList>a,e,i,o,æ</vowelList>
 		<consonentList>c,d,h,l,m,n,r,s,t,w,y,qu</consonentList>
 		<blendList>l,s,r,yl</blendList>
-		<patternList>V(c)vcial,Bvbc,Vbc'Cbcvc,Cbvvc'Trivcora,(V)crian'Bvc,Cvvb-shvbbvria,Vbv(c)vbc</patternList>
+		<patternList>V(c)vcial,Bvbc,Vbc'Cbcvc,Cvbvc'Trivcora,(V)crian'Bvc,Cvvb-shvbbvria,Vbv(c)vbc</patternList>
 	</namegenerator>	
 	
 	<namegenerator name="exotic">
@@ -742,14 +787,14 @@
 		<vowelList>a,i,y,ux,e,ix</vowelList>
 		<consonentList>c,d,f,k,l,m,n,p,q,r,s,t,v,x,z</consonentList>
 		<blendList>ch,l,r,s,v</blendList>
-		<patternList>Vc'Bvcvbc,Cvccvcyx,Cvbc-Bvbczbiq,Ccvbvccvbccv</patternList>
+		<patternList>Vc'Bvcvbc,Cvccvcyx,Cvbc-Bvb,Cvbv(c)vbcv</patternList>
 	</namegenerator>
 	
 	<namegenerator name="korthjach">
 		<vowelList>!,*,^,#,oo,a</vowelList>
 		<consonentList>b,c,d,f,g,h,j,k,l,m,n,p,q,r,s,t,v,w,x,y,z</consonentList>
 		<blendList>f,l,s,vr</blendList>
-		<patternList>Fvc,Cvc'cvbc,Cbvcvvc,Vbccvbc,Vcc</patternList>
+		<patternList>Fvc,Cvc'cvbc,Cbvc(v)c,Vbccvbc,Vcc</patternList>
 	</namegenerator>
 	
 	<namegenerator name="aquatic">

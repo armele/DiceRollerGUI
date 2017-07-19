@@ -37,4 +37,22 @@ public enum EStat {
 		
 		return valid;
 	}
+	
+	/**
+	 * Given a string representation of a statistic, return the corresponding enumeration.
+	 * 
+	 * @return
+	 */
+	static public EStat statForString(String statname) {	
+		EStat stat = null;
+		
+		for (EStat s : values()) {
+			if (s.getName().equals(statname)) {
+				stat = s;
+				break;
+			}
+		}
+		
+		return stat;		
+	}
 }

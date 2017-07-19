@@ -268,6 +268,20 @@ public class NpcPersistor {
 		PathfinderClassDefinition pfClass = 
 				new PathfinderClassDefinition(classNode.getAttributes().getNamedItem(XML_NAME).getNodeValue());
 		
+		NodeList contextChildren = classNode.getChildNodes();
+		
+		for (int i = 0 ; i < contextChildren.getLength(); i++) {
+			Node n = contextChildren.item(i);
+			
+			if (NpcContext.STATPRIORITY.equalsIgnoreCase(n.getNodeName())) {
+				String[] statOrder = n.getFirstChild().getNodeValue().split(",");
+				int j = 0;
+				for (String stat : statOrder) {
+					pfClass.setStatPriority(j, EStat.statForString(stat));
+					j++;
+				}
+			}
+		}
 		
 		// TODO: stat order / level
 		
@@ -299,7 +313,7 @@ public class NpcPersistor {
 	 * @param choices
 	 * @param picklistName
 	 */
-	protected void loadRace(NpcContext context, NodeList choices, String picklistName) {
+	protected void loadRacePicklist(NpcContext context, NodeList choices, String picklistName) {
 		PercentileList<PathfinderRaceDefinition> picklist = new PercentileList<PathfinderRaceDefinition>();
 		
 		for (int j = 0; j < choices.getLength(); j++) {
@@ -327,7 +341,7 @@ public class NpcPersistor {
 	 * @param choices
 	 * @param picklistName
 	 */
-	protected void loadClass(NpcContext context, NodeList choices, String picklistName) {
+	protected void loadClassPicklist(NpcContext context, NodeList choices, String picklistName) {
 		PercentileList<PathfinderClassDefinition> picklist = new PercentileList<PathfinderClassDefinition>();
 		
 		for (int j = 0; j < choices.getLength(); j++) {
@@ -356,7 +370,7 @@ public class NpcPersistor {
 	 * @param choices
 	 * @param picklistName
 	 */
-	protected void loadOther(NpcContext context, NodeList choices, String picklistName) {
+	protected void loadOtherPicklist(NpcContext context, NodeList choices, String picklistName) {
 		PercentileList<String> picklist = new PercentileList<String>();
 		
 		for (int j = 0; j < choices.getLength(); j++) {
@@ -395,13 +409,13 @@ public class NpcPersistor {
 					
 					// If this is a list of classes, load them as classes
 					if (NpcContext.CLASS.equalsIgnoreCase(picklistName)) {
-						loadClass(context, choices, picklistName);
+						loadClassPicklist(context, choices, picklistName);
 					// If this is a list of races, load them as races.
 					} else if (NpcContext.RACE.equalsIgnoreCase(picklistName)) {
-						loadRace(context, choices, picklistName);
+						loadRacePicklist(context, choices, picklistName);
 					// Otherwise, load them as strings.
 					} else {
-						loadOther(context, choices, picklistName);						
+						loadOtherPicklist(context, choices, picklistName);						
 					}
 				}
 			}

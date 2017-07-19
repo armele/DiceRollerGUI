@@ -33,6 +33,15 @@ public class TestNPC {
 		
 		for (PathfinderClassDefinition pc : clist.getItemList()) {
 			logger.info(pc.getPathfinderClassName());
+			
+			if ("Barbarian".equals(pc.getPathfinderClassName())) {
+				Assert.assertEquals(EStat.STR, pc.getStatPriority(0));
+				Assert.assertEquals(EStat.CON, pc.getStatPriority(1));
+				Assert.assertEquals(EStat.DEX, pc.getStatPriority(2));
+				Assert.assertEquals(EStat.CHA, pc.getStatPriority(3));
+				Assert.assertEquals(EStat.WIS, pc.getStatPriority(4));
+				Assert.assertEquals(EStat.INT, pc.getStatPriority(5));
+			}
 		}
 		
 		PercentileList<PathfinderRaceDefinition> rlist = (PercentileList<PathfinderRaceDefinition>) context.getContextLists().get("Race");
@@ -100,7 +109,7 @@ public class TestNPC {
 			
 			logger.info(age);
 			
-			String name = dwarf.pickNameForGender(gender);
+			NameDetails name = dwarf.pickNameForGender(gender);
 			
 			Assert.assertNotNull(name);
 			

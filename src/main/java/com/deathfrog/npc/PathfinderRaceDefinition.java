@@ -69,18 +69,18 @@ public class PathfinderRaceDefinition {
 	 * @param gender
 	 * @return
 	 */
-	public String pickNameForGender(String gender) {
+	public NameDetails pickNameForGender(String gender) {
 		String generatorName = genderNames.get(gender);
 		NameGenerator nameGen = NpcDefinitions.getNameGen(generatorName);
-		String name;
+		NameDetails nameDetails;
 		
 		if (nameGen != null) {
-			name = nameGen.generate();
+			nameDetails = nameGen.generate();
 		} else {
 			throw new GameException("No name found for name generator " + generatorName + " from gender " + gender);
 		}
 		
-		return name;
+		return nameDetails;
 	}
 
 	/**

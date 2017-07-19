@@ -114,7 +114,8 @@ public class NameGenerator {
 	 * @param npcClass
 	 * @return
 	 */
-	public String generate() {
+	public NameDetails generate() {
+		NameDetails name = new NameDetails();
 		boolean repeatSegment = false;
 		StringBuffer result = new StringBuffer();
 		StringBuffer repeat = new StringBuffer();
@@ -186,7 +187,9 @@ public class NameGenerator {
 			
 		}
 		
+		name.setName(result.toString());
+		name.setPattern(pattern);
 		
-		return result.toString();
+		return name;
 	}
 }

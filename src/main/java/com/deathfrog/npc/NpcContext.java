@@ -1,11 +1,12 @@
 package com.deathfrog.npc;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.swt.widgets.Text;
 
+import com.deathfrog.utils.GameException;
 import com.deathfrog.utils.PercentileList;
 import com.deathfrog.utils.dice.Dice;
 
@@ -19,6 +20,7 @@ public class NpcContext implements Comparable<NpcContext> {
 	protected static Logger log = LogManager.getLogger(NpcContext.class);
 	public static final String RACE = "Race";
 	public static final String CLASS = "Class";
+	public static final String STATPRIORITY = "statpriority";
 	
 	protected String name;
 	protected HashMap<String, PercentileList<?>> contextLists = new HashMap<String, PercentileList<?>>();
@@ -98,8 +100,8 @@ public class NpcContext implements Comparable<NpcContext> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public String pickEverything() {
-		StringBuffer sb = new StringBuffer();
+	public GeneratedNPC generateNPC() {
+		GeneratedNPC npc = new GeneratedNPC();
 		PercentileList<PathfinderRaceDefinition> raceList = (PercentileList<PathfinderRaceDefinition>) contextLists.get(RACE);
 		PercentileList<PathfinderClassDefinition> classList = (PercentileList<PathfinderClassDefinition>) contextLists.get(CLASS);
 		
@@ -107,44 +109,63 @@ public class NpcContext implements Comparable<NpcContext> {
 			PathfinderRaceDefinition pfRace = raceList.pick();
 			PathfinderClassDefinition pfClass = classList.pick();
 			
-			if (pfRace != null) {
+			npc.setPfRace(pfRace);
+			npc.setPfClass(pfClass);
+			
+			if (npc.getPfRace() != null) {
 				String gender = pfRace.pickGender();
-				String name = pfRace.pickNameForGender(gender);
-				sb.append(name).append(", ").append(pfRace.pickAge()).append(" year old ").append(gender).append(" ");
-				sb.append(pfRace.getRace()).append(" ");
+				NameDetails nameDetails = pfRace.pickNameForGender(gender);
 				
-				if (pfClass != null) {
-					sb.append(pfClass.getPathfinderClassName() + " ");
-				} else {
-					sb.append("Undefined class.");
-				}		
+				npc.setGender(gender);
+				npc.setName(nameDetails);
 				
-				sb.append(Text.DELIMITER);
+				int[] rolls = new int[6];
+				int j = 0;	
 				
+				// Roll up those stats!  
 				Dice statDice = new Dice(4, 6);
-				for (EStat stat : EStat.values()) {
+				for (@SuppressWarnings("unused") EStat stat : EStat.values()) {
 					statDice.rollAll();
 					int dieRoll = statDice.total(true);
-					int adjustment = pfRace.getStatAdjustment(stat.getName());
-					int total = dieRoll + adjustment;
-					sb.append(stat.getName().toUpperCase() + ": " + dieRoll + " [" + adjustment + "] = " + total + Text.DELIMITER);
+					rolls[j] = dieRoll;
+					j++;
 				}
-			} else {
-				sb.append("Undefined race. ");
-
 				
+				// If a class has been picked, assign statistics according to the priority of the statistics as defined for the class.
 				if (pfClass != null) {
-					sb.append(pfClass.getPathfinderClassName() + " ");
+					log.info("Class selected: " + pfClass.getPathfinderClassName());
+					
+					// Sort the rolls in ascending order.
+					Arrays.sort(rolls);
+					
+					j = rolls.length - 1;
+					// Loop through the class priority for the class, and assign the stats from the most important
+					// to the least important.  Note that the "j" counter is incremented above for the population of the
+					// array, and then decremented here so that the "rolls" array is accessed from last to first.
+					for (EStat stat : pfClass.getStatPriority()) {
+						int adjustment = pfRace.getStatAdjustment(stat.getName());
+						int total = rolls[j] + adjustment;
+						npc.getStats().put(stat, total);
+						j--;
+					}					
 				} else {
-					sb.append("Undefined class.");
-				}						
+					j = 0;
+					
+					// If no class is specified, use the order rolls were made
+					for (EStat stat : EStat.values()) {
+						int adjustment = pfRace.getStatAdjustment(stat.getName());
+						int total = rolls[j] + adjustment;
+						npc.getStats().put(stat, total);						
+						j++;
+					}						
+				}								
 			}
 			
 		} else {
-			sb.append("Incomplete definition file loaded.  (Cannot identify races or classes.)");
+			throw new GameException("Incomplete or corrupt definition file - either class or race list was missing.");
 		}
 		
-		return sb.toString();
+		return npc;
 	}
 	
 	@Override

@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import com.deathfrog.npc.GeneratedNPC;
 import com.deathfrog.npc.NpcContext;
 import com.deathfrog.npc.NpcDefinitions;
 import com.deathfrog.npc.NpcPersistor;
@@ -35,6 +36,7 @@ public class NpcGeneratorUI {
 	protected List<Control> resettableControls = new ArrayList<Control>();
 	private Text txtNpcDetails = null;
 	private Text txtBuilding;
+	private Text txtPattern;
 	
 	/**
 	 * Launch the application.
@@ -120,7 +122,7 @@ public class NpcGeneratorUI {
 	protected Shell createContents() {
 		Shell shell = new Shell();
 		shell.setImage(LaunchPad.getIcon());
-		shell.setSize(450, 300);
+		shell.setSize(600, 300);
 		shell.setText("NPC Generator");
 		
 		Combo combo = new Combo(shell, SWT.READ_ONLY);
@@ -134,7 +136,7 @@ public class NpcGeneratorUI {
 		
 		txtNpcDetails = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		txtNpcDetails.setEditable(false);
-		txtNpcDetails.setBounds(10, 41, 414, 160);
+		txtNpcDetails.setBounds(10, 41, 386, 160);
 		
 		Button btnGenerate = new Button(shell, SWT.NONE);
 		btnGenerate.addSelectionListener(new SelectionAdapter() {
@@ -143,7 +145,9 @@ public class NpcGeneratorUI {
 				NpcContext context = npcDef.get(combo.getSelectionIndex());
 				
 				if (context != null) {
-					txtNpcDetails.setText(context.pickEverything());
+					GeneratedNPC npc = context.generateNPC();
+					txtNpcDetails.setText(npc.toString());
+					txtPattern.setText(npc.getName().getPattern());
 					PercentileList<?> buildingList = context.getContextLists().get("Buildings");
 					if (buildingList != null) {
 						txtBuilding.setText(buildingList.pick().toString());
@@ -155,7 +159,7 @@ public class NpcGeneratorUI {
 				}
 			}
 		});
-		btnGenerate.setBounds(349, 10, 75, 25);
+		btnGenerate.setBounds(321, 10, 75, 25);
 		btnGenerate.setText("Generate");
 		
 		Menu menu = new Menu(shell, SWT.BAR);
@@ -191,7 +195,16 @@ public class NpcGeneratorUI {
 		lblContext.setText("Context:");
 		
 		txtBuilding = new Text(shell, SWT.BORDER);
+		txtBuilding.setEditable(false);
 		txtBuilding.setBounds(10, 210, 112, 21);
+		
+		txtPattern = new Text(shell, SWT.BORDER);
+		txtPattern.setEditable(false);
+		txtPattern.setBounds(462, 41, 112, 21);
+		
+		Label lblPattern = new Label(shell, SWT.NONE);
+		lblPattern.setText("Pattern:");
+		lblPattern.setBounds(409, 41, 47, 21);
 		
 		return shell;
 	}
