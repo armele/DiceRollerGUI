@@ -18,6 +18,7 @@ public class GeneratedNPC {
 	protected PathfinderRaceDefinition pfRace = null;
 	protected String pattern = null;
 	protected HashMap<EStat, Integer> stats = new HashMap<EStat, Integer>();
+	protected Integer level = null;
 	
 	/**
 	 * @return the pfClass
@@ -55,12 +56,64 @@ public class GeneratedNPC {
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
 	}
+	
+	/**
+	 * Returns the primary statistic of this Pathfinder class (null if the class is not set)
+	 * 
+	 * @return
+	 */
+	public EStat getPrimaryStat() {
+		EStat stat = null;
+		
+		if (pfClass != null) {
+			stat = this.getPfClass().getStatPriority()[0];
+		}
+		
+		return stat;
+	}
+	
+	/**
+	 * Returns the value of the most significant statistic for this class (requires class to be set)
+	 * 
+	 * @return
+	 */
+	public Integer getPrimaryStatValue() {
+		Integer statvalue = null;
+		
+		if (pfClass != null) {
+			EStat primary = getPrimaryStat();
+			statvalue = getStatValue(primary);
+		}
+		
+		return statvalue;
+	}
+	
+	/**
+	 * Get the value of a specific statistic
+	 * 
+	 * @param stat
+	 * @return
+	 */
+	public Integer getStatValue(EStat stat) {
+		Integer statvalue = stats.get(stat);
+		
+		return statvalue;
+	}
+	
 	/**
 	 * @return the stats
 	 */
 	public HashMap<EStat, Integer> getStats() {
 		return stats;
 	}
+	
+	/**
+	 * Set a specific stat for the NPC.
+	 */
+	public void setStatValue(EStat stat, Integer statvalue) {
+		stats.put(stat, statvalue);
+	}
+	
 	/**
 	 * @param stats the stats to set
 	 */
@@ -93,7 +146,18 @@ public class GeneratedNPC {
 		this.gender = gender;
 	}
 	
-	
+	/**
+	 * @return the level
+	 */
+	public Integer getLevel() {
+		return level;
+	}
+	/**
+	 * @param level the level to set
+	 */
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -110,6 +174,11 @@ public class GeneratedNPC {
 		}
 		
 		if (pfClass != null) {
+			if (level != null) {
+				sb.append("Level ");
+				sb.append(level);
+				sb.append(" ");
+			}
 			sb.append(pfClass.getPathfinderClassName() + " ");
 		} else {
 			sb.append("Undefined class.");

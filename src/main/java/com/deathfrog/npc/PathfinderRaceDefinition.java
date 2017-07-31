@@ -1,6 +1,7 @@
 package com.deathfrog.npc;
 
 import java.util.HashMap;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -126,5 +127,14 @@ public class PathfinderRaceDefinition {
 	public Integer getStatAdjustment(String stat) {
 		return statAdjustments.get(stat);
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getRace();
+	}
+
 	
 }	

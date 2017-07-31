@@ -90,4 +90,23 @@ public class PercentileList<T> {
 		return chanceList;
 	}
 
+	/**
+	 * Given a string, identify an item in the pick list which corresponds to it, and return that item.
+	 * 
+	 * @param itemString
+	 * @return
+	 */
+	public T findItemByString(String itemString) {
+		T item = null;
+		
+		if (itemString != null) {
+			for (T listMember : itemList) {
+				if (itemString.equals(listMember.toString())) {
+					item = listMember;
+				}
+			}
+		}
+		
+		return item;
+	}
 }

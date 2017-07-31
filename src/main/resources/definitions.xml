@@ -3,7 +3,6 @@
 <!--
 	TODO List:
 	Commoner classes
-	Level generation
 	Level-based age generation
 	Equipment lists
 	"context filter" (Adventurer versus Commoner, for example)
@@ -14,28 +13,28 @@
 	<contextlist>
 		<context name="Sigil">
 			<picklist name="Class">
+				<choice name="Arcanist" chance="8"></choice>			
 				<choice name="Barbarian" chance="20"></choice>
 				<choice name="Bard" chance="20"></choice>
+				<choice name="Bloodrager" chance="8"></choice>
+				<choice name="Brawler" chance="8"></choice>				
 				<choice name="Cleric" chance="20"></choice>
 				<choice name="Druid" chance="20"></choice>
 				<choice name="Fighter" chance="20"></choice>
+				<choice name="Hunter" chance="8"></choice>		
+				<choice name="Investigator" chance="8"></choice>
 				<choice name="Mageslayer" chance="20"></choice>				
 				<choice name="Monk" chance="20"></choice>
 				<choice name="Paladin" chance="20"></choice>
 				<choice name="Ranger" chance="20"></choice>
 				<choice name="Rogue" chance="20"></choice>
 				<choice name="Sorcerer" chance="20"></choice>
-				<choice name="Wizard" chance="20"></choice>
-				<choice name="Arcanist" chance="8"></choice>
-				<choice name="Bloodrager" chance="8"></choice>
-				<choice name="Brawler" chance="8"></choice>
-				<choice name="Hunter" chance="8"></choice>
-				<choice name="Investigator" chance="8"></choice>
 				<choice name="Shaman" chance="8"></choice>				
 				<choice name="Skald" chance="8"></choice>
 				<choice name="Slayer" chance="8"></choice>
 				<choice name="Swashbuckler" chance="8"></choice>
-				<choice name="Warpriest" chance="8"></choice>		
+				<choice name="Warpriest" chance="8"></choice>					
+				<choice name="Wizard" chance="20"></choice>	
 			</picklist>
 			<picklist name="Race">
 				<choice name="Aasimar" chance="8"></choice>	
@@ -80,30 +79,29 @@
 		
 		<context name="Merisyl">
 			<picklist name="Class">
+				<choice name="Arcanist" chance="8"></choice>			
 				<choice name="Barbarian" chance="5"></choice>
 				<choice name="Bard" chance="20"></choice>
+				<choice name="Bloodrager" chance="8"></choice>
+				<choice name="Brawler" chance="8"></choice>				
 				<choice name="Cleric" chance="20"></choice>
 				<choice name="Druid" chance="20"></choice>
 				<choice name="Fighter" chance="20"></choice>
+				<choice name="Hunter" chance="8"></choice>
+				<choice name="Investigator" chance="8"></choice>
+				<choice name="Juggernaut" chance="4"></choice>				
 				<choice name="Mageslayer" chance="20"></choice>				
 				<choice name="Monk" chance="5"></choice>
 				<choice name="Paladin" chance="20"></choice>
 				<choice name="Ranger" chance="20"></choice>
 				<choice name="Rogue" chance="20"></choice>
 				<choice name="Sorcerer" chance="20"></choice>
-				<choice name="Wizard" chance="20"></choice>
-				<choice name="Wizard" chance="20"></choice>
-				<choice name="Arcanist" chance="8"></choice>
-				<choice name="Bloodrager" chance="8"></choice>
-				<choice name="Brawler" chance="8"></choice>
-				<choice name="Hunter" chance="8"></choice>
-				<choice name="Investigator" chance="8"></choice>
-				<choice name="Juggernaut" chance="4"></choice>
 				<choice name="Shaman" chance="8"></choice>				
 				<choice name="Skald" chance="8"></choice>
 				<choice name="Slayer" chance="8"></choice>
 				<choice name="Swashbuckler" chance="8"></choice>
-				<choice name="Warpriest" chance="8"></choice>					
+				<choice name="Warpriest" chance="8"></choice>	
+				<choice name="Wizard" chance="20"></choice>
 			</picklist>
 			<picklist name="Race">
 				<choice name="Dwarf" chance="15"></choice>
@@ -166,7 +164,19 @@
 				<choice name="Potions and Magical Remedies" chance="4"></choice>
 				<choice name="Scribe" chance="4"></choice>
 				<choice name="Basket Maker" chance="4"></choice>
-			</picklist>				
+			</picklist>	
+			<picklist name="Level">
+				<choice name="1" chance="25"></choice>
+				<choice name="2" chance="20"></choice>
+				<choice name="3" chance="15"></choice>
+				<choice name="4" chance="10"></choice>		
+				<choice name="5" chance="8"></choice>
+				<choice name="6" chance="6"></choice>
+				<choice name="7" chance="4"></choice>
+				<choice name="8" chance="3"></choice>				
+				<choice name="9" chance="2"></choice>
+				<choice name="10" chance="1"></choice>	
+			</picklist>							
 		</context>
 			
 	</contextlist>

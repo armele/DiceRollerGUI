@@ -1,6 +1,5 @@
 package com.deathfrog.npc;
 
-
 /**
  * @author Al Mele
  *
@@ -59,4 +58,14 @@ public class PathfinderClassDefinition {
 	public EStat[] getStatPriority() {
 		return statOrder;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return getPathfinderClassName();
+	}
+	
+	
 }

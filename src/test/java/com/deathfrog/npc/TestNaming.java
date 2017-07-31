@@ -34,7 +34,7 @@ public class TestNaming {
 		NameDetails name = ng.generate();
 		logger.info(name);
 		
-		Assert.assertEquals("2113", name);
+		Assert.assertEquals("2113", name.getName());
 		
 		
 		ng.setPatternList(new String[]{"c(vbv)c"});
@@ -42,14 +42,14 @@ public class TestNaming {
 		name = ng.generate();
 		logger.info(name);
 		
-		Assert.assertEquals("23133132", name);		
+		Assert.assertEquals("23133132", name.getName());		
 		
 		ng.setPatternList(new String[]{"(cvc)"});
 		
 		name = ng.generate();
 		logger.info(name);
 		
-		Assert.assertEquals("232232", name);		
+		Assert.assertEquals("232232", name.getName());		
 
 	}
 	

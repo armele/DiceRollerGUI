@@ -283,8 +283,6 @@ public class NpcPersistor {
 			}
 		}
 		
-		// TODO: stat order / level
-		
 		return pfClass;			
 	}
 	

@@ -20,6 +20,7 @@ public class NpcContext implements Comparable<NpcContext> {
 	protected static Logger log = LogManager.getLogger(NpcContext.class);
 	public static final String RACE = "Race";
 	public static final String CLASS = "Class";
+	public static final String LEVEL = "Level";
 	public static final String STATPRIORITY = "statpriority";
 	
 	protected String name;
@@ -96,70 +97,115 @@ public class NpcContext implements Comparable<NpcContext> {
 		return pfRace;
 	}
 	
+	
+	/**
+	 * Randomly determines the level of the NPC, and 
+	 * 
+	 * @param npc
+	 */
+	protected void determineLevel(GeneratedNPC npc) {
+		@SuppressWarnings("unchecked")
+		PercentileList<String> lvlChance = (PercentileList<String>) contextLists.get(LEVEL);
+		Integer level = new Integer(lvlChance.pick());
+		npc.setLevel(level);
+		int levelbonus = level.intValue() / 4;
+		npc.setStatValue(npc.getPrimaryStat(), npc.getPrimaryStatValue() + levelbonus);
+	}
+	
+	/**
+	 * Provided the NPC has already had a class and race picked for it, the remainder of the
+	 * details are completed here.
+	 * 
+	 * @param pfRace
+	 * @param npc
+	 */
+	protected void completeDetails(GeneratedNPC npc) {
+		PathfinderRaceDefinition pfRace = npc.getPfRace();
+		PathfinderClassDefinition pfClass = npc.getPfClass();
+		String gender = pfRace.pickGender();
+		NameDetails nameDetails = pfRace.pickNameForGender(gender);
+		
+		npc.setGender(gender);
+		npc.setName(nameDetails);
+		
+		int[] rolls = new int[6];
+		int j = 0;	
+		
+		// Roll up those stats!  
+		Dice statDice = new Dice(4, 6);
+		for (@SuppressWarnings("unused") EStat stat : EStat.values()) {
+			statDice.rollAll();
+			int dieRoll = statDice.total(true);
+			rolls[j] = dieRoll;
+			j++;
+		}
+		
+		// If a class has been picked, assign statistics according to the priority of the statistics as defined for the class.
+		if (pfClass != null) {
+			log.info("Class selected: " + pfClass.getPathfinderClassName());
+			
+			// Sort the rolls in ascending order.
+			Arrays.sort(rolls);
+			
+			j = rolls.length - 1;
+			// Loop through the class priority for the class, and assign the stats from the most important
+			// to the least important.  Note that the "j" counter is incremented above for the population of the
+			// array, and then decremented here so that the "rolls" array is accessed from last to first.
+			for (EStat stat : pfClass.getStatPriority()) {
+				int adjustment = pfRace.getStatAdjustment(stat.getName());
+				int total = rolls[j] + adjustment;
+				npc.getStats().put(stat, total);
+				j--;
+			}					
+		} else {
+			j = 0;
+			
+			// If no class is specified, use the order rolls were made
+			for (EStat stat : EStat.values()) {
+				int adjustment = pfRace.getStatAdjustment(stat.getName());
+				int total = rolls[j] + adjustment;
+				npc.getStats().put(stat, total);						
+				j++;
+			}						
+		}
+		
+		determineLevel(npc);
+	}
+	
 	/**
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public GeneratedNPC generateNPC() {
+	public GeneratedNPC generateNPC(GenerationConfig gConfig) {
 		GeneratedNPC npc = new GeneratedNPC();
 		PercentileList<PathfinderRaceDefinition> raceList = (PercentileList<PathfinderRaceDefinition>) contextLists.get(RACE);
 		PercentileList<PathfinderClassDefinition> classList = (PercentileList<PathfinderClassDefinition>) contextLists.get(CLASS);
 		
 		if (raceList != null && classList != null) {
-			PathfinderRaceDefinition pfRace = raceList.pick();
-			PathfinderClassDefinition pfClass = classList.pick();
+			PathfinderRaceDefinition pfRace = null; 
+			PathfinderClassDefinition pfClass = null;
+			
+			if (gConfig.isClassOverride()) {
+				pfClass = classList.findItemByString(gConfig.getFixedClass());
+				if (pfClass == null) {
+					throw new GameException("Could not set a fixed class of '" + gConfig.getFixedClass() + "'");
+				}
+			} else {
+				pfClass =  classList.pick();
+			}
+			
+			if (gConfig.isRaceOverride()) {
+				pfRace = raceList.findItemByString(gConfig.getFixedRace());
+				if (pfRace == null) {
+					throw new GameException("Could not set a fixed race of '" + gConfig.getFixedRace() + "'");
+				}				
+			} else {
+				pfRace = raceList.pick();
+			}			
 			
 			npc.setPfRace(pfRace);
 			npc.setPfClass(pfClass);
-			
-			if (npc.getPfRace() != null) {
-				String gender = pfRace.pickGender();
-				NameDetails nameDetails = pfRace.pickNameForGender(gender);
-				
-				npc.setGender(gender);
-				npc.setName(nameDetails);
-				
-				int[] rolls = new int[6];
-				int j = 0;	
-				
-				// Roll up those stats!  
-				Dice statDice = new Dice(4, 6);
-				for (@SuppressWarnings("unused") EStat stat : EStat.values()) {
-					statDice.rollAll();
-					int dieRoll = statDice.total(true);
-					rolls[j] = dieRoll;
-					j++;
-				}
-				
-				// If a class has been picked, assign statistics according to the priority of the statistics as defined for the class.
-				if (pfClass != null) {
-					log.info("Class selected: " + pfClass.getPathfinderClassName());
-					
-					// Sort the rolls in ascending order.
-					Arrays.sort(rolls);
-					
-					j = rolls.length - 1;
-					// Loop through the class priority for the class, and assign the stats from the most important
-					// to the least important.  Note that the "j" counter is incremented above for the population of the
-					// array, and then decremented here so that the "rolls" array is accessed from last to first.
-					for (EStat stat : pfClass.getStatPriority()) {
-						int adjustment = pfRace.getStatAdjustment(stat.getName());
-						int total = rolls[j] + adjustment;
-						npc.getStats().put(stat, total);
-						j--;
-					}					
-				} else {
-					j = 0;
-					
-					// If no class is specified, use the order rolls were made
-					for (EStat stat : EStat.values()) {
-						int adjustment = pfRace.getStatAdjustment(stat.getName());
-						int total = rolls[j] + adjustment;
-						npc.getStats().put(stat, total);						
-						j++;
-					}						
-				}								
-			}
+			completeDetails(npc);
 			
 		} else {
 			throw new GameException("Incomplete or corrupt definition file - either class or race list was missing.");
