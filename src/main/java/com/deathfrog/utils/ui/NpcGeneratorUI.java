@@ -2,7 +2,6 @@ package com.deathfrog.utils.ui;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +10,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
@@ -36,8 +34,9 @@ public class NpcGeneratorUI {
 	
 	protected Shell npcGenShell;
 	protected static NpcDefinitions npcDef = null;
-	protected List<Control> resettableControls = new ArrayList<Control>();
-	private Text txtPattern;
+	protected Text txtNpcDetails = null;
+	protected Combo cmbPfClass = null;
+	protected Combo cmbRace = null;
 	
 	/**
 	 * Launch the application.
@@ -75,9 +74,16 @@ public class NpcGeneratorUI {
 		npcGenShell = createContents();
 		npcGenShell.open();
 		npcGenShell.layout();
+		
 		while (!npcGenShell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
+			try
+			{
+				if (!display.readAndDispatch()) {
+					display.sleep();
+				}
+			} catch (Throwable re) {
+				txtNpcDetails.setText(GameException.fullExceptionInfo(re));
+				log.error(GameException.fullExceptionInfo(re));
 			}
 		}
 	}
@@ -102,24 +108,30 @@ public class NpcGeneratorUI {
 	/**
 	 * 
 	 */
-	protected void updateContents() {
-		for (Control c : resettableControls) {
-			if (c.getClass().isAssignableFrom(Combo.class)) {
-				Combo combo = (Combo)c;
-				combo.removeAll();
-				
-				for (NpcContext ctx : npcDef) {
-					combo.add(ctx.getName());
-				}
-				combo.select(0);
+	@SuppressWarnings("unchecked")
+	protected void updateContents(NpcContext context) {
+		cmbRace.removeAll();
+		cmbPfClass.removeAll();
+		
+		if (context != null) {
+			cmbRace.add("<Randomize>");
+			for (PathfinderRaceDefinition pf : (ArrayList<PathfinderRaceDefinition>) context.getContextLists().get(NpcContext.RACE).getItemList()) {
+				cmbRace.add(pf.getRace());
 			}
+			cmbRace.select(0);	
+			
+			cmbPfClass.add("<Randomize>");
+			for (PathfinderClassDefinition pf : (ArrayList<PathfinderClassDefinition>) context.getContextLists().get(NpcContext.CLASS).getItemList()) {
+				cmbPfClass.add(pf.getPathfinderClassName());
+			}
+			cmbPfClass.select(0);
+
 		}
 	}
 	
 	/**
 	 * Create contents of the window.
 	 */
-	@SuppressWarnings("unchecked")
 	protected Shell createContents() {
 		Shell shell = new Shell();
 		shell.setImage(LaunchPad.getIcon());
@@ -128,41 +140,47 @@ public class NpcGeneratorUI {
 		
 		Combo cmbContext = new Combo(shell, SWT.READ_ONLY);
 		cmbContext.setBounds(70, 12, 124, 23);
+		cmbContext.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				NpcContext context = npcDef.get(cmbContext.getSelectionIndex());
+				
+				if (context != null) {
+					updateContents(context);
+					txtNpcDetails.setText("");
+				} else {
+					String errMsg = "No context found for selection " + cmbContext.getSelectionIndex();
+					log.error(errMsg);
+					throw new GameException(errMsg);
+				}
+			}
+		});
 		
 		for (NpcContext c : npcDef) {
 			cmbContext.add(c.getName());
 		}
 		cmbContext.select(0);
-		resettableControls.add(cmbContext);
 		
 		// Create and populate a dropdown list of supported classes.
-		Combo cmbPfClass = new Combo(shell, SWT.READ_ONLY);
+		cmbPfClass = new Combo(shell, SWT.READ_ONLY);
 		cmbPfClass.setBounds(70, 41, 124, 23);
 		
 		NpcContext context = npcDef.get(cmbContext.getSelectionIndex());
-		cmbPfClass.add("<Randomize>");
-		for (PathfinderClassDefinition pf : (ArrayList<PathfinderClassDefinition>) context.getContextLists().get(NpcContext.CLASS).getItemList()) {
-			cmbPfClass.add(pf.getPathfinderClassName());
-		}
-		
-		cmbPfClass.select(0);
-		resettableControls.add(cmbPfClass);
 		
 		// Create and populate a dropdown list of supported races;
-		Combo cmbRace = new Combo(shell, SWT.READ_ONLY);
+		cmbRace = new Combo(shell, SWT.READ_ONLY);
 		cmbRace.setBounds(70, 70, 124, 23);
 		
-		cmbRace.add("<Randomize>");
-		for (PathfinderRaceDefinition pf : (ArrayList<PathfinderRaceDefinition>) context.getContextLists().get(NpcContext.RACE).getItemList()) {
-			cmbRace.add(pf.getRace());
-		}
+		updateContents(context);	
 		
-		cmbRace.select(0);		
-		resettableControls.add(cmbRace);
+		
+		Text txtPattern = new Text(shell, SWT.BORDER);
+		txtPattern.setEditable(false);
+		txtPattern.setBounds(462, 144, 112, 21);
 		
 		Text txtBuilding = new Text(shell, SWT.BORDER);
 		
-		Text txtNpcDetails = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
+		txtNpcDetails = new Text(shell, SWT.MULTI | SWT.BORDER | SWT.WRAP | SWT.V_SCROLL);
 		txtNpcDetails.setEditable(false);
 		txtNpcDetails.setBounds(10, 144, 386, 160);
 		
@@ -218,7 +236,7 @@ public class NpcGeneratorUI {
 			   
 			   if (result != null) {
 				   loadDefinitionFile(result);
-				   updateContents();
+				   updateContents(null);
 			   }
 			}
 		});
@@ -231,10 +249,6 @@ public class NpcGeneratorUI {
 		
 		txtBuilding.setEditable(false);
 		txtBuilding.setBounds(10, 310, 184, 21);
-		
-		txtPattern = new Text(shell, SWT.BORDER);
-		txtPattern.setEditable(false);
-		txtPattern.setBounds(462, 144, 112, 21);
 		
 		Label lblPattern = new Label(shell, SWT.NONE);
 		lblPattern.setText("Pattern:");

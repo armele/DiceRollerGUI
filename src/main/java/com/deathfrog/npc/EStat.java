@@ -55,4 +55,17 @@ public enum EStat {
 		
 		return stat;		
 	}
+	
+	/**
+	 * Given a numeric statistical value, return the adjustment bonus for that value.
+	 * 
+	 * @param statvalue
+	 * @return
+	 */
+	static public int bonus(int statvalue) {
+		double bonus = (statvalue - 10.0) / 2.0;
+		bonus = Math.floor(bonus);
+		
+		return (int)bonus;
+	}
 }

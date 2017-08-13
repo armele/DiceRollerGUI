@@ -103,13 +103,25 @@ public class NpcContext implements Comparable<NpcContext> {
 	 * 
 	 * @param npc
 	 */
-	protected void determineLevel(GeneratedNPC npc) {
+	protected void determineLevelBasedItems(GeneratedNPC npc) {
 		@SuppressWarnings("unchecked")
 		PercentileList<String> lvlChance = (PercentileList<String>) contextLists.get(LEVEL);
-		Integer level = new Integer(lvlChance.pick());
-		npc.setLevel(level);
-		int levelbonus = level.intValue() / 4;
-		npc.setStatValue(npc.getPrimaryStat(), npc.getPrimaryStatValue() + levelbonus);
+		
+		if (lvlChance != null) {
+			Integer level = new Integer(lvlChance.pick());
+			npc.setLevel(level);
+			int levelbonus = level.intValue() / 4;
+			npc.setStatValue(npc.getPrimaryStat(), npc.getPrimaryStatValue() + levelbonus);
+			
+			// Roll up hit points using the appropriate hit dice for the class.
+			if (npc.getPfClass().getHitdice() != null) {
+				Dice dicebag = new Dice(level, npc.getPfClass().getHitdice());
+				dicebag.rollAll();
+				int hp = dicebag.total(false);
+				hp = hp + (level * EStat.bonus(npc.getStatValue(EStat.CON)));
+				npc.setHitpoints(hp);
+			}
+		}
 	}
 	
 	/**
@@ -141,7 +153,7 @@ public class NpcContext implements Comparable<NpcContext> {
 		}
 		
 		// If a class has been picked, assign statistics according to the priority of the statistics as defined for the class.
-		if (pfClass != null) {
+		if (pfClass != null && pfClass.getStatPriority() != null) {
 			log.info("Class selected: " + pfClass.getPathfinderClassName());
 			
 			// Sort the rolls in ascending order.
@@ -152,9 +164,11 @@ public class NpcContext implements Comparable<NpcContext> {
 			// to the least important.  Note that the "j" counter is incremented above for the population of the
 			// array, and then decremented here so that the "rolls" array is accessed from last to first.
 			for (EStat stat : pfClass.getStatPriority()) {
-				int adjustment = pfRace.getStatAdjustment(stat.getName());
-				int total = rolls[j] + adjustment;
-				npc.getStats().put(stat, total);
+				if (stat != null) {
+					int adjustment = pfRace.getStatAdjustment(stat.getName());
+					int total = rolls[j] + adjustment;
+					npc.getStats().put(stat, total);
+				}
 				j--;
 			}					
 		} else {
@@ -169,7 +183,7 @@ public class NpcContext implements Comparable<NpcContext> {
 			}						
 		}
 		
-		determineLevel(npc);
+		determineLevelBasedItems(npc);
 	}
 	
 	/**

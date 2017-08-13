@@ -37,6 +37,7 @@ public class NpcPersistor {
 	public final String XML_MIN = "min";
 	public final String XML_MAX = "max";
 	public final String XML_STATADUSTMENT = "statadjustment";
+	public final String XML_HITDICE = "hitdice";
 	
 	protected static String defaultDefinitionFile = "com/deathfrog/utils/definitions.xml";
 	
@@ -280,6 +281,8 @@ public class NpcPersistor {
 					pfClass.setStatPriority(j, EStat.statForString(stat));
 					j++;
 				}
+			} else if (XML_HITDICE.equalsIgnoreCase(n.getNodeName())) {
+				pfClass.setHitdice(new Integer(n.getFirstChild().getNodeValue()));
 			}
 		}
 		
@@ -354,7 +357,9 @@ public class NpcPersistor {
 				if (pfClass != null) {
 					picklist.add(pfClass, chance);
 				} else {
-					log.error("No class definitions found for " + choicename);
+					log.error("No class definitions found for [" + choicename + "] - using a 'name only' configuration.");
+					pfClass = new PathfinderClassDefinition(choicename);
+					picklist.add(pfClass,  chance);
 				}
 			}
 		}

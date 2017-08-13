@@ -2,7 +2,7 @@
 melegames.log
 .project
 .classpath
-target/
+target/*
 .externalToolBuilders/Maven_Ant_Builder.launch
 target/classes/com/deathfrog/npc/NpcContext.class
 *.class
@@ -15,3 +15,5 @@ target/surefire-reports/com.deathfrog.npc.TestNPC.txt
 target/surefire-reports/com.deathfrog.npc.TestNaming.txt
 *.jar
 target/classes/com/deathfrog/utils/definitions.xml
+*.class
+*.class

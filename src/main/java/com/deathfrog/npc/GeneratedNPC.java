@@ -2,11 +2,16 @@ package com.deathfrog.npc;
 
 import java.util.HashMap;
 
-import org.eclipse.swt.widgets.Text;
-
 /**
  * Represents a fully generated NPC
- * 
+ * TODO: Diety
+ * TODO: Alignment
+ * DONE: Pastable format
+ * TODO: Make age optional
+ * TODO: CMB / CMD
+ * TODO: BAB
+ * DONE: Hit Points
+ * DONE: Civilian Classes
  * 
  * @author Al Mele
  *
@@ -19,6 +24,7 @@ public class GeneratedNPC {
 	protected String pattern = null;
 	protected HashMap<EStat, Integer> stats = new HashMap<EStat, Integer>();
 	protected Integer level = null;
+	protected Integer hitpoints = null;
 	
 	/**
 	 * @return the pfClass
@@ -99,6 +105,7 @@ public class GeneratedNPC {
 		
 		return statvalue;
 	}
+
 	
 	/**
 	 * @return the stats
@@ -147,6 +154,18 @@ public class GeneratedNPC {
 	}
 	
 	/**
+	 * @return the hitpoints
+	 */
+	public Integer getHitpoints() {
+		return hitpoints;
+	}
+	/**
+	 * @param hitpoints the hitpoints to set
+	 */
+	public void setHitpoints(Integer hitpoints) {
+		this.hitpoints = hitpoints;
+	}
+	/**
 	 * @return the level
 	 */
 	public Integer getLevel() {
@@ -174,20 +193,28 @@ public class GeneratedNPC {
 		}
 		
 		if (pfClass != null) {
+			sb.append(pfClass.getPathfinderClassName() + " ");
+			
 			if (level != null) {
 				sb.append("Level ");
 				sb.append(level);
-				sb.append(" ");
+				sb.append(", HP: ");
+				sb.append(hitpoints);
 			}
-			sb.append(pfClass.getPathfinderClassName() + " ");
 		} else {
 			sb.append("Undefined class.");
 		}
 		
-		sb.append(Text.DELIMITER);				
+		int i = 0;
+		sb.append(" (");
 		for (EStat stat : EStat.values()) {
-			sb.append(stat.getName().toUpperCase() + ": " + getStats().get(stat).toString() + Text.DELIMITER);
+			i++;
+			sb.append(stat.getName().toUpperCase() + ": " + getStats().get(stat).toString());
+			if (i < EStat.values().length) {
+				 sb.append(", ");
+			}
 		}
+		sb.append(")");
 		
 		return sb.toString();
 	}

@@ -13,8 +13,9 @@
 	<contextlist>
 		<context name="Sigil">
 			<picklist name="Class">
+				<choice name="Alchemist" chance="8"></choice>	
 				<choice name="Arcanist" chance="8"></choice>			
-				<choice name="Barbarian" chance="20"></choice>
+				<choice name="Barbarian" chance="12"></choice>
 				<choice name="Bard" chance="20"></choice>
 				<choice name="Bloodrager" chance="8"></choice>
 				<choice name="Brawler" chance="8"></choice>				
@@ -77,8 +78,9 @@
 		
 		</context>
 		
-		<context name="Merisyl">
+		<context name="Merisyl - Adventurer">
 			<picklist name="Class">
+				<choice name="Alchemist" chance="8"></choice>	
 				<choice name="Arcanist" chance="8"></choice>			
 				<choice name="Barbarian" chance="5"></choice>
 				<choice name="Bard" chance="20"></choice>
@@ -179,76 +181,204 @@
 			</picklist>							
 		</context>
 			
+		<context name="Merisyl - Commoner">
+			<picklist name="Class">	
+				<choice name="Architect" chance="8"></choice>
+				<choice name="Baker" chance="8"></choice>
+				<choice name="Barrister" chance="8"></choice>
+				<choice name="Brewer" chance="8"></choice>	
+				<choice name="Butcher" chance="8"></choice>
+				<choice name="Carpenter" chance="8"></choice>
+				<choice name="Clerk" chance="8"></choice>
+				<choice name="Cook" chance="8"></choice>
+				<choice name="Courtesan" chance="8"></choice>
+				<choice name="Dockworker" chance="8"></choice>
+				<choice name="Driver" chance="8"></choice>
+				<choice name="Engineer" chance="8"></choice>
+				<choice name="Farmer" chance="8"></choice>
+				<choice name="Fisherman" chance="8"></choice>
+				<choice name="Gambler" chance="8"></choice>
+				<choice name="Gardener" chance="8"></choice>
+				<choice name="Grocer" chance="8"></choice>
+				<choice name="Herbalist" chance="8"></choice>
+				<choice name="Innkeeper" chance="8"></choice>
+				<choice name="Librarian" chance="8"></choice>
+				<choice name="Merchant" chance="8"></choice>
+				<choice name="Midwife" chance="8"></choice>
+				<choice name="Miller" chance="8"></choice>
+				<choice name="Miner" chance="8"></choice>
+				<choice name="Porter" chance="8"></choice>
+				<choice name="Sailor" chance="8"></choice>
+				<choice name="Scribe" chance="8"></choice>
+				<choice name="Sheperd" chance="8"></choice>
+				<choice name="Smith" chance="8"></choice>
+				<choice name="Stable Master" chance="8"></choice>	
+				<choice name="Soldier" chance="8"></choice>
+				<choice name="Tanner" chance="8"></choice>
+				<choice name="Trapper" chance="8"></choice>
+				<choice name="Weaver" chance="8"></choice>
+				<choice name="Woodcutter" chance="8"></choice>
+			</picklist>
+			<picklist name="Race">
+				<choice name="Dwarf" chance="15"></choice>
+				<choice name="Elf" chance="15"></choice>
+				<choice name="Gnome" chance="10"></choice>
+				<choice name="Half-Elf" chance="15"></choice>		
+				<choice name="Half-Orc" chance="5"></choice>
+				<choice name="Human" chance="20"></choice>
+				<choice name="Ixen" chance="15"></choice>
+				<choice name="Kobold" chance="8"></choice>				
+				<choice name="Korthjach" chance="10"></choice>
+				<choice name="Morphic" chance="15"></choice>	
+			</picklist>	
+			<picklist name="Buildings">
+				<choice name="Inn" chance="10"></choice>
+				<choice name="Tavern" chance="10"></choice>
+				<choice name="Shipwright" chance="4"></choice>
+				<choice name="Rope Maker" chance="4"></choice>		
+				<choice name="Carpenter" chance="8"></choice>
+				<choice name="Smithy" chance="8"></choice>
+				<choice name="Cooper" chance="4"></choice>
+				<choice name="Butcher" chance="8"></choice>				
+				<choice name="Potter" chance="6"></choice>
+				<choice name="Produce Market" chance="8"></choice>
+				<choice name="Brewer" chance="8"></choice>	
+				<choice name="Moneylender" chance="1"></choice>	
+				<choice name="Stable" chance="8"></choice>	
+				<choice name="Leatherworker" chance="8"></choice>
+				<choice name="Tailor" chance="8"></choice>	
+				<choice name="Residence" chance="12"></choice>
+				<choice name="Weaponsmith" chance="4"></choice>
+				<choice name="Armorer" chance="4"></choice>
+				<choice name="Adventuring Outfitter" chance="4"></choice>
+				<choice name="Jeweller" chance="2"></choice>
+				<choice name="Glass Blower" chance="4"></choice>
+				<choice name="Brothel" chance="4"></choice>
+				<choice name="Haberdashery" chance="4"></choice>
+				<choice name="Fletcher" chance="4"></choice>
+				<choice name="Laundry" chance="4"></choice>
+				<choice name="Brassworker" chance="4"></choice>
+				<choice name="Weaver" chance="4"></choice>
+				<choice name="Dye Maker" chance="4"></choice>
+				<choice name="Weaponsmith" chance="4"></choice>
+				<choice name="Advocate's Office" chance="4"></choice>
+				<choice name="Public Baths" chance="4"></choice>
+				<choice name="Bookstore" chance="4"></choice>
+				<choice name="Healer" chance="4"></choice>
+				<choice name="Boyer" chance="4"></choice>
+				<choice name="Candle Shop" chance="4"></choice>
+				<choice name="Fishmonger's Shop" chance="4"></choice>
+				<choice name="Animal Trainer" chance="4"></choice>
+				<choice name="Barber" chance="4"></choice>
+				<choice name="Perfumer" chance="4"></choice>
+				<choice name="Parchment Maker" chance="4"></choice>
+				<choice name="Rug Maker" chance="4"></choice>
+				<choice name="Artisan Shop (Woodcarving, Painting, Music, etc)" chance="4"></choice>
+				<choice name="Cobbler" chance="4"></choice>
+				<choice name="Soapmaker" chance="4"></choice>
+				<choice name="Tannery" chance="4"></choice>
+				<choice name="Potions and Magical Remedies" chance="4"></choice>
+				<choice name="Scribe" chance="4"></choice>
+				<choice name="Basket Maker" chance="4"></choice>
+			</picklist>						
+		</context>			
 	</contextlist>
 	
+	<class name="Alchemist">
+		<statpriority>int,wis,cha,con,dex,str</statpriority>
+		<hitdice>8</hitdice>
+	</class>
 	<class name="Barbarian">
 		<statpriority>str,con,dex,cha,wis,int</statpriority>
+		<hitdice>12</hitdice>
 	</class>
 	<class name="Bard">
 		<statpriority>cha,int,dex,str,con,wis</statpriority>
+		<hitdice>8</hitdice>
 	</class>
 	<class name="Cleric">
 		<statpriority>wis,cha,con,dex,str,int</statpriority>	
+		<hitdice>8</hitdice>
 	</class>
 	<class name="Druid">
 		<statpriority>wis,dex,cha,con,int,str</statpriority>	
+		<hitdice>8</hitdice>
 	</class>
 	<class name="Fighter">
-		<statpriority>str,con,dex,cha,int,wis</statpriority>	
+		<statpriority>str,con,dex,cha,int,wis</statpriority>
+		<hitdice>10</hitdice>	
 	</class>
 	<class name="Mageslayer">
-		<statpriority>dex,str,con,wis,int,cha</statpriority>	
+		<statpriority>dex,str,con,wis,int,cha</statpriority>
+		<hitdice>10</hitdice>	
 	</class>				
 	<class name="Monk">
-		<statpriority>dex,wis,con,int,str,cha</statpriority>	
+		<statpriority>dex,wis,con,int,str,cha</statpriority>
+		<hitdice>8</hitdice> 	
 	</class>
 	<class name="Paladin">
-		<statpriority>cha,str,con,dex,wis,int</statpriority>	
+		<statpriority>cha,str,con,dex,wis,int</statpriority>
+		<hitdice>10</hitdice>	
 	</class>
 	<class name="Ranger">
-		<statpriority>dex,str,wis,cha,con,int</statpriority>	
+		<statpriority>dex,str,wis,cha,con,int</statpriority>
+		<hitdice>10</hitdice>	
 	</class>
 	<class name="Rogue">
-		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<hitdice>8</hitdice>	
 	</class>
 	<class name="Sorcerer">
-		<statpriority>cha,dex,int,str,con,wis</statpriority>	
+		<statpriority>cha,dex,int,str,con,wis</statpriority>
+		<hitdice>6</hitdice>	
 	</class>
 	<class name="Wizard">
-		<statpriority>int,dex,con,wis,str,cha</statpriority>	
+		<statpriority>int,dex,con,wis,str,cha</statpriority>
+		<hitdice>6</hitdice>	
 	</class>
 	<class name="Arcanist">
-		<statpriority>int,dex,con,wis,str,cha</statpriority>		
+		<statpriority>int,dex,con,wis,str,cha</statpriority>
+		<hitdice>6</hitdice>		
 	</class>
 	<class name="Bloodrager">
-		<statpriority>con,cha,dex,str,wis,int</statpriority>		
+		<statpriority>con,cha,dex,str,wis,int</statpriority>
+		<hitdice>10</hitdice>		
 	</class>
 	<class name="Brawler">
-		<statpriority>str,con,dex,cha,int,wis</statpriority>	
+		<statpriority>str,con,dex,cha,int,wis</statpriority>
+		<hitdice>10</hitdice>	
 	</class>
 	<class name="Hunter">
-		<statpriority>dex,str,wis,cha,con,int</statpriority>		
+		<statpriority>dex,str,wis,cha,con,int</statpriority>
+		<hitdice>8</hitdice>		
 	</class>
 	<class name="Investigator">
-		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<hitdice>8</hitdice>	
 	</class>
 	<class name="Shaman">
-		<statpriority>wis,dex,cha,con,int,str</statpriority>	
+		<statpriority>wis,dex,cha,con,int,str</statpriority>
+		<hitdice>8</hitdice>	
 	</class>				
 	<class name="Skald">
 		<statpriority>cha,str,dex,con,int,wis</statpriority>	
+		<hitdice>8</hitdice>
 	</class>
 	<class name="Slayer">
-		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<hitdice>10</hitdice>	
 	</class>
 	<class name="Swashbuckler">
-		<statpriority>dex,int,str,cha,con,wis</statpriority>	
+		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<hitdice>10</hitdice>
 	</class>
 	<class name="Warpriest">
 		<statpriority>wis,cha,con,dex,str,int</statpriority>	
+		<hitdice>8</hitdice>
 	</class>				
 	<class name="Juggernaut">
-		<statpriority>con,int,str,dex,wis,cha</statpriority>	
+		<statpriority>con,int,str,dex,wis,cha</statpriority>
+		<hitdice>8</hitdice>
 	</class>	
 
 	<race name="Aasimar">

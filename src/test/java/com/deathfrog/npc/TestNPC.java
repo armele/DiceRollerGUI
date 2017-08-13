@@ -41,6 +41,8 @@ public class TestNPC {
 				Assert.assertEquals(EStat.CHA, pc.getStatPriority(3));
 				Assert.assertEquals(EStat.WIS, pc.getStatPriority(4));
 				Assert.assertEquals(EStat.INT, pc.getStatPriority(5));
+				
+				Assert.assertEquals(12, pc.getHitdice());
 			}
 		}
 		

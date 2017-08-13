@@ -7,7 +7,8 @@ package com.deathfrog.npc;
 public class PathfinderClassDefinition {
 
 	protected String pathfinderClassName; 
-	protected EStat[] statOrder = new EStat[6];
+	protected Integer hitdice = null;
+	protected EStat[] statOrder = null;
 	
 	public PathfinderClassDefinition(String pathfinderClassName) {
 		this.pathfinderClassName = pathfinderClassName;
@@ -49,6 +50,9 @@ public class PathfinderClassDefinition {
 	 * @param stat
 	 */
 	public void setStatPriority(int statspot, EStat stat) {
+		if (statOrder == null) {
+			statOrder = new EStat[6];
+		}
 		statOrder[statspot] = stat;
 	}
 	
@@ -57,6 +61,21 @@ public class PathfinderClassDefinition {
 	 */
 	public EStat[] getStatPriority() {
 		return statOrder;
+	}
+	
+	
+	/**
+	 * @return the hitdice
+	 */
+	public Integer getHitdice() {
+		return hitdice;
+	}
+
+	/**
+	 * @param hitdice the hitdice to set
+	 */
+	public void setHitdice(Integer hitdice) {
+		this.hitdice = hitdice;
 	}
 
 	/* (non-Javadoc)

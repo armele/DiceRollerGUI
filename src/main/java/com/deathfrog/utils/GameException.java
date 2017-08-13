@@ -1,6 +1,7 @@
 package com.deathfrog.utils;
 
-import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class GameException extends RuntimeException {
 
@@ -25,15 +26,20 @@ public class GameException extends RuntimeException {
 		StringBuffer buf = new StringBuffer();
 		
 		if (t != null) {
-			buf.append(t.getLocalizedMessage());
+			if (t.getLocalizedMessage() == null) {
+				buf.append(t);
+			} else {
+				buf.append(t.getLocalizedMessage());
+			}
 			buf.append("\nCaused by:");
 			buf.append(fullExceptionInfo(t.getCause()));
 			buf.append("\nStack:");
 			
-			PrintStream stack = new PrintStream(System.out);
-			
-			t.printStackTrace(stack);
-			buf.append(stack.toString());
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			t.printStackTrace(pw);
+
+			buf.append(sw.toString());
 		} else {
 			buf.append("(null)");
 		}
