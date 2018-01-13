@@ -158,6 +158,7 @@
 				<choice name="Barber" chance="4"></choice>
 				<choice name="Perfumer" chance="4"></choice>
 				<choice name="Parchment Maker" chance="4"></choice>
+				<choice name="Cartographer" chance="4"></choice>				
 				<choice name="Rug Maker" chance="4"></choice>
 				<choice name="Artisan Shop (Woodcarving, Painting, Music, etc)" chance="4"></choice>
 				<choice name="Cobbler" chance="4"></choice>
@@ -189,6 +190,7 @@
 				<choice name="Brewer" chance="8"></choice>	
 				<choice name="Butcher" chance="8"></choice>
 				<choice name="Carpenter" chance="8"></choice>
+				<choice name="Cartographer" chance="8"></choice>
 				<choice name="Clerk" chance="8"></choice>
 				<choice name="Cook" chance="8"></choice>
 				<choice name="Courtesan" chance="8"></choice>

@@ -1426,3 +1426,375 @@ Stack:java.io.PrintStream@60438a68
 [2017-07-18 23:53:54,507] INFO - main: com.deathfrog.npc.NpcContext.generateNPC(136) | Class selected: Ranger
 [2017-07-18 23:53:57,164] INFO - main: com.deathfrog.npc.NpcContext.generateNPC(136) | Class selected: Warpriest
 [2017-07-18 23:54:02,016] INFO - main: com.deathfrog.npc.NpcContext.generateNPC(136) | Class selected: Swashbuckler
+[2017-11-25 12:08:17,490] INFO - main: com.deathfrog.npc.NpcPersistor.parse(55) | Loading default NPC definition file.
+[2017-11-25 12:08:17,521] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(91) | Loading globals.
+[2017-11-25 12:08:17,533] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Alchemist
+[2017-11-25 12:08:17,533] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Barbarian
+[2017-11-25 12:08:17,533] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bard
+[2017-11-25 12:08:17,533] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Cleric
+[2017-11-25 12:08:17,533] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Druid
+[2017-11-25 12:08:17,534] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Fighter
+[2017-11-25 12:08:17,534] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Mageslayer
+[2017-11-25 12:08:17,534] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Monk
+[2017-11-25 12:08:17,534] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Paladin
+[2017-11-25 12:08:17,534] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Ranger
+[2017-11-25 12:08:17,535] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Rogue
+[2017-11-25 12:08:17,535] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Sorcerer
+[2017-11-25 12:08:17,535] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Wizard
+[2017-11-25 12:08:17,535] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Arcanist
+[2017-11-25 12:08:17,535] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bloodrager
+[2017-11-25 12:08:17,536] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Brawler
+[2017-11-25 12:08:17,536] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Hunter
+[2017-11-25 12:08:17,536] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Investigator
+[2017-11-25 12:08:17,536] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Shaman
+[2017-11-25 12:08:17,536] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Skald
+[2017-11-25 12:08:17,537] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Slayer
+[2017-11-25 12:08:17,537] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Swashbuckler
+[2017-11-25 12:08:17,537] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Warpriest
+[2017-11-25 12:08:17,537] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Juggernaut
+[2017-11-25 12:08:17,550] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Aasimar
+[2017-11-25 12:08:17,551] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Catfolk
+[2017-11-25 12:08:17,551] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Changeling
+[2017-11-25 12:08:17,551] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dhampir
+[2017-11-25 12:08:17,552] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Drow
+[2017-11-25 12:08:17,552] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Duergar
+[2017-11-25 12:08:17,552] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dwarf
+[2017-11-25 12:08:17,552] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Elf
+[2017-11-25 12:08:17,553] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Fetchling
+[2017-11-25 12:08:17,553] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gillman
+[2017-11-25 12:08:17,554] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gnome
+[2017-11-25 12:08:17,554] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Goblin
+[2017-11-25 12:08:17,555] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Grippli
+[2017-11-25 12:08:17,555] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Elf
+[2017-11-25 12:08:17,556] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Orc
+[2017-11-25 12:08:17,556] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Hobgoblin
+[2017-11-25 12:08:17,556] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Human
+[2017-11-25 12:08:17,557] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ifrit
+[2017-11-25 12:08:17,557] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ixen
+[2017-11-25 12:08:17,557] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kitsune
+[2017-11-25 12:08:17,558] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kobold
+[2017-11-25 12:08:17,558] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Korthjach
+[2017-11-25 12:08:17,558] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Merfolk
+[2017-11-25 12:08:17,559] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Morphic
+[2017-11-25 12:08:17,559] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Nagaji
+[2017-11-25 12:08:17,559] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Orc
+[2017-11-25 12:08:17,560] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Oread
+[2017-11-25 12:08:17,560] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ratfolk
+[2017-11-25 12:08:17,560] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Strix
+[2017-11-25 12:08:17,560] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Suli
+[2017-11-25 12:08:17,561] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Sylph
+[2017-11-25 12:08:17,561] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vanaras
+[2017-11-25 12:08:17,561] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tengu
+[2017-11-25 12:08:17,561] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tiefling
+[2017-11-25 12:08:17,561] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Undine
+[2017-11-25 12:08:17,561] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vishkanyas
+[2017-11-25 12:08:17,569] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: default
+[2017-11-25 12:08:17,569] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: celestial
+[2017-11-25 12:08:17,570] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: elven
+[2017-11-25 12:08:17,570] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: exotic
+[2017-11-25 12:08:17,570] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: draconic
+[2017-11-25 12:08:17,570] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: korthjach
+[2017-11-25 12:08:17,570] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: aquatic
+[2017-11-25 12:08:17,571] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome man
+[2017-11-25 12:08:17,571] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome woman
+[2017-11-25 12:08:17,571] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: simple
+[2017-11-25 12:08:17,571] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: sibilant
+[2017-11-25 12:08:17,571] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk men
+[2017-11-25 12:08:17,572] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk women
+[2017-11-25 12:08:17,582] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Sigil
+[2017-11-25 12:08:17,582] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl - Adventurer
+[2017-11-25 12:08:17,583] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl - Commoner
+[2017-11-25 12:08:17,583] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Architect] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Baker] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Barrister] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Brewer] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Butcher] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Carpenter] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Cartographer] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Clerk] - using a 'name only' configuration.
+[2017-11-25 12:08:17,584] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Cook] - using a 'name only' configuration.
+[2017-11-25 12:08:17,585] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Courtesan] - using a 'name only' configuration.
+[2017-11-25 12:08:17,585] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Dockworker] - using a 'name only' configuration.
+[2017-11-25 12:08:17,585] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Driver] - using a 'name only' configuration.
+[2017-11-25 12:08:17,585] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Engineer] - using a 'name only' configuration.
+[2017-11-25 12:08:17,585] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Farmer] - using a 'name only' configuration.
+[2017-11-25 12:08:17,585] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Fisherman] - using a 'name only' configuration.
+[2017-11-25 12:08:17,585] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Gambler] - using a 'name only' configuration.
+[2017-11-25 12:08:17,586] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Gardener] - using a 'name only' configuration.
+[2017-11-25 12:08:17,586] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Grocer] - using a 'name only' configuration.
+[2017-11-25 12:08:17,586] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Herbalist] - using a 'name only' configuration.
+[2017-11-25 12:08:17,586] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Innkeeper] - using a 'name only' configuration.
+[2017-11-25 12:08:17,586] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Librarian] - using a 'name only' configuration.
+[2017-11-25 12:08:17,586] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Merchant] - using a 'name only' configuration.
+[2017-11-25 12:08:17,587] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Midwife] - using a 'name only' configuration.
+[2017-11-25 12:08:17,587] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Miller] - using a 'name only' configuration.
+[2017-11-25 12:08:17,587] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Miner] - using a 'name only' configuration.
+[2017-11-25 12:08:17,587] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Porter] - using a 'name only' configuration.
+[2017-11-25 12:08:17,587] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Sailor] - using a 'name only' configuration.
+[2017-11-25 12:08:17,587] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Scribe] - using a 'name only' configuration.
+[2017-11-25 12:08:17,588] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Sheperd] - using a 'name only' configuration.
+[2017-11-25 12:08:17,588] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Smith] - using a 'name only' configuration.
+[2017-11-25 12:08:17,588] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Stable Master] - using a 'name only' configuration.
+[2017-11-25 12:08:17,588] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Soldier] - using a 'name only' configuration.
+[2017-11-25 12:08:17,588] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Tanner] - using a 'name only' configuration.
+[2017-11-25 12:08:17,588] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Trapper] - using a 'name only' configuration.
+[2017-11-25 12:08:17,589] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Weaver] - using a 'name only' configuration.
+[2017-11-25 12:08:17,589] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Woodcutter] - using a 'name only' configuration.
+[2017-11-25 12:08:17,589] INFO - main: com.deathfrog.npc.NpcPersistor.parse(78) | Document loaded.
+[2017-11-25 12:08:41,335] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:08:50,859] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:08:52,003] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:08:53,631] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:08:54,571] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:08:55,283] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:08:56,067] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:38:07,844] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:38:09,276] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:38:11,233] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:38:12,157] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:38:12,932] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:38:15,320] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 12:38:16,524] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 16:44:51,306] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 16:44:54,074] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 16:47:12,730] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 16:54:22,123] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Sorcerer
+[2017-11-25 16:54:33,502] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Paladin
+[2017-11-25 17:05:58,679] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Skald
+[2017-12-16 14:35:10,953] INFO - main: com.deathfrog.npc.NpcPersistor.parse(55) | Loading default NPC definition file.
+[2017-12-16 14:35:11,248] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(91) | Loading globals.
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Alchemist
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Barbarian
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bard
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Cleric
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Druid
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Fighter
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Mageslayer
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Monk
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Paladin
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Ranger
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Rogue
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Sorcerer
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Wizard
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Arcanist
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bloodrager
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Brawler
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Hunter
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Investigator
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Shaman
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Skald
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Slayer
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Swashbuckler
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Warpriest
+[2017-12-16 14:35:11,264] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Juggernaut
+[2017-12-16 14:35:11,289] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Aasimar
+[2017-12-16 14:35:11,289] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Catfolk
+[2017-12-16 14:35:11,290] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Changeling
+[2017-12-16 14:35:11,290] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dhampir
+[2017-12-16 14:35:11,290] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Drow
+[2017-12-16 14:35:11,290] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Duergar
+[2017-12-16 14:35:11,291] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dwarf
+[2017-12-16 14:35:11,291] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Elf
+[2017-12-16 14:35:11,291] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Fetchling
+[2017-12-16 14:35:11,291] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gillman
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gnome
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Goblin
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Grippli
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Elf
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Orc
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Hobgoblin
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Human
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ifrit
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ixen
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kitsune
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kobold
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Korthjach
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Merfolk
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Morphic
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Nagaji
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Orc
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Oread
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ratfolk
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Strix
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Suli
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Sylph
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vanaras
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tengu
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tiefling
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Undine
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vishkanyas
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: default
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: celestial
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: elven
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: exotic
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: draconic
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: korthjach
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: aquatic
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome man
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome woman
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: simple
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: sibilant
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk men
+[2017-12-16 14:35:11,292] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk women
+[2017-12-16 14:35:11,308] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Sigil
+[2017-12-16 14:35:11,308] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl - Adventurer
+[2017-12-16 14:35:11,308] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl - Commoner
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Architect] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Baker] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Barrister] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Brewer] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Butcher] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Carpenter] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Cartographer] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Clerk] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Cook] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Courtesan] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Dockworker] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Driver] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Engineer] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Farmer] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Fisherman] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Gambler] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Gardener] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Grocer] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Herbalist] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Innkeeper] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Librarian] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Merchant] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Midwife] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Miller] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Miner] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Porter] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Sailor] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Scribe] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Sheperd] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Smith] - using a 'name only' configuration.
+[2017-12-16 14:35:11,308] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Stable Master] - using a 'name only' configuration.
+[2017-12-16 14:35:11,323] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Soldier] - using a 'name only' configuration.
+[2017-12-16 14:35:11,323] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Tanner] - using a 'name only' configuration.
+[2017-12-16 14:35:11,323] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Trapper] - using a 'name only' configuration.
+[2017-12-16 14:35:11,323] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Weaver] - using a 'name only' configuration.
+[2017-12-16 14:35:11,323] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Woodcutter] - using a 'name only' configuration.
+[2017-12-16 14:35:11,323] INFO - main: com.deathfrog.npc.NpcPersistor.parse(78) | Document loaded.
+[2017-12-16 17:51:39,642] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Paladin
+[2017-12-16 17:55:07,111] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Cleric
+[2017-12-16 17:55:08,855] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Bard
+[2017-12-16 17:55:09,907] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Brawler
+[2017-12-16 17:55:11,266] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Fighter
+[2017-12-16 17:55:12,074] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Rogue
+[2017-12-16 17:55:17,559] INFO - main: com.deathfrog.npc.NpcContext.completeDetails(157) | Class selected: Ranger
+[2018-01-07 14:56:55,994] INFO - main: com.deathfrog.npc.NpcPersistor.parse(55) | Loading default NPC definition file.
+[2018-01-07 14:56:56,057] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(91) | Loading globals.
+[2018-01-07 14:56:56,059] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Alchemist
+[2018-01-07 14:56:56,059] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Barbarian
+[2018-01-07 14:56:56,060] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bard
+[2018-01-07 14:56:56,060] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Cleric
+[2018-01-07 14:56:56,060] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Druid
+[2018-01-07 14:56:56,060] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Fighter
+[2018-01-07 14:56:56,060] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Mageslayer
+[2018-01-07 14:56:56,061] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Monk
+[2018-01-07 14:56:56,061] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Paladin
+[2018-01-07 14:56:56,061] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Ranger
+[2018-01-07 14:56:56,061] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Rogue
+[2018-01-07 14:56:56,062] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Sorcerer
+[2018-01-07 14:56:56,062] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Wizard
+[2018-01-07 14:56:56,062] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Arcanist
+[2018-01-07 14:56:56,062] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Bloodrager
+[2018-01-07 14:56:56,062] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Brawler
+[2018-01-07 14:56:56,062] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Hunter
+[2018-01-07 14:56:56,063] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Investigator
+[2018-01-07 14:56:56,063] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Shaman
+[2018-01-07 14:56:56,063] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Skald
+[2018-01-07 14:56:56,063] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Slayer
+[2018-01-07 14:56:56,064] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Swashbuckler
+[2018-01-07 14:56:56,064] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Warpriest
+[2018-01-07 14:56:56,064] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(135) | Loaded global class: Juggernaut
+[2018-01-07 14:56:56,065] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Aasimar
+[2018-01-07 14:56:56,066] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Catfolk
+[2018-01-07 14:56:56,066] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Changeling
+[2018-01-07 14:56:56,066] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dhampir
+[2018-01-07 14:56:56,066] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Drow
+[2018-01-07 14:56:56,067] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Duergar
+[2018-01-07 14:56:56,067] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Dwarf
+[2018-01-07 14:56:56,067] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Elf
+[2018-01-07 14:56:56,067] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Fetchling
+[2018-01-07 14:56:56,068] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gillman
+[2018-01-07 14:56:56,068] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Gnome
+[2018-01-07 14:56:56,068] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Goblin
+[2018-01-07 14:56:56,068] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Grippli
+[2018-01-07 14:56:56,069] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Elf
+[2018-01-07 14:56:56,069] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Half-Orc
+[2018-01-07 14:56:56,069] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Hobgoblin
+[2018-01-07 14:56:56,069] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Human
+[2018-01-07 14:56:56,070] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ifrit
+[2018-01-07 14:56:56,070] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ixen
+[2018-01-07 14:56:56,070] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kitsune
+[2018-01-07 14:56:56,070] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Kobold
+[2018-01-07 14:56:56,071] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Korthjach
+[2018-01-07 14:56:56,071] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Merfolk
+[2018-01-07 14:56:56,071] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Morphic
+[2018-01-07 14:56:56,072] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Nagaji
+[2018-01-07 14:56:56,072] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Orc
+[2018-01-07 14:56:56,072] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Oread
+[2018-01-07 14:56:56,072] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Ratfolk
+[2018-01-07 14:56:56,073] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Strix
+[2018-01-07 14:56:56,073] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Suli
+[2018-01-07 14:56:56,073] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Sylph
+[2018-01-07 14:56:56,073] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vanaras
+[2018-01-07 14:56:56,074] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tengu
+[2018-01-07 14:56:56,074] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Tiefling
+[2018-01-07 14:56:56,074] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Undine
+[2018-01-07 14:56:56,074] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(131) | Loaded global race: Vishkanyas
+[2018-01-07 14:56:56,075] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: default
+[2018-01-07 14:56:56,076] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: celestial
+[2018-01-07 14:56:56,076] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: elven
+[2018-01-07 14:56:56,076] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: exotic
+[2018-01-07 14:56:56,077] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: draconic
+[2018-01-07 14:56:56,077] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: korthjach
+[2018-01-07 14:56:56,077] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: aquatic
+[2018-01-07 14:56:56,077] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome man
+[2018-01-07 14:56:56,078] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: gnome woman
+[2018-01-07 14:56:56,078] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: simple
+[2018-01-07 14:56:56,078] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: sibilant
+[2018-01-07 14:56:56,078] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk men
+[2018-01-07 14:56:56,078] INFO - main: com.deathfrog.npc.NpcPersistor.loadGlobals(126) | Loaded global namegenerator: ratfolk women
+[2018-01-07 14:56:56,081] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Sigil
+[2018-01-07 14:56:56,082] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl - Adventurer
+[2018-01-07 14:56:56,083] INFO - main: com.deathfrog.npc.NpcPersistor.loadContext(198) | Loading context Merisyl - Commoner
+[2018-01-07 14:56:56,083] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Architect] - using a 'name only' configuration.
+[2018-01-07 14:56:56,084] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Baker] - using a 'name only' configuration.
+[2018-01-07 14:56:56,084] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Barrister] - using a 'name only' configuration.
+[2018-01-07 14:56:56,084] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Brewer] - using a 'name only' configuration.
+[2018-01-07 14:56:56,084] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Butcher] - using a 'name only' configuration.
+[2018-01-07 14:56:56,084] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Carpenter] - using a 'name only' configuration.
+[2018-01-07 14:56:56,084] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Cartographer] - using a 'name only' configuration.
+[2018-01-07 14:56:56,085] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Clerk] - using a 'name only' configuration.
+[2018-01-07 14:56:56,085] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Cook] - using a 'name only' configuration.
+[2018-01-07 14:56:56,085] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Courtesan] - using a 'name only' configuration.
+[2018-01-07 14:56:56,085] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Dockworker] - using a 'name only' configuration.
+[2018-01-07 14:56:56,085] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Driver] - using a 'name only' configuration.
+[2018-01-07 14:56:56,086] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Engineer] - using a 'name only' configuration.
+[2018-01-07 14:56:56,086] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Farmer] - using a 'name only' configuration.
+[2018-01-07 14:56:56,086] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Fisherman] - using a 'name only' configuration.
+[2018-01-07 14:56:56,086] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Gambler] - using a 'name only' configuration.
+[2018-01-07 14:56:56,086] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Gardener] - using a 'name only' configuration.
+[2018-01-07 14:56:56,086] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Grocer] - using a 'name only' configuration.
+[2018-01-07 14:56:56,087] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Herbalist] - using a 'name only' configuration.
+[2018-01-07 14:56:56,087] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Innkeeper] - using a 'name only' configuration.
+[2018-01-07 14:56:56,087] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Librarian] - using a 'name only' configuration.
+[2018-01-07 14:56:56,087] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Merchant] - using a 'name only' configuration.
+[2018-01-07 14:56:56,087] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Midwife] - using a 'name only' configuration.
+[2018-01-07 14:56:56,088] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Miller] - using a 'name only' configuration.
+[2018-01-07 14:56:56,088] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Miner] - using a 'name only' configuration.
+[2018-01-07 14:56:56,088] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Porter] - using a 'name only' configuration.
+[2018-01-07 14:56:56,088] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Sailor] - using a 'name only' configuration.
+[2018-01-07 14:56:56,088] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Scribe] - using a 'name only' configuration.
+[2018-01-07 14:56:56,089] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Sheperd] - using a 'name only' configuration.
+[2018-01-07 14:56:56,089] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Smith] - using a 'name only' configuration.
+[2018-01-07 14:56:56,089] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Stable Master] - using a 'name only' configuration.
+[2018-01-07 14:56:56,089] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Soldier] - using a 'name only' configuration.
+[2018-01-07 14:56:56,089] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Tanner] - using a 'name only' configuration.
+[2018-01-07 14:56:56,090] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Trapper] - using a 'name only' configuration.
+[2018-01-07 14:56:56,090] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Weaver] - using a 'name only' configuration.
+[2018-01-07 14:56:56,090] ERROR - main: com.deathfrog.npc.NpcPersistor.loadClassPicklist(360) | No class definitions found for [Woodcutter] - using a 'name only' configuration.
+[2018-01-07 14:56:56,090] INFO - main: com.deathfrog.npc.NpcPersistor.parse(78) | Document loaded.

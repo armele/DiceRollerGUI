@@ -23,7 +23,7 @@ public class TestNPC {
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testFileLoad() {		
-		Assert.assertEquals(2, npcDef.size()); 
+		Assert.assertEquals(3, npcDef.size()); 
 		NpcContext context = npcDef.get(0);
 		Assert.assertEquals("Sigil", context.getName());
 		Assert.assertEquals(2, context.getContextLists().size());
@@ -70,7 +70,7 @@ public class TestNPC {
 	
 	@Test
 	public void testGeneration() {
-		Assert.assertEquals(2, npcDef.size()); 
+		Assert.assertEquals(3, npcDef.size()); 
 		
 		for (NpcContext context : npcDef) {
 			PathfinderRaceDefinition dwarf = context.getRace("Dwarf");
