@@ -26,27 +26,11 @@ public class RollerInterface {
 
 	static Shell riShell = null;
 	
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Display display = Display.getDefault();
-		RollerInterface ri = new RollerInterface();
-		riShell = ri.createContents();
-
-		riShell.open();
-		riShell.layout();
-		
-		while (!riShell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
 	
-	public Shell createContents() {
-		
+	/**
+	 * @return
+	 */
+	public Shell createContents() { 
 		Shell shell = new Shell();
 		shell.setImage(LaunchPad.getIcon());
 		shell.setSize(560, 311);

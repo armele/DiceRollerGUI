@@ -32,12 +32,17 @@ public class LaunchPad {
 	protected static Logger log = LogManager.getLogger(LaunchPad.class);
 	static protected NpcGeneratorUI npcWin = null;
 	static protected RollerInterface rollerWin = null;
+	static protected InitiativeManager initManWin = null;
+	
 	static Image icon = null;
 	
 	public static Image getIcon() {
 		return icon;
 	}
 	
+	/**
+	 * Load the log4j2 configuration file and establish the logging configuration.
+	 */
 	static public void configureLogging() {
 		LoggerContext context = (org.apache.logging.log4j.core.LoggerContext) LogManager.getContext(false);
 		URL loggingConfig = LaunchPad.class.getClassLoader().getResource(
@@ -57,6 +62,77 @@ public class LaunchPad {
 	}
 	
 	/**
+	 * @param menuTool
+	 */
+	static protected void setupDiceRoller(Menu menuTool) {
+		MenuItem miDiceRoller = new MenuItem(menuTool, SWT.NONE);
+		miDiceRoller.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if (rollerWin == null) {
+					rollerWin = new RollerInterface();
+				}
+				
+				if (!rollerWin.isOpen()) {
+					rollerWin.open();
+				} else { 
+					rollerWin.getShell().forceActive();
+					rollerWin.getShell().forceFocus();					
+				}
+			}
+		});
+		miDiceRoller.setText("&Dice Roller");		
+	}
+	
+	/**
+	 * @param menuTool
+	 */
+	static protected void setupNPCGenerator(Menu menuTool) {
+		MenuItem miGenerator = new MenuItem(menuTool, SWT.NONE);
+		miGenerator.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if (npcWin == null) {
+					npcWin = new NpcGeneratorUI();
+				}
+				
+				if (!npcWin.isOpen()) {
+					npcWin.open();
+				} else {
+					npcWin.getShell().forceActive();
+					npcWin.getShell().forceFocus();
+				}
+			}
+		});
+		miGenerator.setText("&NPC Generator");		
+	}
+	
+	
+	/**
+	 * @param menuTool
+	 */
+	static protected void setupInitiativeTracker(Menu menuTool) {
+		MenuItem miInitiative = new MenuItem(menuTool, SWT.NONE);
+		miInitiative.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if (initManWin == null) {
+					initManWin = new InitiativeManager();
+				}
+				
+				if (!initManWin.isOpen()) {
+					initManWin.open();
+				} else { 
+					initManWin.getShell().forceActive();
+					initManWin.getShell().forceFocus();					
+				}
+			}
+		});
+		miInitiative.setText("&Initiative");
+	}
+	
+	
+	/**
 	 * Configure and display the launch pad.
 	 */
 	static protected void openLaunchPad() {
@@ -71,6 +147,9 @@ public class LaunchPad {
 				}
 				if (rollerWin != null) {
 					rollerWin.close();
+				}
+				if (initManWin != null) {
+					initManWin.close();
 				}
 			}
 		});
@@ -91,41 +170,10 @@ public class LaunchPad {
 		Menu menuTool = new Menu(mntmtools);
 		mntmtools.setMenu(menuTool);
 		
-		MenuItem miGenerator = new MenuItem(menuTool, SWT.NONE);
-		miGenerator.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				if (npcWin == null) {
-					npcWin = new NpcGeneratorUI();
-				}
-				
-				if (!npcWin.isOpen()) {
-					npcWin.open();
-				} else {
-					npcWin.getShell().forceActive();
-					npcWin.getShell().forceFocus();
-				}
-			}
-		});
-		miGenerator.setText("&NPC Generator");
-		
-		MenuItem miDiceRoller = new MenuItem(menuTool, SWT.NONE);
-		miDiceRoller.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				if (rollerWin == null) {
-					rollerWin = new RollerInterface();
-				}
-				
-				if (!rollerWin.isOpen()) {
-					rollerWin.open();
-				} else { 
-					rollerWin.getShell().forceActive();
-					rollerWin.getShell().forceFocus();					
-				}
-			}
-		});
-		miDiceRoller.setText("&Dice Roller");
+
+		setupNPCGenerator(menuTool);
+		setupDiceRoller(menuTool);
+		setupInitiativeTracker(menuTool);
 		
 		Browser browser = new Browser(shlMerisylDivineTools, SWT.NONE);
 		browser.setUrl("www.merisyl.com");
