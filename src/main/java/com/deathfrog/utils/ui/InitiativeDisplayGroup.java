@@ -1,7 +1,11 @@
 package com.deathfrog.utils.ui;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,11 +17,16 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+
+import com.deathfrog.utils.GameException;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * @author Al Mele
@@ -59,17 +68,43 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		uiGroup.addMouseListener(this);
 		uiGroup.addMouseMoveListener(this);
 		uiGroup.setText(text);
-        GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 2;
-        uiGroup.setLayout(gridLayout);
+		RowLayout cardContentLayout = new RowLayout();
+		cardContentLayout.type = SWT.VERTICAL;
+        uiGroup.setLayout(cardContentLayout);
      
-        /* Prototype Code for value labels... */
+        /* Prototype Code for value labels... 
         attributes.add(new ValueLabel(uiGroup, "HP", "24"));
         attributes.add(new ValueLabel(uiGroup, "Perception", "5"));
         attributes.add(new ValueLabel(uiGroup, "Stealth", "2"));
         attributes.add(new ValueLabel(uiGroup, "AC", "17"));
+        */
+        
+        // Load attributes for this initiative card from the default file.
+		try {
+			Scanner attributeFile =  new Scanner(new File("InitiativeAttributes.json"));
+			JsonArray ja = readJsonStream(attributeFile);
+			for (JsonElement je : ja) {
+				log.info(je);
+				if(je.isJsonObject()) {
+					String attribute = je.getAsJsonObject().get("label").getAsString();
+					attributes.add(new ValueLabel(uiGroup, attribute, ""));
+				}
+			}
+		} catch (FileNotFoundException fe) {
+			log.error(GameException.fullExceptionInfo(fe));
+		} catch (IOException ie) {
+			log.error(GameException.fullExceptionInfo(ie));
+		}
+
 	}
 
+	/**
+	 * @return
+	 */
+	public String getText() {
+		return uiGroup.getText();
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
 	 */
@@ -163,6 +198,13 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	}
 
 	/**
+	 * @return
+	 */
+	public ArrayList<ValueLabel> getAttributes() {
+		return attributes;
+	}
+	
+	/**
 	 * @param xpos
 	 * @param ypos
 	 * @param width
@@ -182,24 +224,35 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	}
 	
 	/**
-	 * Mark all children of the Composite control for re-layout, and
-	 * all descendants of those children.
-	 * 
-	 * @param parent
+	 * Adjust the contents of the card for the scale they're being shown at, and
+	 * mark items on the card for layout refresh.
 	 */
-	protected void requestChildLayout(Composite parent) {
-		for (Control c : parent.getChildren()) {
-			if (c instanceof Composite) {
-				requestChildLayout((Composite)c);
-			}
+	public void requestLayout(double scale) {	
+		for (ValueLabel vl : attributes) {
+			vl.positionControls(scale);
 		}
+		
+		uiGroup.requestLayout();
 	}
 	
 	/**
-	 * Mark items on the card for layout refresh.
+	 * @param in
+	 * @return
+	 * @throws IOException
 	 */
-	public void requestLayout() {	
-		uiGroup.requestLayout();
-		requestChildLayout(uiGroup);
-	}
+	protected JsonArray readJsonStream(Scanner in) throws IOException {
+		StringBuilder sb = new StringBuilder();
+		while(in.hasNext()) {
+			sb.append(in.next());
+		}
+		in.close();
+		
+		JsonParser parser = new JsonParser();
+		JsonElement element = parser.parse(sb.toString());
+	    JsonObject  jobject = element.getAsJsonObject();
+	    JsonArray jarray = jobject.getAsJsonArray("attributes");
+	    
+        return jarray;
+    }
+
 }

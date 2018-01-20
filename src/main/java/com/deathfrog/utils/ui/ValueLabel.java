@@ -1,6 +1,8 @@
 package com.deathfrog.utils.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
@@ -12,6 +14,8 @@ public class ValueLabel {
 	protected Label lblText;
 	protected Label lblValue;
 	protected Text txtValue;
+	private static final int LBL_PAD = 5;
+	private static final int LBL_FONT_HEIGHT = 10;
 	
 	/**
 	 * @param parent
@@ -23,25 +27,46 @@ public class ValueLabel {
 		valueLabelControl = new Composite(parent, SWT.NONE);
         lblText = new Label(valueLabelControl, SWT.NONE);
         lblText.setText(text);
+
+        lblValue = new Label(valueLabelControl, SWT.NONE);
+        lblValue.setText(value);
         
+        txtValue = new Text(valueLabelControl, SWT.NONE);
+        txtValue.setText(lblValue.getText());
+        txtValue.setVisible(false);
+        
+        positionControls(1.0);
+	}
+	
+	/**
+	 * @param scale
+	 */
+	public void positionControls(double scale) {
+		FontData[] fD = lblText.getFont().getFontData();
+		 // Note that scaling the font and then measuring by the font eliminates the need to scale the controls any other way.
+		fD[0].setHeight((int) (LBL_FONT_HEIGHT * scale)); 
+		lblText.setFont( new Font(lblText.getDisplay(),fD[0]));
+		
         GC gc = new GC(lblText);
         Point labelSize = gc.textExtent(lblText.getText());
         gc.dispose ();
         
-        lblText.setBounds(0, 0, labelSize.x, 24);
-        lblValue = new Label(valueLabelControl, SWT.NONE);
-        lblValue.setText(value);
+        lblText.setBounds(0, 0, labelSize.x, labelSize.y);
         
-        gc = new GC(lblText);
+        lblValue.setFont( new Font(lblValue.getDisplay(),fD[0]));
+        txtValue.setFont( new Font(txtValue.getDisplay(),fD[0]));
+		
+        gc = new GC(lblValue);
         Point valueSize = gc.textExtent(lblValue.getText());
         gc.dispose ();
         
-        lblValue.setBounds(labelSize.x + 5, 0, valueSize.x, 24);
-        txtValue = new Text(valueLabelControl, SWT.NONE);
-        txtValue.setBounds(labelSize.x + 5, 0, valueSize.x, 24);
-        txtValue.setText(lblValue.getText());
-        txtValue.setVisible(false);
-        
+        lblValue.setBounds(labelSize.x + LBL_PAD, 0, valueSize.x, valueSize.y);     
+        txtValue.setBounds(labelSize.x + LBL_PAD, 0, valueSize.x, valueSize.y);
+       
+        valueLabelControl.requestLayout();
+        lblText.requestLayout();
+        lblValue.requestLayout();
+        txtValue.requestLayout();
 	}
 	
 	/**

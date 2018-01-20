@@ -1,6 +1,9 @@
 package com.deathfrog.utils.ui;
 
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -18,8 +21,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
+
+import com.deathfrog.utils.GameException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 
 
@@ -52,19 +60,26 @@ public class InitiativeManager {
 	/**
 	 * @return
 	 */
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public Shell createContents() {
 		
 		imShell = new Shell();
 		imShell.setImage(LaunchPad.getIcon());
 		imShell.setSize(800, 540);
 		imShell.setText("Initiative Manager");
-			
+		
 		Button addPlayer = new Button(imShell, SWT.NONE);
 		addPlayer.setBounds(14, 14, 120, 20);
 		addPlayer.setText("Add Character");
 		
+		Label lblZoom = new Label(imShell, SWT.NONE);
+		lblZoom.setText("Zoom");
+		lblZoom.setBounds(160, 14, 40, 20);
+		
 		Spinner zoomSpinner = new Spinner(imShell, SWT.NONE);
-		zoomSpinner.setBounds(140, 14, 60, 20);
+		zoomSpinner.setBounds(200, 14, 60, 20);
 		zoomSpinner.setMaximum(1000);
 		zoomSpinner.setMinimum(100);
 		zoomSpinner.setSelection(100);
@@ -136,6 +151,7 @@ public class InitiativeManager {
 	 * 
 	 */
 	public void close() {
+		
 		if (imShell != null && !imShell.isDisposed()) {
 			imShell.close();
 		}
@@ -231,7 +247,7 @@ public class InitiativeManager {
 	 * Take care of whatever maintenance is associated with managing window sizes.
 	 */
 	protected void manageSizing() {
-		// Handle scaling
+		// Handle scaling of the character cards, and ask that they in turn scale their contents.
 		for (Control c : characterWindow.getChildren()) {
 			c.setBounds(c.getBounds().x, c.getBounds().y, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));
 			FontData[] fD = c.getFont().getFontData();
@@ -241,15 +257,18 @@ public class InitiativeManager {
 			
 			InitiativeDisplayGroup idg = controlMap.get(c);
 			if (idg != null) {
-				idg.requestLayout();
+				idg.requestLayout(scale);
 			}
 			
 		}		
 		
+		// determine how much room the character cards take up (max x and y)
 		Point pt = getChildrenMaxLocation();
 		
+		// Set the viewport to the size of the parent shell.
 		viewPort.setBounds(0, 0, imShell.getBounds().width - 14 /* Scrollbar width - inelegant */, imShell.getBounds().height);
 		
+		// Set the minimum size so the viewport can decide if scrolling needs to be allowed.
 		pt.y = pt.y + 30;  // Account for Shell menu space when setting viewport minimum size. (Inelegant).
 		viewPort.setMinSize(pt);	
 		
@@ -289,5 +308,30 @@ public class InitiativeManager {
 			idg.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));	
 			i++;
 		}
+		
+		persistContent();
+	}
+	
+	/**
+	 * 
+	 */
+	public void persistContent() {
+		HashMap<String, HashMap<String, String>> persistMap = new HashMap<String, HashMap<String, String>>();
+		for (InitiativeDisplayGroup idg : idgList) {
+			HashMap<String, String> attributeList = new HashMap<String, String>();
+			for (ValueLabel attribute : idg.getAttributes()) {
+				attributeList.put(attribute.getText(), attribute.getValue());
+			}
+			persistMap.put(idg.getText(), attributeList);
+		}
+		
+		log.info(persistMap);
+		
+		try (Writer writer = new FileWriter("Output.json")) {
+		    Gson gson = new GsonBuilder().create();
+		    gson.toJson(persistMap, writer);
+		} catch (IOException ie) {
+			log.error(GameException.fullExceptionInfo(ie));
+		}		
 	}
 }

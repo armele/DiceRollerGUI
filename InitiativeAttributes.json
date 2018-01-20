@@ -1,0 +1,19 @@
+{
+    "attributes": [
+        {
+			"label":"HP:"
+		},
+        {
+			"label":"Perception:"
+        },
+        {
+			"label":"Stealth:"
+        },
+        {
+			"label":"AC:"
+        },
+		{
+			"label":"Juicebox:"
+        }
+    ] 
+}
