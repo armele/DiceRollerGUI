@@ -13,14 +13,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Device;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Text;
 
 import com.deathfrog.utils.GameException;
 import com.google.gson.JsonArray;
@@ -87,12 +89,14 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				log.info(je);
 				if(je.isJsonObject()) {
 					String attribute = je.getAsJsonObject().get("label").getAsString();
-					attributes.add(new ValueLabel(uiGroup, attribute, ""));
+					attributes.add(new ValueLabel(this, attribute, ""));
 				}
 			}
 		} catch (FileNotFoundException fe) {
+			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(fe));
 		} catch (IOException ie) {
+			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(ie));
 		}
 
@@ -105,12 +109,28 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		return uiGroup.getText();
 	}
 	
+	/**
+	 * @return
+	 */
+	public Group getGroup() {
+		return uiGroup;
+	}
+	
 	/* (non-Javadoc)
 	 * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
 	 */
 	@Override
 	public void mouseDoubleClick(MouseEvent e) {
-		// TODO Auto-generated method stub
+		Text txtTitleEdit = new Text(uiGroup, SWT.NONE);
+		txtTitleEdit.setText(uiGroup.getText());
+		GC gc = new GC(uiGroup);
+        Point valueSize = gc.textExtent(uiGroup.getText());
+        gc.dispose ();
+        
+		Rectangle editTrim = txtTitleEdit.computeTrim(0, 0, valueSize.x, valueSize.y);
+		
+		txtTitleEdit.setBounds(editTrim);
+		txtTitleEdit.setFocus();
 		
 	}
 
@@ -125,8 +145,6 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		// A left-mouse click while no drag action is occurring initiates a drag action.
 		if (uiState == UI_STATE_NORMAL && e.button == LEFT_BUTTON) {
 			log.info("Start Drag: " + uiGroup);
-			Color grey = new Color (device, 200, 200, 200);
-			uiGroup.setBackground(grey);
 			uiState = UI_STATE_DRAG;
 			
 			Cursor cursor = new Cursor(device, SWT.CURSOR_HAND);
@@ -153,8 +171,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		
 		if (uiState == UI_STATE_DRAG && e.button == LEFT_BUTTON) {
 			log.info("Stop Drag: " + uiGroup);
-			Color green = new Color (device, 0, 255, 0);
-			uiGroup.setBackground(green);
+	
 			uiState = UI_STATE_NORMAL;
 			
 			Cursor cursor = new Cursor(device, SWT.CURSOR_ARROW);
@@ -180,11 +197,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	@Override
 	public void mouseMove(MouseEvent e) {
 		
-		if (uiState == UI_STATE_DRAG) {
-			Device device = Display.getCurrent();
-			Color highlight = new Color (device, 25, 25, 25);
-			uiGroup.setBackground(highlight);
-			
+		if (uiState == UI_STATE_DRAG) {	
 			Point eventPt = Display.getCurrent().map(uiGroup, initMgr.getCharacterWindow(), e.x, e.y);
 		    Point offset = new Point (eventPt.x - priorLoc.x, eventPt.y - priorLoc.y);
 		    Point newLoc = new Point (dragShadow.getBounds().x + offset.x, dragShadow.getBounds().y + offset.y );
@@ -220,7 +233,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 * @param childEvent
 	 */
 	public void siblingEventHandler(InitiativeDisplayGroup source, MouseEvent childEvent) {
-		// log.info("Sibling Event from: " + source + " for " + uiGroup + ": " + childEvent);
+		attributeEditEvent(null);  // Any mouse event from a sibling should end in edits in progress.
 	}
 	
 	/**
@@ -255,4 +268,16 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
         return jarray;
     }
 
+	/**
+	 * Allows one attribute ("source") to signal the other attributes in the group that any edit in progess should end.
+	 * @param source
+	 */
+	protected void attributeEditEvent(ValueLabel source) {
+		for (ValueLabel vl : attributes) {
+			if (!vl.equals(source)) {
+				vl.editMode(false);
+			}
+		}
+	}
+	
 }

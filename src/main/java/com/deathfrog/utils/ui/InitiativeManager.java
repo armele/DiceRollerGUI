@@ -14,6 +14,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.ShellEvent;
+import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
@@ -43,12 +45,14 @@ public class InitiativeManager {
 	protected double CARD_HEIGHT = 120.0;
 	protected double FONT_HEIGHT = 12.0;
 	protected double scale = 1.0;
+	protected double priorScale = scale;
 	
 	protected Shell imShell = null;
 	protected ScrolledComposite viewPort = null;
 	protected Composite characterWindow = null;
 	protected HashMap<Control, InitiativeDisplayGroup> controlMap = new HashMap<Control, InitiativeDisplayGroup>();
 	protected ArrayList<InitiativeDisplayGroup> idgList = new ArrayList<InitiativeDisplayGroup>();
+	protected Font fontCreatedForScaling = null;  // Track for disposal
 	
 	/**
 	 * @return
@@ -69,6 +73,37 @@ public class InitiativeManager {
 		imShell.setImage(LaunchPad.getIcon());
 		imShell.setSize(800, 540);
 		imShell.setText("Initiative Manager");
+		imShell.addShellListener(new ShellListener(){
+
+			@Override
+			public void shellActivated(ShellEvent e) {
+				// no-op
+				
+			}
+
+			@Override
+			public void shellClosed(ShellEvent e) {
+				persistContent();
+				
+			}
+
+			@Override
+			public void shellDeactivated(ShellEvent e) {
+				// no-op
+				
+			}
+
+			@Override
+			public void shellDeiconified(ShellEvent e) {
+				// no-op
+				
+			}
+
+			@Override
+			public void shellIconified(ShellEvent e) {
+				// no-op
+				
+			}});
 		
 		Button addPlayer = new Button(imShell, SWT.NONE);
 		addPlayer.setBounds(14, 14, 120, 20);
@@ -182,23 +217,15 @@ public class InitiativeManager {
 	 * @param childEvent
 	 */
 	public void childEventHandler(InitiativeDisplayGroup source, MouseEvent childEvent) {
-		Point parentLoc = Display.getCurrent().map(source.getControl(), characterWindow, childEvent.x, childEvent.y);
-		ArrayList<Control> children = childrenAtPoint(parentLoc);
-		
-		for (Control c : children) {
-			if (!c.equals(source.getControl())) {
-				InitiativeDisplayGroup sibling = controlMap.get(c);
-				
-				if (sibling != null) {
-					sibling.siblingEventHandler(source, childEvent);
-				}
+		// Point parentLoc = Display.getCurrent().map(source.getControl(), characterWindow, childEvent.x, childEvent.y);
+
+		// Report a mouse event from one child to all siblings
+		for (InitiativeDisplayGroup idg : idgList) {
+			if (!source.equals(idg)) {
+				idg.siblingEventHandler(source, childEvent);
 			}
 		}
 		
-		// If we're dragging things around, deal with sizing issues.
-		if (source.getUiState() == InitiativeDisplayGroup.UI_STATE_DRAG) {
-			manageSizing();
-		}
 	}
 	
 
@@ -247,20 +274,31 @@ public class InitiativeManager {
 	 * Take care of whatever maintenance is associated with managing window sizes.
 	 */
 	protected void manageSizing() {
-		// Handle scaling of the character cards, and ask that they in turn scale their contents.
-		for (Control c : characterWindow.getChildren()) {
-			c.setBounds(c.getBounds().x, c.getBounds().y, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));
-			FontData[] fD = c.getFont().getFontData();
-			fD[0].setHeight((int) (FONT_HEIGHT * scale));
-			c.setFont( new Font(c.getDisplay(),fD[0]));
-			c.requestLayout();
+		log.debug("Managing sizing...");
+		
+		// Handle scaling only if the scale has actually changed...
+		if (priorScale != scale) {
 			
-			InitiativeDisplayGroup idg = controlMap.get(c);
-			if (idg != null) {
-				idg.requestLayout(scale);
-			}
+			// Handle scaling of the character cards, and ask that they in turn scale their contents.
+			for (Control c : characterWindow.getChildren()) {
+				c.setBounds(c.getBounds().x, c.getBounds().y, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));
+				FontData[] fD = c.getFont().getFontData();
+				fD[0].setHeight((int) (FONT_HEIGHT * scale));
+				
+	
+				SWTResourceManager.releaseFontResource(c.getFont());
+				c.setFont(SWTResourceManager.createFontResource(c.getDisplay(),fD[0]));		     	
+				c.requestLayout();
+				
+				InitiativeDisplayGroup idg = controlMap.get(c);
+				if (idg != null) {
+					idg.requestLayout(scale);
+				}
+				
+			}	
 			
-		}		
+			priorScale = scale;
+		}
 		
 		// determine how much room the character cards take up (max x and y)
 		Point pt = getChildrenMaxLocation();
@@ -309,11 +347,10 @@ public class InitiativeManager {
 			i++;
 		}
 		
-		persistContent();
 	}
 	
 	/**
-	 * 
+	 * Saves the current configuration of the initiative board to a JSON file.
 	 */
 	public void persistContent() {
 		HashMap<String, HashMap<String, String>> persistMap = new HashMap<String, HashMap<String, String>>();
@@ -331,6 +368,7 @@ public class InitiativeManager {
 		    Gson gson = new GsonBuilder().create();
 		    gson.toJson(persistMap, writer);
 		} catch (IOException ie) {
+			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(ie));
 		}		
 	}
