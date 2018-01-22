@@ -116,7 +116,7 @@ public class LaunchPad {
 		miInitiative.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				if (initManWin == null) {
+				if (initManWin == null || initManWin.getShell().isDisposed()) {
 					initManWin = new InitiativeManager();
 				}
 				

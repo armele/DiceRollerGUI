@@ -248,6 +248,13 @@ public class InitiativeManager {
 
 	
 	/**
+	 * @return
+	 */
+	public ArrayList<InitiativeDisplayGroup> getInitiativeGroups() {
+		return idgList;
+	}
+	
+	/**
 	 * Examine the locations of all children cards and report back a Point that represents the 
 	 * maximum x and y positions needed in order to see all cards.
 	 * 
@@ -344,6 +351,7 @@ public class InitiativeManager {
 			int xPos = ANCHOR_X;
 			int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * i * scale));
 			idg.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));	
+			idg.setUiState(InitiativeDisplayGroup.UI_STATE_NORMAL);
 			i++;
 		}
 		

@@ -41,6 +41,9 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 	protected static int UI_STATE_NORMAL = 0;
 	protected static int UI_STATE_DRAG = 1;
+	protected static int UI_STATE_NUDGEUP = -20;
+	protected static int UI_STATE_NUDGEDOWN = 20;
+	
 	
 	protected Group uiGroup = null;
 	protected InitiativeManager initMgr = null;
@@ -62,6 +65,13 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 */
 	public int getUiState() {
 		return uiState;
+	}
+	
+	/**
+	 * @param state
+	 */
+	public void setUiState(int state) {
+		uiState = state;
 	}
 	
 	public InitiativeDisplayGroup(String text, InitiativeManager parent) {
@@ -111,10 +121,11 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	
 	/**
 	 * @return
-	 */
+	 *
 	public Group getGroup() {
 		return uiGroup;
 	}
+	*/
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
@@ -156,6 +167,10 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			dragShadow = new Group(initMgr.getCharacterWindow(), uiGroup.getStyle());
 			dragShadow.setText(uiGroup.getText());
 			dragShadow.setBounds(uiGroup.getBounds());
+			
+			// Put the dragShadow on top of everything else...
+			dragShadow.moveAbove(null);
+			
 			uiGroup.setVisible(false);
 		}
 		
@@ -201,10 +216,29 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			Point eventPt = Display.getCurrent().map(uiGroup, initMgr.getCharacterWindow(), e.x, e.y);
 		    Point offset = new Point (eventPt.x - priorLoc.x, eventPt.y - priorLoc.y);
 		    Point newLoc = new Point (dragShadow.getBounds().x + offset.x, dragShadow.getBounds().y + offset.y );
+
+		    for (InitiativeDisplayGroup idg : initMgr.getInitiativeGroups()) {
+		    	if (!this.equals(idg)) {
+			    	Control c = idg.getControl();
+		    		if (c.getBounds().y < newLoc.y && !(idg.getUiState() == UI_STATE_NUDGEUP)) {
+		    			idg.setUiState(UI_STATE_NUDGEUP);
+		    			Point nudgeLoc = new Point(c.getBounds().x, c.getBounds().y + UI_STATE_NUDGEUP);
+		    			c.setLocation(nudgeLoc);
+		    		}
+		    		if (c.getBounds().y > newLoc.y && !(idg.getUiState() == UI_STATE_NUDGEDOWN)) {
+		    			idg.setUiState(UI_STATE_NUDGEDOWN);
+		    			Point nudgeLoc = new Point(c.getBounds().x, c.getBounds().y + UI_STATE_NUDGEDOWN);
+		    			c.setLocation(nudgeLoc);
+		    		}
+		    		
+		    		c.requestLayout();
+		    	}
+		    }
+		    
 		    dragShadow.setLocation(newLoc);
+		    
 			priorLoc = eventPt;
-			
-			
+			dragShadow.requestLayout();
 		}
 		
 		initMgr.childEventHandler(this, e);
@@ -234,7 +268,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 */
 	public void siblingEventHandler(InitiativeDisplayGroup source, MouseEvent childEvent) {
 		attributeEditEvent(null);  // Any mouse event from a sibling should end in edits in progress.
-	}
+	} 
 	
 	/**
 	 * Adjust the contents of the card for the scale they're being shown at, and

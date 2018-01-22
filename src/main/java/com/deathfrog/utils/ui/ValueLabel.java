@@ -40,7 +40,7 @@ public class ValueLabel {
 		initiativeCard = parent;
 		
         /* Prototype code for value labels */
-		valueLabelControl = new Composite(initiativeCard.getGroup(), SWT.NONE);
+		valueLabelControl = new Composite((Composite)initiativeCard.getControl(), SWT.NONE);
         lblText = new Label(valueLabelControl, SWT.NONE);
         lblText.setText(text);
         
