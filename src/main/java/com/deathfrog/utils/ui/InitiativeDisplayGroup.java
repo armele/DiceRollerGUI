@@ -10,14 +10,21 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -29,6 +36,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.annotations.Expose;
 
 /**
  * @author Al Mele
@@ -44,14 +52,22 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected static int UI_STATE_NUDGEUP = -20;
 	protected static int UI_STATE_NUDGEDOWN = 20;
 	
-	
+
 	protected Group uiGroup = null;
+	protected Text txtTitleEdit = null;
 	protected InitiativeManager initMgr = null;
-	protected ArrayList<ValueLabel> attributes = new ArrayList<ValueLabel>();
-	protected Point priorLoc = null;  // Tracked in the Parent coordinate grid (InitiativeManager)
 	
+	@Expose(serialize = true, deserialize = true)
+	protected String character = null;
+	
+	@Expose(serialize = true, deserialize = true)
+	protected ArrayList<ValueLabel> attributes = new ArrayList<ValueLabel>();
+	
+
+	protected Point priorLoc = null;  // Tracked in the Parent coordinate grid (InitiativeManager)
 	protected int uiState = UI_STATE_NORMAL;
 	protected Group dragShadow = null;
+	protected Rectangle closeBox = null;
 	
 	/**
 	 * @return
@@ -74,25 +90,80 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		uiState = state;
 	}
 	
-	public InitiativeDisplayGroup(String text, InitiativeManager parent) {
+	/**
+	 * @param text
+	 * @param parent
+	 */
+	public InitiativeDisplayGroup(String charName, InitiativeManager parent) {
+		character = charName;
 		initMgr = parent;
 		uiGroup = new Group(initMgr.getCharacterWindow(), SWT.VERTICAL);
 		uiGroup.addMouseListener(this);
 		uiGroup.addMouseMoveListener(this);
-		uiGroup.setText(text);
+		uiGroup.setText(character);
+		uiGroup.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				for (ValueLabel vl : attributes) {
+					vl.getValueLabelControl().dispose();
+				}
+				
+			}});
+		
 		RowLayout cardContentLayout = new RowLayout();
 		cardContentLayout.type = SWT.VERTICAL;
         uiGroup.setLayout(cardContentLayout);
-     
-        /* Prototype Code for value labels... 
-        attributes.add(new ValueLabel(uiGroup, "HP", "24"));
-        attributes.add(new ValueLabel(uiGroup, "Perception", "5"));
-        attributes.add(new ValueLabel(uiGroup, "Stealth", "2"));
-        attributes.add(new ValueLabel(uiGroup, "AC", "17"));
-        */
         
+		// Set up a text edit box for changing group names.
+		txtTitleEdit = new Text(uiGroup, SWT.NONE);
+		txtTitleEdit.setVisible(false);
+		txtTitleEdit.addTraverseListener(new TraverseListener() {
+
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				character = txtTitleEdit.getText();
+				uiGroup.setText(character);
+				txtTitleEdit.setVisible(false);
+				
+			}});
+		
+		// Exclude this control from being automatically organized in the layout
+	    RowData data = new RowData();
+	    data.exclude = true;
+	    txtTitleEdit.setLayoutData(data);
+	    
+	    // Draw a "close" box.
+	    uiGroup.addPaintListener(new PaintListener(){ 
+	        public void paintControl(PaintEvent e){ 
+	        	int boxsize = (int)(14 * parent.getScale());
+	            Rectangle clientArea = uiGroup.getClientArea(); 
+	            closeBox = new Rectangle(clientArea.width + clientArea.x - boxsize, (int)(e.gc.getFontMetrics().getHeight()/2), boxsize, boxsize);
+	            e.gc.drawRectangle(closeBox);
+	            // Drawn an "X" in the rectangle just created.
+	            e.gc.drawLine(closeBox.x,closeBox.y,closeBox.x + closeBox.width,closeBox.y + closeBox.height);
+	            e.gc.drawLine(closeBox.x,closeBox.y + closeBox.height,closeBox.x + closeBox.width,closeBox.y); 
+	        } 
+	    }); 
+
+	}
+
+	/**
+	 * @return
+	 */
+	public String getCharacter() {
+		return character;
+	}
+	
+	/**
+	 * Reads the default initiative attributes from a file and sets up empty
+	 * labels for them.
+	 */
+	public void loadDefaultAttributes() {
         // Load attributes for this initiative card from the default file.
+   
 		try {
+			// TODO: Make default property file name configurable.
 			Scanner attributeFile =  new Scanner(new File("InitiativeAttributes.json"));
 			JsonArray ja = readJsonStream(attributeFile);
 			for (JsonElement je : ja) {
@@ -109,39 +180,25 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(ie));
 		}
-
 	}
-
-	/**
-	 * @return
-	 */
-	public String getText() {
-		return uiGroup.getText();
-	}
-	
-	/**
-	 * @return
-	 *
-	public Group getGroup() {
-		return uiGroup;
-	}
-	*/
 	
 	/* (non-Javadoc)
 	 * @see org.eclipse.swt.events.MouseListener#mouseDoubleClick(org.eclipse.swt.events.MouseEvent)
 	 */
 	@Override
 	public void mouseDoubleClick(MouseEvent e) {
-		Text txtTitleEdit = new Text(uiGroup, SWT.NONE);
-		txtTitleEdit.setText(uiGroup.getText());
+		txtTitleEdit.setFont(uiGroup.getFont());
+		txtTitleEdit.setText(character);
+		txtTitleEdit.selectAll();
 		GC gc = new GC(uiGroup);
-        Point valueSize = gc.textExtent(uiGroup.getText());
+        Point valueSize = gc.textExtent(character);
         gc.dispose ();
         
-		Rectangle editTrim = txtTitleEdit.computeTrim(0, 0, valueSize.x, valueSize.y);
+		Rectangle editTrim = txtTitleEdit.computeTrim(6, 0, valueSize.x, valueSize.y);
 		
 		txtTitleEdit.setBounds(editTrim);
-		txtTitleEdit.setFocus();
+		txtTitleEdit.setVisible(true);
+		txtTitleEdit.forceFocus();
 		
 	}
 
@@ -155,23 +212,28 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		
 		// A left-mouse click while no drag action is occurring initiates a drag action.
 		if (uiState == UI_STATE_NORMAL && e.button == LEFT_BUTTON) {
-			log.info("Start Drag: " + uiGroup);
-			uiState = UI_STATE_DRAG;
-			
-			Cursor cursor = new Cursor(device, SWT.CURSOR_HAND);
-			uiGroup.setCursor(cursor);
-			
-			priorLoc = Display.getCurrent().map(uiGroup, initMgr.getCharacterWindow(), e.x, e.y);
-			log.info ("priorLoc: " + priorLoc);
-			
-			dragShadow = new Group(initMgr.getCharacterWindow(), uiGroup.getStyle());
-			dragShadow.setText(uiGroup.getText());
-			dragShadow.setBounds(uiGroup.getBounds());
-			
-			// Put the dragShadow on top of everything else...
-			dragShadow.moveAbove(null);
-			
-			uiGroup.setVisible(false);
+			if (closeBox.contains(new Point(e.x, e.y))) {
+				initMgr.dropCharacter(this);
+				uiGroup.dispose();
+			} else {
+				log.info("Start Drag: " + uiGroup);
+				uiState = UI_STATE_DRAG;
+				
+				Cursor cursor = new Cursor(device, SWT.CURSOR_HAND);
+				uiGroup.setCursor(cursor);
+				
+				priorLoc = Display.getCurrent().map(uiGroup, initMgr.getCharacterWindow(), e.x, e.y);
+				log.info ("priorLoc: " + priorLoc);
+				
+				dragShadow = new Group(initMgr.getCharacterWindow(), uiGroup.getStyle());
+				dragShadow.setText(character);
+				dragShadow.setBounds(uiGroup.getBounds());
+				
+				// Put the dragShadow on top of everything else...
+				dragShadow.moveAbove(null);
+				
+				uiGroup.setVisible(false);
+			}
 		}
 		
 		initMgr.childEventHandler(this, e);
@@ -268,6 +330,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 */
 	public void siblingEventHandler(InitiativeDisplayGroup source, MouseEvent childEvent) {
 		attributeEditEvent(null);  // Any mouse event from a sibling should end in edits in progress.
+		txtTitleEdit.setVisible(false); // And stop an in-progress name edit.
 	} 
 	
 	/**

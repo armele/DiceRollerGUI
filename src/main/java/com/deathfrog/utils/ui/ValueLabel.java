@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import com.google.gson.annotations.Expose;
+
 public class ValueLabel {
 	protected static Logger log = LogManager.getLogger(ValueLabel.class);
 	private static final int LBL_PAD = 5;
@@ -25,8 +27,15 @@ public class ValueLabel {
 	protected Font fontCreatedForScaling = null;  // Track for disposal
 	protected InitiativeDisplayGroup initiativeCard = null;
 	protected Composite valueLabelControl = null;
+	
+	@Expose(serialize = true, deserialize = true)
+	protected String name;
 	protected Label lblText;
+	
+	@Expose(serialize = true, deserialize = true)
+	protected String value; 
 	protected Label lblValue;
+	
 	protected Text txtValue;
 	protected double currentScale = 1.0;
 	
@@ -35,14 +44,16 @@ public class ValueLabel {
 	 * @param text
 	 * @param value
 	 */
-	public ValueLabel(InitiativeDisplayGroup parent, String text, String value) {
+	public ValueLabel(InitiativeDisplayGroup parent, String attr, String val) {
 		ValueLabel me = this;  // Workaround for anonymous classes not being able to reference "this" within it.
 		initiativeCard = parent;
+		name = attr;
+		value = val;
 		
         /* Prototype code for value labels */
 		valueLabelControl = new Composite((Composite)initiativeCard.getControl(), SWT.NONE);
         lblText = new Label(valueLabelControl, SWT.NONE);
-        lblText.setText(text);
+        lblText.setText(name);
         
         // If the user clicks an attribute label, give them edit ability for the attribute value.
         lblText.addMouseListener(new MouseListener() {
@@ -98,8 +109,25 @@ public class ValueLabel {
 			@Override
 			public void keyTraversed(TraverseEvent e) {
 				if (e.getSource().equals(txtValue) && e.detail == SWT.TRAVERSE_RETURN){
-					log.debug("Ending edit mode - Keypress.");
+					log.debug("Ending edit mode - Return.");
 					editMode(false);
+				}
+				
+				if (e.getSource().equals(txtValue) && e.detail == SWT.TRAVERSE_TAB_NEXT){
+					log.debug("Ending edit mode - Tab.");
+					editMode(false);
+					
+					boolean nextAttribute = false;
+					for (ValueLabel lbl : parent.getAttributes()) {
+						if (nextAttribute == true) {
+							log.debug("Tabbing to next attribute.");
+							lbl.editMode(true);
+							break;
+						}
+						if (lbl.equals(me)) {
+							nextAttribute = true;
+						}
+					}
 				}
 				
 			}
@@ -120,7 +148,8 @@ public class ValueLabel {
 			txtValue.setFocus();
 			txtValue.redraw();
 		} else {
-			lblValue.setText(txtValue.getText());
+			value = txtValue.getText();
+			lblValue.setText(value);
 			txtValue.setVisible(false);
 			lblValue.setVisible(true);
 			positionControls(currentScale);
@@ -168,31 +197,33 @@ public class ValueLabel {
 	/**
 	 * @return the labelText
 	 */
-	public String getText() {
-		return lblText.getText();
+	public String getName() {
+		return name;
 	}
 
 
 	/**
 	 * @param labelText the labelText to set
 	 */
-	public void setText(String labelText) {
-		lblText.setText(labelText);
+	public void setAttribute(String labelText) {
+		name = labelText;
+		lblText.setText(name);
 	}
 
 	/**
 	 * @return the value associated with this attribute
 	 */
 	public String getValue() {
-		return lblValue.getText();
+		return value;
 	}
 
 	/**
 	 * @param labelValue the labelValue to set
 	 */
 	public void setValue(String labelValue) {
-		lblValue.setText(labelValue);
-		txtValue.setText(labelValue);
+		value = labelValue;
+		lblValue.setText(value);
+		txtValue.setText(value);
 	}
 
 	/**

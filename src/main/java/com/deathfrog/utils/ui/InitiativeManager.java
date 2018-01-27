@@ -1,8 +1,10 @@
 package com.deathfrog.utils.ui;
 
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -30,6 +32,8 @@ import org.eclipse.swt.widgets.Spinner;
 import com.deathfrog.utils.GameException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.annotations.Expose;
 
 
 
@@ -44,14 +48,23 @@ public class InitiativeManager {
 	protected double CARD_WIDTH = 240.0;
 	protected double CARD_HEIGHT = 120.0;
 	protected double FONT_HEIGHT = 12.0;
+	
+	@Expose(serialize = true, deserialize = true)
 	protected double scale = 1.0;
+	Spinner zoomSpinner = null;
+	
+	@Expose(serialize = true, deserialize = true)
 	protected double priorScale = scale;
+	protected InitiativeDisplayGroup priorEventSource = null;
 	
 	protected Shell imShell = null;
 	protected ScrolledComposite viewPort = null;
 	protected Composite characterWindow = null;
 	protected HashMap<Control, InitiativeDisplayGroup> controlMap = new HashMap<Control, InitiativeDisplayGroup>();
+	
+	@Expose(serialize = true, deserialize = true)
 	protected ArrayList<InitiativeDisplayGroup> idgList = new ArrayList<InitiativeDisplayGroup>();
+	
 	protected Font fontCreatedForScaling = null;  // Track for disposal
 	
 	/**
@@ -59,6 +72,13 @@ public class InitiativeManager {
 	 */
 	protected InitiativeManager getInitiativeManager() {
 		return this;
+	}
+	
+	/**
+	 * @return
+	 */
+	public double getScale() {
+		return scale;
 	}
 	
 	/**
@@ -113,7 +133,7 @@ public class InitiativeManager {
 		lblZoom.setText("Zoom");
 		lblZoom.setBounds(160, 14, 40, 20);
 		
-		Spinner zoomSpinner = new Spinner(imShell, SWT.NONE);
+		zoomSpinner = new Spinner(imShell, SWT.NONE);
 		zoomSpinner.setBounds(200, 14, 60, 20);
 		zoomSpinner.setMaximum(1000);
 		zoomSpinner.setMinimum(100);
@@ -149,12 +169,8 @@ public class InitiativeManager {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				int listsize = controlMap.size();
-				int xPos = ANCHOR_X;
-				int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * listsize * scale));
-				InitiativeDisplayGroup characterInitiativeCard = new InitiativeDisplayGroup("New Character " + (listsize+1), getInitiativeManager());
-				characterInitiativeCard.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));
-				controlMap.put(characterInitiativeCard.getControl(), characterInitiativeCard);
-				idgList.add(characterInitiativeCard);
+				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1));
+				idg.loadDefaultAttributes();
 				manageSizing();
 			}
 
@@ -164,7 +180,26 @@ public class InitiativeManager {
 
 		});		
 		
+		readContent();
+		
 		return imShell;
+	}
+	
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	protected InitiativeDisplayGroup addCharacterCard(String name) {
+		int listsize = controlMap.size();
+		int xPos = ANCHOR_X;
+		int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * listsize * scale));
+		InitiativeDisplayGroup characterInitiativeCard = new InitiativeDisplayGroup(name, getInitiativeManager());
+		characterInitiativeCard.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));
+		controlMap.put(characterInitiativeCard.getControl(), characterInitiativeCard);
+		idgList.add(characterInitiativeCard);
+		
+		return characterInitiativeCard;
 	}
 	
 	/**
@@ -214,18 +249,22 @@ public class InitiativeManager {
 	}
 	
 	/**
+	 * Called when a character initiative card received a mouse event.
 	 * @param childEvent
 	 */
 	public void childEventHandler(InitiativeDisplayGroup source, MouseEvent childEvent) {
 		// Point parentLoc = Display.getCurrent().map(source.getControl(), characterWindow, childEvent.x, childEvent.y);
 
-		// Report a mouse event from one child to all siblings
-		for (InitiativeDisplayGroup idg : idgList) {
-			if (!source.equals(idg)) {
-				idg.siblingEventHandler(source, childEvent);
+		if (!source.equals(priorEventSource)) {
+			// Report a mouse event from one child to all siblings, the first time it is coming from a new source.
+			for (InitiativeDisplayGroup idg : idgList) {
+				if (!source.equals(idg)) {
+					idg.siblingEventHandler(source, childEvent);
+				}
 			}
+			
+			priorEventSource = source;
 		}
-		
 	}
 	
 
@@ -361,23 +400,56 @@ public class InitiativeManager {
 	 * Saves the current configuration of the initiative board to a JSON file.
 	 */
 	public void persistContent() {
-		HashMap<String, HashMap<String, String>> persistMap = new HashMap<String, HashMap<String, String>>();
-		for (InitiativeDisplayGroup idg : idgList) {
-			HashMap<String, String> attributeList = new HashMap<String, String>();
-			for (ValueLabel attribute : idg.getAttributes()) {
-				attributeList.put(attribute.getText(), attribute.getValue());
-			}
-			persistMap.put(idg.getText(), attributeList);
-		}
-		
-		log.info(persistMap);
 		
 		try (Writer writer = new FileWriter("Output.json")) {
-		    Gson gson = new GsonBuilder().create();
-		    gson.toJson(persistMap, writer);
+		    final GsonBuilder builder = new GsonBuilder();
+		    builder.excludeFieldsWithoutExposeAnnotation();
+		    final Gson gson = builder.create();
+		    // gson.toJson(persistMap, writer);
+		    gson.toJson(this, writer);
 		} catch (IOException ie) {
 			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(ie));
 		}		
+	}
+	
+	/**
+	 * Read the prior state from the file.
+	 */
+	public void readContent() {
+		try (Reader reader = new FileReader("Output.json")) {
+		    final GsonBuilder builder = new GsonBuilder();
+		    builder.excludeFieldsWithoutExposeAnnotation();
+		    final Gson gson = builder.create();
+		    // gson.toJson(persistMap, writer);
+		    InitiativeManager dummyManager = gson.fromJson(reader, InitiativeManager.class);
+		    this.priorScale = this.scale;
+		    this.scale = dummyManager.scale;
+		    zoomSpinner.setSelection((int)(scale * 100));
+		    
+		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getInitiativeGroups()) {
+		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter());
+		    	
+		    	for (ValueLabel vl : dummyGroup.getAttributes()) {
+		    		idg.getAttributes().add(new ValueLabel(idg, vl.getName(), vl.getValue()));
+		    	}
+		    }
+		} catch (JsonSyntaxException jse) {
+			// TODO: Display error messages to the user when appropriate.
+			log.error(GameException.fullExceptionInfo(jse));
+		} catch (IOException ie) {
+			// TODO: Display error messages to the user when appropriate.
+			log.error(GameException.fullExceptionInfo(ie));
+		}
+	}
+
+	/**
+	 * Drop a character initiative group and remove resources associated with it.
+	 * @param initiativeDisplayGroup
+	 */
+	public void dropCharacter(InitiativeDisplayGroup initiativeDisplayGroup) {
+		controlMap.remove(initiativeDisplayGroup.getControl());
+		idgList.remove(initiativeDisplayGroup);
+		initiativeDisplayGroup.getControl().dispose();		
 	}
 }
