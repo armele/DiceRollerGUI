@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
+import com.deathfrog.ui.initiative.InitiativeManager;
 import com.deathfrog.utils.GameException;
 
 /**
