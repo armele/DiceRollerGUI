@@ -16,6 +16,8 @@ import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Cursor;
@@ -28,6 +30,8 @@ import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.deathfrog.utils.GameException;
@@ -48,12 +52,14 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 	protected static int UI_STATE_NORMAL = 0;
 	protected static int UI_STATE_DRAG = 1;
-	protected static int UI_STATE_NUDGEUP = -20;
-	protected static int UI_STATE_NUDGEDOWN = 20;
+	protected static int UI_STATE_NUDGEUP = -30;
+	protected static int UI_STATE_NUDGEDOWN = 30;
 
 	protected Group uiGroup = null;
 	protected Text txtTitleEdit = null;
 	protected InitiativeManager initMgr = null;
+	protected Menu contextMenu = null;
+	protected Menu attributeSubmenu = null;
 
 	@Expose(serialize = true, deserialize = true)
 	protected String character = null;
@@ -66,6 +72,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected int uiState = UI_STATE_NORMAL;
 	protected Group dragShadow = null;
 	protected Rectangle closeBox = null;
+	protected InitiativeDisplayGroup me = null;
 
 	/**
 	 * @return
@@ -93,6 +100,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 * @param parent
 	 */
 	public InitiativeDisplayGroup(String charName, InitiativeManager parent) {
+		me = this;  // Workaround since "this" cannot be referenced within anonymous classes.
 		character = charName;
 		initMgr = parent;
 		uiGroup = new Group(initMgr.getCharacterWindow(), SWT.VERTICAL);
@@ -110,11 +118,14 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			}
 		});
 
+		menuConfig();
+		
+		// Arrange the card such that attributes show in columns.
 		RowLayout cardContentLayout = new RowLayout();
 		cardContentLayout.type = SWT.VERTICAL;
 		uiGroup.setLayout(cardContentLayout);
 
-		// Set up a text edit box for changing group names.
+		// Set up a text edit box for changing character names.
 		txtTitleEdit = new Text(uiGroup, SWT.NONE);
 		txtTitleEdit.setVisible(false);
 		txtTitleEdit.addTraverseListener(new TraverseListener() {
@@ -128,7 +139,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			}
 		});
 
-		// Exclude this control from being automatically organized in the layout
+		// Exclude this title edit control from being automatically organized in the layout
 		RowData data = new RowData();
 		data.exclude = true;
 		txtTitleEdit.setLayoutData(data);
@@ -152,12 +163,93 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	}
 
 	/**
+	 * Create the right-click menus for the group.
+	 */
+	protected void menuConfig() {
+		// Set up a right-click context menu.
+		contextMenu = new Menu(getControl());
+		uiGroup.setMenu(contextMenu);
+		
+		// Menu for adding a new attribute.
+		MenuItem addAttrMenu = new MenuItem(contextMenu, SWT.CASCADE);
+		addAttrMenu.setText("Add Attribute");
+		addAttrMenu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + addAttrMenu);
+				ValueLabel vl = addAttribute(me, "New Attribute", "");
+				vl.editName(true);
+			}
+		});			
+		
+		MenuItem removeChar = new MenuItem(contextMenu, SWT.CASCADE);
+		removeChar.setText("Remove Character");
+		removeChar.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + removeChar);
+				initMgr.removeCharacterCard(me);
+			}
+		});
+		
+		// Menu for removing attributes
+		MenuItem remAttrMenu = new MenuItem(contextMenu, SWT.CASCADE);
+		remAttrMenu.setText("Remove Attribute");
+		attributeSubmenu = new Menu(contextMenu);
+		remAttrMenu.setMenu(attributeSubmenu);
+		remAttrMenu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + remAttrMenu);
+			}
+		});
+	
+	}
+	
+	/**
 	 * @return
 	 */
 	public String getCharacter() {
 		return character;
 	}
 
+	/**
+	 * Add a new attribute to the collect, and handle any setup necessary.
+	 * 
+	 * @param parent
+	 * @param label
+	 * @param value
+	 * @return
+	 */
+	public ValueLabel addAttribute(InitiativeDisplayGroup parent, String label, String value) {
+		ValueLabel newAttr = new ValueLabel(parent, label, value);
+		newAttr.setMenu(contextMenu);
+		attributes.add(newAttr);
+		
+		MenuItem attribute = new MenuItem(attributeSubmenu, SWT.CASCADE);
+		attribute.setText(newAttr.getName());
+		attribute.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + attribute);
+				removeAttribute(newAttr);
+			}
+		});
+		
+		return newAttr;
+	}
+	
+	/**
+	 * Get rid of an attribute.
+	 * @param vl
+	 */
+	public void removeAttribute(ValueLabel vl) {
+		attributes.remove(vl);
+		vl.setMenu(null);
+		vl.getValueLabelControl().setVisible(false);
+		vl.getValueLabelControl().dispose();
+	}
+	
 	/**
 	 * Reads the default initiative attributes from a file and sets up empty
 	 * labels for them.
@@ -173,7 +265,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				log.info(je);
 				if (je.isJsonObject()) {
 					String attribute = je.getAsJsonObject().get("label").getAsString();
-					attributes.add(new ValueLabel(this, attribute, ""));
+					addAttribute(this, attribute, "");
 				}
 			}
 		} catch (FileNotFoundException fe) {
@@ -217,7 +309,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 */
 	@Override
 	public void mouseDown(MouseEvent e) {
-		log.debug(e);
+		// log.debug(e);
 		Point pt = new Point(e.x, e.y);
 		Device device = Display.getCurrent();
 
@@ -354,8 +446,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 * @param childEvent
 	 */
 	public void siblingEventHandler(InitiativeDisplayGroup source, MouseEvent childEvent) {
-		attributeEditEvent(null); // Any mouse event from a sibling should end
-									// in edits in progress.
+		log.debug("Sibling event handler: " + childEvent);
+		attributeEditEvent(null); // Any mouse event from a sibling should end in edits in progress.
 		txtTitleEdit.setVisible(false); // And stop an in-progress name edit.
 	}
 
@@ -410,7 +502,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected void attributeEditEvent(ValueLabel source) {
 		for (ValueLabel vl : attributes) {
 			if (!vl.equals(source)) {
-				vl.editMode(false);
+				vl.editValue(false);
+				vl.editName(false);
 			}
 		}
 	}

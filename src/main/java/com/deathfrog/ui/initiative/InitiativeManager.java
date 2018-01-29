@@ -52,7 +52,7 @@ public class InitiativeManager {
 	protected int ANCHOR_X = 50;
 	protected int ANCHOR_Y = 10;
 	protected double CARD_WIDTH = 320.0;
-	protected double CARD_HEIGHT = 80.0;
+	protected double CARD_HEIGHT = 90.0;
 	protected double FONT_HEIGHT = 12.0;
 	protected int CONTROLBAR_HEIGHT = 40;
 	
@@ -229,7 +229,7 @@ public class InitiativeManager {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				if (turnIndex == 0) {
-					turnIndex = idgList.size();
+					turnIndex = idgList.size() - 1;
 				} else {
 					turnIndex--;
 				}
@@ -361,6 +361,7 @@ public class InitiativeManager {
 			// Report a mouse event from one child to all siblings, the first time it is coming from a new source.
 			for (InitiativeDisplayGroup idg : idgList) {
 				if (!source.equals(idg)) {
+					log.debug("childEventHandler: " + source);
 					idg.siblingEventHandler(source, childEvent);
 				}
 			}
@@ -544,8 +545,9 @@ public class InitiativeManager {
 		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter());
 		    	
 		    	for (ValueLabel vl : dummyGroup.getAttributes()) {
-		    		idg.getAttributes().add(new ValueLabel(idg, vl.getName(), vl.getValue()));
+		    		idg.addAttribute(idg, vl.getName(), vl.getValue());
 		    	}
+		    	idg.requestLayout(scale);
 		    }
 		    
 		    manageSizing();

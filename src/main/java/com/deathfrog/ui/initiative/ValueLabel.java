@@ -3,6 +3,8 @@ package com.deathfrog.ui.initiative;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.TraverseEvent;
@@ -14,6 +16,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 
 import com.deathfrog.utils.ui.SWTResourceManager;
@@ -31,7 +34,8 @@ public class ValueLabel {
 	
 	@Expose(serialize = true, deserialize = true)
 	protected String name;
-	protected Label lblText;
+	protected Text txtName;
+	protected Label lblName;
 	
 	@Expose(serialize = true, deserialize = true)
 	protected String value; 
@@ -46,18 +50,42 @@ public class ValueLabel {
 	 * @param value
 	 */
 	public ValueLabel(InitiativeDisplayGroup parent, String attr, String val) {
-		ValueLabel me = this;  // Workaround for anonymous classes not being able to reference "this" within it.
 		initiativeCard = parent;
 		name = attr;
 		value = val;
 		
-        /* Prototype code for value labels */
+		// A value label is made up of a label component and two forms of value component (non-editable value
+		// and editable value.  Only one of the editable/non-editable pair of controls will be visible at the same time.
 		valueLabelControl = new Composite((Composite)initiativeCard.getControl(), SWT.NONE);
-        lblText = new Label(valueLabelControl, SWT.NONE);
-        lblText.setText(name);
+		valueLabelControl.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				txtName.dispose();
+				lblName.dispose();
+				lblValue.dispose();
+				txtValue.dispose();
+			}
+		}); 
+		
+		configureLabels();
+		configureTextboxes();
+        
+        positionControls(1.0);
+	}
+	
+	/**
+	 * Configure the controls that are for displaying information (not editing)
+	 */
+	protected void configureLabels() {
+		ValueLabel me = this;  // Workaround for anonymous classes not being able to reference "this" within it.
+		// Set up name controls.
+		lblName = new Label(valueLabelControl, SWT.NONE);
+		lblName.setText(name);
+
         
         // If the user clicks an attribute label, give them edit ability for the attribute value.
-        lblText.addMouseListener(new MouseListener() {
+		lblName.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
@@ -65,9 +93,11 @@ public class ValueLabel {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				log.debug("Edit mode enabled from label.");
-				initiativeCard.attributeEditEvent(me);
-				editMode(true);
+				if (initiativeCard.getUiState() == InitiativeDisplayGroup.UI_STATE_NORMAL && e.button == InitiativeDisplayGroup.LEFT_BUTTON) {
+					log.debug("Edit mode enabled from label.");
+					initiativeCard.attributeEditEvent(me);
+					editValue(true);
+				}
 			}
 
 			@Override
@@ -79,7 +109,6 @@ public class ValueLabel {
         
         lblValue = new Label(valueLabelControl, SWT.NONE);
         lblValue.setText(value);
-  
         
         // If the user clicks an attribute value, give them edit ability for that value.        
         lblValue.addMouseListener(new MouseListener() {
@@ -90,18 +119,45 @@ public class ValueLabel {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				log.debug("Edit mode enabled from value.");
-				editMode(true);
+				if (initiativeCard.getUiState() == InitiativeDisplayGroup.UI_STATE_NORMAL && e.button == InitiativeDisplayGroup.LEFT_BUTTON) {
+					log.debug("Edit mode enabled from value.");
+					initiativeCard.attributeEditEvent(me);
+					editValue(true);
+				}
 			}
 
 			@Override
 			public void mouseUp(MouseEvent e) {
 			}
 
-		});	        
+		});	    		
+	}
+	
+	/**
+	 * Configure the controls that are for data entry.
+	 */
+	protected void configureTextboxes() {
+		ValueLabel me = this;  // Workaround for anonymous classes not being able to reference "this" within it.
+        txtName = new Text(valueLabelControl, SWT.NONE);
+        txtName.setText(name);
+        txtName.setVisible(false);
+        // When the user is finished typing an attribute name in, end the editing function by hiding the entry box and re-showing the label.
+        txtName.addTraverseListener(new TraverseListener() {
+
+			@Override
+			public void keyTraversed(TraverseEvent e) {
+				if (e.getSource().equals(txtName)){
+					log.debug("Ending name edit mode - Return.");
+					editName(false);
+					editValue(true);
+				}
+			}
+
+
+		});	   
         
         txtValue = new Text(valueLabelControl, SWT.NONE);
-        txtValue.setText(lblValue.getText());
+        txtValue.setText(value);
         txtValue.setVisible(false);
         
         // When the user is finished typing an attribute value in, end the editing function by hiding the entry box and re-showing the label.
@@ -111,18 +167,18 @@ public class ValueLabel {
 			public void keyTraversed(TraverseEvent e) {
 				if (e.getSource().equals(txtValue) && e.detail == SWT.TRAVERSE_RETURN){
 					log.debug("Ending edit mode - Return.");
-					editMode(false);
+					editValue(false);
 				}
 				
 				if (e.getSource().equals(txtValue) && e.detail == SWT.TRAVERSE_TAB_NEXT){
 					log.debug("Ending edit mode - Tab.");
-					editMode(false);
+					editValue(false);
 					
 					boolean nextAttribute = false;
-					for (ValueLabel lbl : parent.getAttributes()) {
+					for (ValueLabel lbl : initiativeCard.getAttributes()) {
 						if (nextAttribute == true) {
 							log.debug("Tabbing to next attribute.");
-							lbl.editMode(true);
+							lbl.editValue(true);
 							break;
 						}
 						if (lbl.equals(me)) {
@@ -134,19 +190,39 @@ public class ValueLabel {
 			}
 
 
-		});	          
-        
-        positionControls(1.0);
+		});	    		
+	}	
+	
+	/**
+	 * Toggles the edit mode for attribute name.
+	 */
+	protected void editName(boolean isEdit) {
+		log.debug("Start name edits: " + isEdit);
+		
+		if (isEdit) {
+			lblName.setVisible(false);
+			txtName.setVisible(true);
+			txtName.setFocus();
+			txtName.selectAll();
+			txtName.redraw();
+		} else {
+			name = txtName.getText();
+			lblName.setText(name);
+			txtName.setVisible(false);
+			lblName.setVisible(true);
+			positionControls(currentScale);
+		}
 	}
 	
 	/**
-	 * Toggles the edit mode for labels.
+	 * Toggles the edit mode for attribute values.
 	 */
-	protected void editMode(boolean isEdit) {
+	protected void editValue(boolean isEdit) {
 		if (isEdit) {
 			lblValue.setVisible(false);
 			txtValue.setVisible(true);
 			txtValue.setFocus();
+			txtValue.selectAll();
 			txtValue.redraw();
 		} else {
 			value = txtValue.getText();
@@ -162,19 +238,21 @@ public class ValueLabel {
 	 */
 	public void positionControls(double scale) {
 		currentScale = scale;
-		FontData[] fD = lblText.getFont().getFontData();
+		FontData[] fD = lblName.getFont().getFontData();
 		 // Note that scaling the font and then measuring by the font eliminates the need to scale the controls any other way.
 		fD[0].setHeight((int) (LBL_FONT_HEIGHT * scale)); 
 		
-		SWTResourceManager.releaseFontResource(lblText.getFont());
-		lblText.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));
+		SWTResourceManager.releaseFontResource(lblName.getFont());
+		lblName.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));
 		
-        GC gc = new GC(lblText);
-        Point labelSize = gc.textExtent(lblText.getText());
+        GC gc = new GC(lblName);
+        Point labelSize = gc.textExtent(lblName.getText());
         gc.dispose ();
         
-        lblText.setBounds(0, 0, labelSize.x, labelSize.y);
+        lblName.setBounds(0, 0, labelSize.x, labelSize.y);
         
+		SWTResourceManager.releaseFontResource(txtName.getFont());
+		txtName.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));        
 		SWTResourceManager.releaseFontResource(lblValue.getFont());
 		lblValue.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));
 		SWTResourceManager.releaseFontResource(txtValue.getFont());
@@ -182,15 +260,19 @@ public class ValueLabel {
         
         gc = new GC(lblValue);
         Point valueSize = gc.textExtent(lblValue.getText());
+        Point nameSize = gc.textExtent(lblName.getText());
         gc.dispose ();
         
-        Rectangle editTrim = txtValue.computeTrim(0, 0, valueSize.x, valueSize.y);
+        Rectangle nameTrim = txtName.computeTrim(0, 0, nameSize.x, nameSize.y);
+        txtName.setBounds(0, 0, Math.max(nameTrim.width, TXT_MINEDITSIZE), nameTrim.height);
         
+        Rectangle editTrim = txtValue.computeTrim(0, 0, valueSize.x, valueSize.y);
         lblValue.setBounds(labelSize.x + LBL_PAD, 0, Math.max(valueSize.x, LBL_PAD), valueSize.y);     
         txtValue.setBounds(labelSize.x + LBL_PAD, 0, Math.max(editTrim.width, TXT_MINEDITSIZE), editTrim.height);
        
         valueLabelControl.requestLayout();
-        lblText.requestLayout();
+        txtName.requestLayout();
+        lblName.requestLayout();
         lblValue.requestLayout();
         txtValue.requestLayout();
 	}
@@ -208,7 +290,7 @@ public class ValueLabel {
 	 */
 	public void setAttribute(String labelText) {
 		name = labelText;
-		lblText.setText(name);
+		lblName.setText(name);
 	}
 
 	/**
@@ -232,6 +314,16 @@ public class ValueLabel {
 	 */
 	public Composite getValueLabelControl() {
 		return valueLabelControl;
+	}
+
+	/**
+	 * Set up the child controls with a menu
+	 * @param contextMenu
+	 */
+	public void setMenu(Menu contextMenu) {
+		lblName.setMenu(contextMenu);
+		lblValue.setMenu(contextMenu);
+		valueLabelControl.setMenu(contextMenu);
 	}
 
 }
