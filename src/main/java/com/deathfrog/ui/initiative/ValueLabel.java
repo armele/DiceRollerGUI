@@ -26,7 +26,7 @@ public class ValueLabel {
 	protected static Logger log = LogManager.getLogger(ValueLabel.class);
 	private static final int LBL_PAD = 5;
 	private static final int TXT_MINEDITSIZE = 25;
-	private static final int LBL_FONT_HEIGHT = 10;
+	static final int LBL_FONT_HEIGHT = 8;
 	
 	protected Font fontCreatedForScaling = null;  // Track for disposal
 	protected InitiativeDisplayGroup initiativeCard = null;
@@ -197,7 +197,7 @@ public class ValueLabel {
 	 * Toggles the edit mode for attribute name.
 	 */
 	protected void editName(boolean isEdit) {
-		log.debug("Start name edits: " + isEdit);
+		// log.debug("Start name edits: " + isEdit);
 		
 		if (isEdit) {
 			lblName.setVisible(false);

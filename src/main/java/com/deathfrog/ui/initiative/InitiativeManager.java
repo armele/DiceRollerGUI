@@ -1,6 +1,8 @@
 package com.deathfrog.ui.initiative;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,11 +11,15 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.TreeMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -38,6 +44,8 @@ import com.deathfrog.utils.ui.LaunchPad;
 import com.deathfrog.utils.ui.SWTResourceManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.Expose;
 
@@ -70,6 +78,7 @@ public class InitiativeManager {
 	protected ScrolledComposite viewPort = null;
 	protected Composite characterWindow = null;
 	protected HashMap<Control, InitiativeDisplayGroup> controlMap = new HashMap<Control, InitiativeDisplayGroup>();
+	protected TreeMap<String, String> statusMetadata = new TreeMap<String, String>();
 	protected Image turnArrow = null;
 	
 	@Expose(serialize = true, deserialize = true)
@@ -82,6 +91,13 @@ public class InitiativeManager {
 	 */
 	protected InitiativeManager getInitiativeManager() {
 		return this;
+	}
+	
+	/**
+	 * @return
+	 */
+	public TreeMap<String, String> getStatusMetadata() {
+		return statusMetadata;
 	}
 	
 	/**
@@ -142,6 +158,15 @@ public class InitiativeManager {
 				
 			}});
 		
+		// Clean up after ourselves...
+		imShell.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				SWTResourceManager.disposeAll();
+			}
+		});
+		
 		Button addPlayer = new Button(imShell, SWT.NONE);
 		addPlayer.setBounds(14, 14, 120, 20);
 		addPlayer.setText("Add Character");
@@ -182,10 +207,25 @@ public class InitiativeManager {
 
 			@Override
 			public void paintControl(PaintEvent pEv) {
-				Control turnCtl = idgList.get(turnIndex).getControl();
-				Rectangle idgSpot = turnCtl.getBounds();
-				pEv.gc.drawImage(getTurnArrow(),0,idgSpot.y + 10);
-				viewPort.showControl(turnCtl);
+				// If a card has been deleted out of the initiative list, the
+				// arrow index must be reset to be no further along than the last card.
+				if (turnIndex >= idgList.size()) {
+					turnIndex = idgList.size() - 1;
+				}
+				
+				// If we have an empty list, don't try to paint an initiative arrow.
+				if (idgList.size() != 0) {
+					
+					// The first card added to a list will automatically be the one with the active turn.
+					if (turnIndex < 0) {
+						turnIndex = 0;
+					}
+					
+					Control turnCtl = idgList.get(turnIndex).getControl();
+					Rectangle idgSpot = turnCtl.getBounds();
+					pEv.gc.drawImage(getTurnArrow(),0,idgSpot.y + 10);
+					viewPort.showControl(turnCtl);
+				}
 			}}); 
 
 		
@@ -207,8 +247,7 @@ public class InitiativeManager {
 			@Override
 			public void mouseDown(MouseEvent e) {
 				int listsize = controlMap.size();
-				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1));
-				idg.loadDefaultAttributes();
+				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1), null);
 				manageSizing();
 				idg.editTitle();
 			}
@@ -278,17 +317,30 @@ public class InitiativeManager {
 	/**
 	 * Add a new character card to the list.
 	 * @param name
+	 * @param arrayList 
 	 * @return
 	 */
-	protected InitiativeDisplayGroup addCharacterCard(String name) {
+	protected InitiativeDisplayGroup addCharacterCard(String name, ArrayList<ValueLabel> attributeList) {
+		log.debug("Adding card: " + name);
 		int listsize = controlMap.size();
 		int xPos = ANCHOR_X;
 		int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * listsize * scale));
 		InitiativeDisplayGroup characterInitiativeCard = new InitiativeDisplayGroup(name, getInitiativeManager());
 		characterInitiativeCard.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));
 		controlMap.put(characterInitiativeCard.getControl(), characterInitiativeCard);
-		idgList.add(characterInitiativeCard);
+		
+		if (attributeList == null) {
+			characterInitiativeCard.loadDefaultAttributes();
+		} else {
+	    	for (ValueLabel vl : attributeList) {
+	    		characterInitiativeCard.addAttribute(characterInitiativeCard, vl.getName(), vl.getValue());
+	    	}
+		}
+		
 		scaleControl(characterInitiativeCard.getControl(), scale);
+		characterInitiativeCard.requestLayout(scale);
+		idgList.add(characterInitiativeCard);
+
 		
 		return characterInitiativeCard;
 	}
@@ -529,6 +581,8 @@ public class InitiativeManager {
 	 * Read the prior state from the file.
 	 */
 	public void readContent() {
+		loadStatuses();
+		
 		// TODO: Make save state file name configurable.
 		try (Reader reader = new FileReader("Output.json")) {
 		    final GsonBuilder builder = new GsonBuilder();
@@ -542,11 +596,14 @@ public class InitiativeManager {
 		    zoomSpinner.setSelection((int)(scale * 100));
 		    
 		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getInitiativeGroups()) {
-		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter());
+		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes());
 		    	
-		    	for (ValueLabel vl : dummyGroup.getAttributes()) {
-		    		idg.addAttribute(idg, vl.getName(), vl.getValue());
+		    	if (dummyGroup.statuses != null) {
+			    	for (String status : dummyGroup.statuses.keySet()) {
+			    		idg.toggleStatus(status, statusMetadata.get(status));
+			    	}
 		    	}
+		    	
 		    	idg.requestLayout(scale);
 		    }
 		    
@@ -561,5 +618,34 @@ public class InitiativeManager {
 		}
 	}
 
+	/**
+	 * Set up the status metadata.
+	 */
+	public void loadStatuses() {
+		// Load attributes for this initiative card from the default file.
 
+		try {
+			// TODO: Make default property file name configurable.
+			Scanner statusFile = new Scanner(new File("DefaultAttributes.json"));
+			if (statusFile != null) {
+				JsonArray ja = InitiativeDisplayGroup.readJsonStream(statusFile, "statuses");
+				log.info(ja);
+				for (JsonElement je : ja) {
+					log.info(je);
+					if (je.isJsonObject()) {
+						String color = je.getAsJsonObject().get("color").getAsString();
+						String text = je.getAsJsonObject().get("text").getAsString();
+						
+						statusMetadata.put(text, color);
+					}
+				}
+			}
+		} catch (FileNotFoundException fe) {
+			// TODO: Display error messages to the user when appropriate.
+			log.error(GameException.fullExceptionInfo(fe));
+		} catch (IOException ie) {
+			// TODO: Display error messages to the user when appropriate.
+			log.error(GameException.fullExceptionInfo(ie));
+		}
+	}
 }

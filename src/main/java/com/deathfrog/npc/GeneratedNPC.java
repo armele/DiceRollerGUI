@@ -8,8 +8,8 @@ import java.util.HashMap;
  * TODO: Alignment
  * DONE: Pastable format
  * TODO: Make age optional
- * TODO: CMB / CMD
- * TODO: BAB
+ * DONE: CMB / CMD
+ * DONE: BAB
  * DONE: Hit Points
  * DONE: Civilian Classes
  * 
@@ -198,6 +198,9 @@ public class GeneratedNPC {
 			if (level != null) {
 				sb.append("Level ");
 				sb.append(level);
+				sb.append(" [BAB: ").append(pfClass.getBabForLevel(level));
+				sb.append(", CMB: ").append(getCMB()).append(", CMD: ").append(getCMD());
+				sb.append("]");
 				sb.append(", HP: ");
 				sb.append(hitpoints);
 			}
@@ -217,5 +220,21 @@ public class GeneratedNPC {
 		sb.append(")");
 		
 		return sb.toString();
+	}
+	
+	// CMB = Base attack bonus + Strength modifier + special size modifier
+	public int getCMB( ) {
+		int bab = pfClass.getBabForLevel(level);
+		int strModifier = EStat.bonus(this.getStatValue(EStat.STR));
+		return (bab + strModifier + 0);
+		
+	}
+	
+	// CMD = 10 + Base attack bonus + Strength modifier + Dexterity modifier + special size modifier + miscellaneous modifiers
+	public int getCMD() {
+		int bab = pfClass.getBabForLevel(level);
+		int strModifier = EStat.bonus(this.getStatValue(EStat.STR));
+		int dexModifier = EStat.bonus(this.getStatValue(EStat.DEX));
+		return (10 + bab + strModifier + dexModifier + 0);
 	}
 }

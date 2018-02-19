@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
@@ -20,10 +21,12 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
@@ -35,6 +38,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.deathfrog.utils.GameException;
+import com.deathfrog.utils.ui.SWTResourceManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -54,19 +58,24 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected static int UI_STATE_DRAG = 1;
 	protected static int UI_STATE_NUDGEUP = -30;
 	protected static int UI_STATE_NUDGEDOWN = 30;
+	
+	protected static int CLOSE_BOX_SIZE = 14;
 
 	protected Group uiGroup = null;
 	protected Text txtTitleEdit = null;
 	protected InitiativeManager initMgr = null;
 	protected Menu contextMenu = null;
 	protected Menu attributeSubmenu = null;
-
+	protected Menu statusSubmenu = null;
+	
 	@Expose(serialize = true, deserialize = true)
 	protected String character = null;
 	
 	@Expose(serialize = true, deserialize = true)
 	protected ArrayList<ValueLabel> attributes = new ArrayList<ValueLabel>();
-
+	@Expose(serialize = true, deserialize = true)
+	protected HashMap<String, StatusLabel> statuses = new HashMap<String, StatusLabel>();
+	
 	protected Point priorLoc = null; // Tracked in the Parent coordinate grid
 										// (InitiativeManager)
 	protected int uiState = UI_STATE_NORMAL;
@@ -148,14 +157,21 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		uiGroup.addPaintListener(new PaintListener() {
 			public void paintControl(PaintEvent e) {
 				// Set up the area which represents the close box.
-				int boxsize = (int) (14 * parent.getScale());
+				int boxsize = (int) (CLOSE_BOX_SIZE * parent.getScale());
 				Rectangle clientArea = uiGroup.getClientArea();
 				closeBox = new Rectangle(clientArea.width + clientArea.x - boxsize,
 						(int) (e.gc.getFontMetrics().getHeight() / 2), boxsize, boxsize);
 				e.gc.drawRectangle(closeBox);
+				
 				// Drawn an "X" in the rectangle just created.
 				e.gc.drawLine(closeBox.x, closeBox.y, closeBox.x + closeBox.width, closeBox.y + closeBox.height);
 				e.gc.drawLine(closeBox.x, closeBox.y + closeBox.height, closeBox.x + closeBox.width, closeBox.y);
+				
+				// Draw any status labels that apply
+				Point startLoc = new Point(uiGroup.getSize().x - (closeBox.width + 10), (int) (10 * parent.getScale()));
+				for (StatusLabel statLbl : statuses.values()) {
+					startLoc = statLbl.paint(e, parent.getScale(), startLoc);
+				}
 				
 			}
 		});
@@ -169,6 +185,17 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		// Set up a right-click context menu.
 		contextMenu = new Menu(getControl());
 		uiGroup.setMenu(contextMenu);
+		
+		// Menu for editing the name.
+		MenuItem addEditTitleMenu = new MenuItem(contextMenu, SWT.CASCADE);
+		addEditTitleMenu.setText("Edit Character Name");
+		addEditTitleMenu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + addEditTitleMenu);
+				editTitle();
+			}
+		});	
 		
 		// Menu for adding a new attribute.
 		MenuItem addAttrMenu = new MenuItem(contextMenu, SWT.CASCADE);
@@ -203,7 +230,21 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				log.debug("Selected: " + remAttrMenu);
 			}
 		});
-	
+		
+		// Menu for adding statuses
+		MenuItem statusMenu = new MenuItem(contextMenu, SWT.CASCADE);
+		statusMenu.setText("Toggle Status");
+		statusSubmenu = new Menu(contextMenu);
+		statusMenu.setMenu(statusSubmenu);
+		statusMenu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + statusMenu);
+			}
+		});
+		
+		loadStatusMenu();
+		
 	}
 	
 	/**
@@ -236,6 +277,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			}
 		});
 		
+		newAttr.positionControls(initMgr.getScale());
+		
 		return newAttr;
 	}
 	
@@ -259,13 +302,16 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 		try {
 			// TODO: Make default property file name configurable.
-			Scanner attributeFile = new Scanner(new File("InitiativeAttributes.json"));
-			JsonArray ja = readJsonStream(attributeFile);
-			for (JsonElement je : ja) {
-				log.info(je);
-				if (je.isJsonObject()) {
-					String attribute = je.getAsJsonObject().get("label").getAsString();
-					addAttribute(this, attribute, "");
+			Scanner attributeFile = new Scanner(new File("DefaultAttributes.json"));
+			if (attributeFile != null) {
+				JsonArray ja = readJsonStream(attributeFile, "attributes");
+				log.info(ja);
+				for (JsonElement je : ja) {
+					log.info(je);
+					if (je.isJsonObject()) {
+						String attribute = je.getAsJsonObject().get("label").getAsString();
+						addAttribute(this, attribute, "");
+					}
 				}
 			}
 		} catch (FileNotFoundException fe) {
@@ -276,7 +322,53 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			log.error(GameException.fullExceptionInfo(ie));
 		}
 	}
+	
+	/**
+	 * Set up the possible statuses that can be applied to a character.
+	 */
+	public void loadStatusMenu() {
+		// Load attributes for this initiative card from the status metadata.
+		for (String text : initMgr.getStatusMetadata().keySet()) {
+			String color = initMgr.getStatusMetadata().get(text);
+			MenuItem miStatus = new MenuItem(statusSubmenu, SWT.CASCADE);
+			miStatus.setText(text);
+			miStatus.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					log.debug("Selected: " + miStatus);
+					toggleStatus(text, color);
+				}
+			});
+		}
+	}
 
+	/**
+	 * @param text
+	 */
+	protected void toggleStatus(String text, String color) {
+		if (statuses.containsKey(text)) {
+			StatusLabel removedStatus = statuses.remove(text);
+			SWTResourceManager.releaseColorResource(removedStatus.getColor());
+		} else {
+			StatusLabel addedStatus = new StatusLabel(this);
+			addedStatus.setLabel(text);
+			String[] rgb = color.split(",");
+			RGB colorspec = new RGB(new Integer(rgb[0]), new Integer(rgb[1]), new Integer(rgb[2]));
+			Color newColor = SWTResourceManager.createColorResource(this.getControl().getDisplay(), colorspec);
+			addedStatus.setColor(newColor);
+			statuses.put(text, addedStatus);
+		}
+		
+		//layout of parent works
+		uiGroup.getParent().layout(true, true);
+
+		//marks the composite's screen are as invalidates, which will force a redraw on next paint request 
+		uiGroup.redraw(); 
+
+		//tells the application to do all outstanding paint requests immediately
+		uiGroup.update(); 
+	}
+	
 	/**
 	 * set the title box active for editing.
 	 */
@@ -297,7 +389,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 */
 	@Override
 	public void mouseDoubleClick(MouseEvent e) {
-		editTitle();
+		// no-op
 	}
 
 	/*
@@ -313,14 +405,16 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		Point pt = new Point(e.x, e.y);
 		Device device = Display.getCurrent();
 
-		// Right click to edit title
+		/*
+		// Right click in the name box to edit title
 		if (uiState == UI_STATE_NORMAL && e.button == RIGHT_BUTTON) {
 			log.debug(txtTitleEdit.getBounds());
 			if (txtTitleEdit.getBounds().contains(pt)) {
 				editTitle();
 			}
 		}
-
+		*/
+		
 		// A left-mouse click while no drag action is occurring initiates a drag
 		// action.
 		if (uiState == UI_STATE_NORMAL && e.button == LEFT_BUTTON) {
@@ -419,6 +513,19 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 			priorLoc = eventPt;
 			dragShadow.requestLayout();
+		} else {
+			boolean found = false;
+			for (StatusLabel statLbl : statuses.values()) {
+				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
+					uiGroup.setToolTipText(statLbl.getLabel());
+					found = true;
+					break;
+				}
+			}
+			
+			if (!found) {
+				uiGroup.setToolTipText(null);
+			}
 		}
 
 		initMgr.childEventHandler(this, e);
@@ -478,7 +585,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 * @return
 	 * @throws IOException
 	 */
-	protected JsonArray readJsonStream(Scanner in) throws IOException {
+	protected static JsonArray readJsonStream(Scanner in, String arrayName) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		while (in.hasNext()) {
 			sb.append(in.next());
@@ -488,7 +595,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		JsonParser parser = new JsonParser();
 		JsonElement element = parser.parse(sb.toString());
 		JsonObject jobject = element.getAsJsonObject();
-		JsonArray jarray = jobject.getAsJsonArray("attributes");
+		JsonArray jarray = jobject.getAsJsonArray(arrayName);
 
 		return jarray;
 	}

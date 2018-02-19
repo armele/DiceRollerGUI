@@ -158,4 +158,19 @@ public class SWTResourceManager {
 		return refCount;
 	}
 	
+	/**
+	 * Disposes of all managed resources remaining.
+	 */
+	public static void disposeAll() {
+		for (Font f : fontResources.values()) {
+			f.dispose();
+		}
+		fontResources.clear();
+		
+		for (Color c : colorResources.values()) {
+			c.dispose();
+		}
+		colorResources.clear();
+	}
+	
 }

@@ -36,6 +36,7 @@ public class NpcPersistor {
 	public final String XML_AGE = "age";
 	public final String XML_MIN = "min";
 	public final String XML_MAX = "max";
+	public final String XML_BAB = "bab";
 	public final String XML_STATADUSTMENT = "statadjustment";
 	public final String XML_HITDICE = "hitdice";
 	
@@ -280,6 +281,14 @@ public class NpcPersistor {
 				for (String stat : statOrder) {
 					pfClass.setStatPriority(j, EStat.statForString(stat));
 					j++;
+				}
+			} else if (XML_BAB.equalsIgnoreCase(n.getNodeName())) {
+				String babProgression = n.getFirstChild().getNodeValue();
+				String babArray[] = babProgression.split(",");
+				int level = 1;
+				for (String bab : babArray) {
+					pfClass.setBabForLevel(level, new Integer(bab));
+					level++;
 				}
 			} else if (XML_HITDICE.equalsIgnoreCase(n.getNodeName())) {
 				pfClass.setHitdice(new Integer(n.getFirstChild().getNodeValue()));

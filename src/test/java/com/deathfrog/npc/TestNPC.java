@@ -43,6 +43,10 @@ public class TestNPC {
 				Assert.assertEquals(EStat.INT, pc.getStatPriority(5));
 				
 				Assert.assertEquals(12, pc.getHitdice());
+				
+				for (int i = 1; i <= 20; i++) {
+					Assert.assertEquals(i, pc.getBabForLevel(i));
+				}
 			}
 		}
 		

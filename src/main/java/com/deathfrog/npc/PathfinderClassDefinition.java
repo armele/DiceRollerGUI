@@ -9,6 +9,7 @@ public class PathfinderClassDefinition {
 	protected String pathfinderClassName; 
 	protected Integer hitdice = null;
 	protected EStat[] statOrder = null;
+	protected int[] babProgression = new int[20];
 	
 	public PathfinderClassDefinition(String pathfinderClassName) {
 		this.pathfinderClassName = pathfinderClassName;
@@ -76,6 +77,22 @@ public class PathfinderClassDefinition {
 	 */
 	public void setHitdice(Integer hitdice) {
 		this.hitdice = hitdice;
+	} 
+	
+	/**
+	 * @param level
+	 * @return
+	 */
+	public int getBabForLevel(int level) {
+		return babProgression[level-1];
+	}
+	
+	/**
+	 * @param level
+	 * @param bab
+	 */
+	public void setBabForLevel(int level, int bab) {
+		babProgression[level-1] = bab;
 	}
 
 	/* (non-Javadoc)

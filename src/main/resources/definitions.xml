@@ -288,98 +288,122 @@
 	
 	<class name="Alchemist">
 		<statpriority>int,wis,cha,con,dex,str</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>
 	</class>
 	<class name="Barbarian">
 		<statpriority>str,con,dex,cha,wis,int</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>12</hitdice>
 	</class>
 	<class name="Bard">
 		<statpriority>cha,int,dex,str,con,wis</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>
 	</class>
 	<class name="Cleric">
-		<statpriority>wis,cha,con,dex,str,int</statpriority>	
+		<statpriority>wis,cha,con,dex,str,int</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>
 	</class>
 	<class name="Druid">
-		<statpriority>wis,dex,cha,con,int,str</statpriority>	
+		<statpriority>wis,dex,cha,con,int,str</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>
 	</class>
 	<class name="Fighter">
 		<statpriority>str,con,dex,cha,int,wis</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>	
 	</class>
 	<class name="Mageslayer">
 		<statpriority>dex,str,con,wis,int,cha</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>	
 	</class>				
 	<class name="Monk">
 		<statpriority>dex,wis,con,int,str,cha</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice> 	
 	</class>
 	<class name="Paladin">
 		<statpriority>cha,str,con,dex,wis,int</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>	
 	</class>
 	<class name="Ranger">
 		<statpriority>dex,str,wis,cha,con,int</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>	
 	</class>
 	<class name="Rogue">
 		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>	
 	</class>
 	<class name="Sorcerer">
 		<statpriority>cha,dex,int,str,con,wis</statpriority>
+		<bab>0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10</bab>
 		<hitdice>6</hitdice>	
 	</class>
 	<class name="Wizard">
 		<statpriority>int,dex,con,wis,str,cha</statpriority>
+		<bab>0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10</bab>
 		<hitdice>6</hitdice>	
 	</class>
 	<class name="Arcanist">
 		<statpriority>int,dex,con,wis,str,cha</statpriority>
+		<bab>0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10</bab>
 		<hitdice>6</hitdice>		
 	</class>
 	<class name="Bloodrager">
 		<statpriority>con,cha,dex,str,wis,int</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>		
 	</class>
 	<class name="Brawler">
 		<statpriority>str,con,dex,cha,int,wis</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>	
 	</class>
 	<class name="Hunter">
 		<statpriority>dex,str,wis,cha,con,int</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>		
 	</class>
 	<class name="Investigator">
 		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>	
 	</class>
 	<class name="Shaman">
 		<statpriority>wis,dex,cha,con,int,str</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>	
 	</class>				
 	<class name="Skald">
-		<statpriority>cha,str,dex,con,int,wis</statpriority>	
+		<statpriority>cha,str,dex,con,int,wis</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>	
 		<hitdice>8</hitdice>
 	</class>
 	<class name="Slayer">
 		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>	
 	</class>
 	<class name="Swashbuckler">
 		<statpriority>dex,int,str,cha,con,wis</statpriority>
+		<bab>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20</bab>
 		<hitdice>10</hitdice>
 	</class>
 	<class name="Warpriest">
 		<statpriority>wis,cha,con,dex,str,int</statpriority>	
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>
 	</class>				
 	<class name="Juggernaut">
 		<statpriority>con,int,str,dex,wis,cha</statpriority>
+		<bab>0,1,2,3,3,4,5,6,6,7,8,9,9,10,11,12,12,13,14,15</bab>
 		<hitdice>8</hitdice>
 	</class>	
 
