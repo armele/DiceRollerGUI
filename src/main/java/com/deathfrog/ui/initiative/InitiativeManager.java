@@ -1,7 +1,6 @@
 package com.deathfrog.ui.initiative;
 
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -40,6 +39,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
 import com.deathfrog.utils.GameException;
+import com.deathfrog.utils.JsonUtils;
 import com.deathfrog.utils.ui.LaunchPad;
 import com.deathfrog.utils.ui.SWTResourceManager;
 import com.google.gson.Gson;
@@ -78,7 +78,7 @@ public class InitiativeManager {
 	protected ScrolledComposite viewPort = null;
 	protected Composite characterWindow = null;
 	protected HashMap<Control, InitiativeDisplayGroup> controlMap = new HashMap<Control, InitiativeDisplayGroup>();
-	protected TreeMap<String, String> statusMetadata = new TreeMap<String, String>();
+	protected TreeMap<String, StatusMetadata> statusMetadata = new TreeMap<String, StatusMetadata>();
 	protected Image turnArrow = null;
 	
 	@Expose(serialize = true, deserialize = true)
@@ -96,7 +96,7 @@ public class InitiativeManager {
 	/**
 	 * @return
 	 */
-	public TreeMap<String, String> getStatusMetadata() {
+	public TreeMap<String, StatusMetadata> getStatusMetadata() {
 		return statusMetadata;
 	}
 	
@@ -600,8 +600,9 @@ public class InitiativeManager {
 		    	
 		    	if (dummyGroup.statuses != null) {
 			    	for (String status : dummyGroup.statuses.keySet()) {
-			    		idg.toggleStatus(status, statusMetadata.get(status));
+			    		idg.toggleStatus(statusMetadata.get(status));
 			    	}
+			    	idg.syncStatusMenuState();
 		    	}
 		    	
 		    	idg.requestLayout(scale);
@@ -626,17 +627,19 @@ public class InitiativeManager {
 
 		try {
 			// TODO: Make default property file name configurable.
-			Scanner statusFile = new Scanner(new File("DefaultAttributes.json"));
+			Scanner statusFile = new Scanner(LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/DefaultAttributes.json"));
 			if (statusFile != null) {
-				JsonArray ja = InitiativeDisplayGroup.readJsonStream(statusFile, "statuses");
+				JsonArray ja = JsonUtils.readJsonStream(statusFile, "statuses");
 				log.info(ja);
 				for (JsonElement je : ja) {
 					log.info(je);
 					if (je.isJsonObject()) {
-						String color = je.getAsJsonObject().get("color").getAsString();
-						String text = je.getAsJsonObject().get("text").getAsString();
-						
-						statusMetadata.put(text, color);
+						StatusMetadata statMeta = new StatusMetadata();
+						statMeta.setColor(JsonUtils.getJsonString(je, "color"));
+						statMeta.setName(JsonUtils.getJsonString(je, "name"));
+						statMeta.setIconName(JsonUtils.getJsonString(je, "icon"));
+						statMeta.setDescription(JsonUtils.getJsonString(je, "description"));
+						statusMetadata.put(statMeta.getName(), statMeta);
 					}
 				}
 			}

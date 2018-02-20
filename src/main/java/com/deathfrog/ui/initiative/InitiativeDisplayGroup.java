@@ -1,6 +1,5 @@
 package com.deathfrog.ui.initiative;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,12 +20,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.RowData;
 import org.eclipse.swt.layout.RowLayout;
@@ -38,11 +35,11 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.deathfrog.utils.GameException;
+import com.deathfrog.utils.JsonUtils;
+import com.deathfrog.utils.ui.LaunchPad;
 import com.deathfrog.utils.ui.SWTResourceManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.annotations.Expose;
 
 /**
@@ -168,7 +165,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				e.gc.drawLine(closeBox.x, closeBox.y + closeBox.height, closeBox.x + closeBox.width, closeBox.y);
 				
 				// Draw any status labels that apply
-				Point startLoc = new Point(uiGroup.getSize().x - (closeBox.width + 10), (int) (10 * parent.getScale()));
+				Point startLoc = new Point(uiGroup.getSize().x - (closeBox.width + 5), 0);
 				for (StatusLabel statLbl : statuses.values()) {
 					startLoc = statLbl.paint(e, parent.getScale(), startLoc);
 				}
@@ -302,14 +299,14 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 		try {
 			// TODO: Make default property file name configurable.
-			Scanner attributeFile = new Scanner(new File("DefaultAttributes.json"));
+			Scanner attributeFile = new Scanner(LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/DefaultAttributes.json"));
 			if (attributeFile != null) {
-				JsonArray ja = readJsonStream(attributeFile, "attributes");
+				JsonArray ja = JsonUtils.readJsonStream(attributeFile, "attributes");
 				log.info(ja);
 				for (JsonElement je : ja) {
 					log.info(je);
 					if (je.isJsonObject()) {
-						String attribute = je.getAsJsonObject().get("label").getAsString();
+						String attribute = JsonUtils.getJsonString(je, "label");
 						addAttribute(this, attribute, "");
 					}
 				}
@@ -329,34 +326,56 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	public void loadStatusMenu() {
 		// Load attributes for this initiative card from the status metadata.
 		for (String text : initMgr.getStatusMetadata().keySet()) {
-			String color = initMgr.getStatusMetadata().get(text);
+			StatusMetadata statMeta = initMgr.getStatusMetadata().get(text);
 			MenuItem miStatus = new MenuItem(statusSubmenu, SWT.CASCADE);
 			miStatus.setText(text);
 			miStatus.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent arg0) {
 					log.debug("Selected: " + miStatus);
-					toggleStatus(text, color);
+					boolean on = toggleStatus(statMeta);
+					if (on) {
+						miStatus.setImage(StatusLabel.selectedIcon);
+					} else {
+						miStatus.setImage(StatusLabel.unselectedIcon);	
+					}
 				}
 			});
+			
 		}
 	}
 
+
+	/**
+	 * cycle through all status submenu items and set up the selected/unselected icon appropriately based on the current state.
+	 */
+	protected void syncStatusMenuState() {
+		for (MenuItem miStatus : statusSubmenu.getItems()) {
+			
+			// This allows the menu to correctly display status selection icons after initial load from save state;
+			if (me.statuses.containsKey(miStatus.getText())) {
+				miStatus.setImage(StatusLabel.selectedIcon);
+			} else {
+				miStatus.setImage(StatusLabel.unselectedIcon);	
+			}
+		}
+	}
+	
 	/**
 	 * @param text
+	 * @param color
+	 * @return
 	 */
-	protected void toggleStatus(String text, String color) {
-		if (statuses.containsKey(text)) {
-			StatusLabel removedStatus = statuses.remove(text);
-			SWTResourceManager.releaseColorResource(removedStatus.getColor());
+	protected boolean toggleStatus(StatusMetadata statMeta) {
+		boolean on = false;
+		if (statuses.containsKey(statMeta.getName())) {
+			statuses.remove(statMeta.getName());
+			SWTResourceManager.releaseColorResource(statMeta.getSWTColor(null));
 		} else {
 			StatusLabel addedStatus = new StatusLabel(this);
-			addedStatus.setLabel(text);
-			String[] rgb = color.split(",");
-			RGB colorspec = new RGB(new Integer(rgb[0]), new Integer(rgb[1]), new Integer(rgb[2]));
-			Color newColor = SWTResourceManager.createColorResource(this.getControl().getDisplay(), colorspec);
-			addedStatus.setColor(newColor);
-			statuses.put(text, addedStatus);
+			addedStatus.setStatMeta(statMeta);
+			statuses.put(statMeta.getName(), addedStatus);
+			on = true;
 		}
 		
 		//layout of parent works
@@ -367,6 +386,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 		//tells the application to do all outstanding paint requests immediately
 		uiGroup.update(); 
+		
+		return on;
 	}
 	
 	/**
@@ -404,16 +425,6 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		// log.debug(e);
 		Point pt = new Point(e.x, e.y);
 		Device device = Display.getCurrent();
-
-		/*
-		// Right click in the name box to edit title
-		if (uiState == UI_STATE_NORMAL && e.button == RIGHT_BUTTON) {
-			log.debug(txtTitleEdit.getBounds());
-			if (txtTitleEdit.getBounds().contains(pt)) {
-				editTitle();
-			}
-		}
-		*/
 		
 		// A left-mouse click while no drag action is occurring initiates a drag
 		// action.
@@ -514,13 +525,20 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			priorLoc = eventPt;
 			dragShadow.requestLayout();
 		} else {
+			// Show the tool tips for the status markers
 			boolean found = false;
 			for (StatusLabel statLbl : statuses.values()) {
 				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
-					uiGroup.setToolTipText(statLbl.getLabel());
+					uiGroup.setToolTipText(statLbl.getStatMeta().toString());
 					found = true;
 					break;
 				}
+			}
+			
+			// Show the tool tip for the close box
+			if (closeBox.contains(new Point(e.x, e.y))) {
+				uiGroup.setToolTipText("Remove this character from the board.");
+				found = true;
 			}
 			
 			if (!found) {
@@ -580,25 +598,6 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		uiGroup.requestLayout();
 	}
 
-	/**
-	 * @param in
-	 * @return
-	 * @throws IOException
-	 */
-	protected static JsonArray readJsonStream(Scanner in, String arrayName) throws IOException {
-		StringBuilder sb = new StringBuilder();
-		while (in.hasNext()) {
-			sb.append(in.next());
-		}
-		in.close();
-
-		JsonParser parser = new JsonParser();
-		JsonElement element = parser.parse(sb.toString());
-		JsonObject jobject = element.getAsJsonObject();
-		JsonArray jarray = jobject.getAsJsonArray(arrayName);
-
-		return jarray;
-	}
 
 	/**
 	 * Allows one attribute ("source") to signal the other attributes in the

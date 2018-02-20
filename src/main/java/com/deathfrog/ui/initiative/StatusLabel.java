@@ -3,59 +3,61 @@ package com.deathfrog.ui.initiative;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
+import com.deathfrog.utils.ui.LaunchPad;
 import com.google.gson.annotations.Expose;
 
 public class StatusLabel {
 	protected static int STATUS_LABEL_CORNERSIZE = 4;
-	protected static int STATUS_LABEL_SIZE = 14;
+	protected static int STATUS_LABEL_SIZE = 24;
+	public static Image selectedIcon = null;
+	public static Image unselectedIcon = null;
+	
 	
 	@Expose(serialize = true, deserialize = true)
-	protected String label = null;
-	
-	protected Color color = null;
+	protected StatusMetadata statMeta = null;
+
 	protected Rectangle statusDisplayArea = null;
 	protected InitiativeDisplayGroup parent = null;
+
 	
 	/**
 	 * @param idgParent
 	 */
 	public StatusLabel(InitiativeDisplayGroup idgParent) {
 		parent = idgParent;
+		
+		if (selectedIcon == null) {
+			selectedIcon = new Image(idgParent.getControl().getDisplay(), LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/selected.png"));
+		}
+		
+		if (unselectedIcon == null) {
+			unselectedIcon = new Image(idgParent.getControl().getDisplay(), LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/unselected.png"));
+		}
+	}
+
+	/**
+	 * @return
+	 */
+	public Rectangle getStatusDisplayArea() {
+		return statusDisplayArea;
 	}
 	
 	/**
 	 * @return
 	 */
-	public String getLabel() {
-		return label;
+	public StatusMetadata getStatMeta() {
+		return statMeta;
 	}
 
 	/**
-	 * @param label
+	 * @param statMeta
 	 */
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	/**
-	 * @return
-	 */
-	public Color getColor() {
-		return color;
-	}
-
-	/**
-	 * @param color
-	 */
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-	public Rectangle getStatusDisplayArea() {
-		return statusDisplayArea;
+	public void setStatMeta(StatusMetadata statMeta) {
+		this.statMeta = statMeta;
 	}
 
 	/**
@@ -72,32 +74,38 @@ public class StatusLabel {
 		int prevLineSize = e.gc.getLineWidth();
 		
 		// Set the foreground color
-		if (color != null) {
-			e.gc.setBackground(color);
+		if (statMeta.getColor() != null) {
+			e.gc.setBackground(statMeta.getSWTColor(parent.getControl()));
 		} else {
 			e.gc.setBackground(e.gc.getDevice().getSystemColor(SWT.COLOR_GREEN));
 		}
 		
 		statusDisplayArea = new Rectangle((int) (startLoc.x - (STATUS_LABEL_SIZE * scale)), startLoc.y, (int)(STATUS_LABEL_SIZE * scale), (int)(STATUS_LABEL_SIZE * scale));
 		
-		// Draw the filled label area
-		e.gc.fillRoundRectangle(statusDisplayArea.x, statusDisplayArea.y, 							// Upper left Corner
-				statusDisplayArea.width, statusDisplayArea.height, 		   							// width and height
-				(int)(STATUS_LABEL_CORNERSIZE * scale), (int)(STATUS_LABEL_CORNERSIZE * scale));  	// size of corner "rounding"
-		
-		
-		// Draw the black outline
-		e.gc.setLineWidth(2);
-		e.gc.setForeground(e.gc.getDevice().getSystemColor(SWT.COLOR_BLACK));
-		e.gc.drawRoundRectangle(statusDisplayArea.x, statusDisplayArea.y, 							// Upper left Corner
-				statusDisplayArea.width, statusDisplayArea.height, 		   							// width and height
-				(int)(STATUS_LABEL_CORNERSIZE * scale), (int)(STATUS_LABEL_CORNERSIZE * scale));  	// size of corner "rounding"
-		
-		// Restore the prior color settings in the graphics context
-		e.gc.setForeground(prevForeground);
-		e.gc.setBackground(prevBackground);
-		e.gc.setLineWidth(prevLineSize);
-		
+		// If no icon, use a color label.
+		if (statMeta.getIconName() == null) {
+			// Draw the filled label area
+			e.gc.fillRoundRectangle(statusDisplayArea.x, statusDisplayArea.y, 							// Upper left Corner
+					statusDisplayArea.width, statusDisplayArea.height, 		   							// width and height
+					(int)(STATUS_LABEL_CORNERSIZE * scale), (int)(STATUS_LABEL_CORNERSIZE * scale));  	// size of corner "rounding"
+			
+			
+			// Draw the black outline
+			e.gc.setLineWidth(2);
+			e.gc.setForeground(e.gc.getDevice().getSystemColor(SWT.COLOR_BLACK));
+			e.gc.drawRoundRectangle(statusDisplayArea.x, statusDisplayArea.y, 							// Upper left Corner
+					statusDisplayArea.width, statusDisplayArea.height, 		   							// width and height
+					(int)(STATUS_LABEL_CORNERSIZE * scale), (int)(STATUS_LABEL_CORNERSIZE * scale));  	// size of corner "rounding"
+			
+			// Restore the prior color settings in the graphics context
+			e.gc.setForeground(prevForeground);
+			e.gc.setBackground(prevBackground);
+			e.gc.setLineWidth(prevLineSize);
+		} else {
+			// Draw an image into the display area.
+			Image icon = statMeta.getIcon(parent.getControl());
+			e.gc.drawImage(icon, 0, 0, icon.getBounds().width, icon.getBounds().height, statusDisplayArea.x, statusDisplayArea.y, statusDisplayArea.width, statusDisplayArea.height);
+		}
 		Point endLoc = new Point(statusDisplayArea.x, statusDisplayArea.y);
 		
 		return endLoc;
