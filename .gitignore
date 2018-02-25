@@ -6,3 +6,4 @@ target/
 .externalToolBuilders/Maven_Ant_Builder.launch
 *.class
 MerisylLaunchPad.log
+Output.json
