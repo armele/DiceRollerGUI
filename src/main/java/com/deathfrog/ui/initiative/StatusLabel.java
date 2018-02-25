@@ -1,5 +1,7 @@
 package com.deathfrog.ui.initiative;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.graphics.Color;
@@ -11,6 +13,8 @@ import com.deathfrog.utils.ui.LaunchPad;
 import com.google.gson.annotations.Expose;
 
 public class StatusLabel {
+	protected static Logger log = LogManager.getLogger(StatusLabel.class);
+	
 	protected static int STATUS_LABEL_CORNERSIZE = 4;
 	protected static int STATUS_LABEL_SIZE = 24;
 	public static Image selectedIcon = null;
@@ -104,7 +108,11 @@ public class StatusLabel {
 		} else {
 			// Draw an image into the display area.
 			Image icon = statMeta.getIcon(parent.getControl());
-			e.gc.drawImage(icon, 0, 0, icon.getBounds().width, icon.getBounds().height, statusDisplayArea.x, statusDisplayArea.y, statusDisplayArea.width, statusDisplayArea.height);
+			if (icon != null) {
+				e.gc.drawImage(icon, 0, 0, icon.getBounds().width, icon.getBounds().height, statusDisplayArea.x, statusDisplayArea.y, statusDisplayArea.width, statusDisplayArea.height);
+			} else {
+				log.error("Image Missing: " + statMeta.getIconName());
+			}
 		}
 		Point endLoc = new Point(statusDisplayArea.x, statusDisplayArea.y);
 		

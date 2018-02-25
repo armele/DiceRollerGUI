@@ -95,59 +95,59 @@
 			"description":"A helpless character is paralyzed, held, bound, sleeping, unconscious, or otherwise completely at an opponent’s mercy. A helpless target is treated as having a Dexterity of 0 (–5 modifier). Melee attacks against a helpless target get a +4 bonus (equivalent to attacking a prone target). Ranged attacks get no special bonus against helpless targets."
         },
         {
-			"color":"125,10,10", "name":"Incorporeal",
+			"color":"125,10,10", "name":"Incorporeal","icon":"incorporeal.png",
 			"description":"Creatures with the incorporeal condition do not have a physical body. Incorporeal creatures are immune to all nonmagical attack forms. Incorporeal creatures take half damage (50%) from magic weapons, spells, spell-like effects, and supernatural effects. Incorporeal creatures take full damage from other incorporeal creatures and effects, as well as all force effects."
         },
         {
-			"color":"125,10,10", "name":"Invisible",
+			"color":"125,10,10", "name":"Invisible","icon":"invisible.png",
 			"description":"Invisible creatures are visually undetectable. An invisible creature gains a +2 bonus on attack rolls against sighted opponents, and ignores its opponents’ Dexterity bonuses to AC (if any)."
         },
         {
-			"color":"125,10,10", "name":"Nauseated",
+			"color":"125,10,10", "name":"Nauseated","icon":"nauseated.png",
 			"description":"Creatures with the nauseated condition experience stomach distress. Nauseated creatures are unable to attack, cast spells, concentrate on spells, or do anything else requiring attention. The only action such a character can take is a single move action per turn."
         },
         {
-			"color":"125,10,10", "name":"Panicked",
+			"color":"125,10,10", "name":"Panicked","icon":"panicked.png",
 			"description":"A panicked creature must drop anything it holds and flee at top speed from the source of its fear, as well as any other dangers it encounters, along a random path. It can’t take any other actions. In addition, the creature takes a –2 penalty on all saving throws, skill checks, and ability checks. If cornered, a panicked creature cowers and does not attack, typically using the total defense action in combat. A panicked creature can use special abilities, including spells, to flee; indeed, the creature must use such means if they are the only way to escape."
         },
         {
-			"color":"125,10,10", "name":"Paralyzed",
+			"color":"125,10,10", "name":"Paralyzed","icon":"paralyzed.png",
 			"description":"A paralyzed character is frozen in place and unable to move or act. A paralyzed character has effective Dexterity and Strength scores of 0 and is helpless, but can take purely mental actions. "
         },
         {
-			"color":"125,10,10", "name":"Petrified",
+			"color":"125,10,10", "name":"Petrified","icon":"petrified.png",
 			"description":"A petrified character has been turned to stone and is considered unconscious. If a petrified character cracks or breaks, but the broken pieces are joined with the body as he returns to flesh, he is unharmed. If the character’s petrified body is incomplete when it returns to flesh, the body is likewise incomplete and there is some amount of permanent hit point loss and/or debilitation."
         },
         {
-			"color":"125,10,10", "name":"Pinned",
+			"color":"125,10,10", "name":"Pinned","icon":"pinned.png",
 			"description":"A pinned creature is tightly bound and can take few actions. A pinned creature cannot move and is denied its Dexterity bonus. A pinned character also takes an additional –4 penalty to his Armor Class. A pinned creature is limited in the actions that it can take. A pinned creature can always attempt to free itself, usually through a combat maneuver check or Escape Artist check. A pinned creature can take verbal and mental actions, but cannot cast any spells that require a somatic or material component. A pinned character who attempts to cast a spell or use a spell-like ability must make a concentration check (DC 10 + grappler’s CMB + spell level) or lose the spell. Pinned is a more severe version of grappled, and their effects do not stack."
         },
         {
-			"color":"125,10,10", "name":"Prone",
+			"color":"125,10,10", "name":"Prone","icon":"prone.png",
 			"description":"The character is lying on the ground. A prone attacker has a –4 penalty on melee attack rolls and cannot use a ranged weapon (except for a crossbow). A prone defender gains a +4 bonus to Armor Class against ranged attacks, but takes a –4 penalty to AC against melee attacks."
         },
         {
-			"color":"125,10,10", "name":"Shaken",
+			"color":"125,10,10", "name":"Shaken","icon":"shaken.png",
 			"description":"A shaken character takes a –2 penalty on attack rolls, saving throws, skill checks, and ability checks. Shaken is a less severe state of fear than frightened or panicked."
         },
         {
-			"color":"125,10,10", "name":"Sickened",
+			"color":"125,10,10", "name":"Sickened","icon":"sickened.png",
 			"description":"The character takes a –2 penalty on all attack rolls, weapon damage rolls, saving throws, skill checks, and ability checks."
         },
         {
-			"color":"125,10,10", "name":"Stable",
+			"color":"125,10,10", "name":"Stable","icon":"stable.png",
 			"description":"A character who was dying but who has stopped losing hit points each round and still has negative hit points is stable. The character is no longer dying, but is still unconscious. If the character has become stable because of aid from another character (such as a Heal check or magical healing), then the character no longer loses hit points. The character can make a DC 10 Constitution check each hour to become conscious and disabled (even though his hit points are still negative). The character takes a penalty on this roll equal to his negative hit point total."
         },
         {
-			"color":"125,10,10", "name":"Staggered",
+			"color":"125,10,10", "name":"Staggered","icon":"staggered.png",
 			"description":"A staggered creature may take a single move action or standard action each round (but not both, nor can he take full-round actions). A staggered creature can still take free, swift, and immediate actions. A creature with nonlethal damage exactly equal to its current hit points gains the staggered condition."
         },
         {
-			"color":"125,10,10", "name":"Stunned",
+			"color":"125,10,10", "name":"Stunned","icon":"stunned.png",
 			"description":"A stunned creature drops everything held, can’t take actions, takes a –2 penalty to AC, and loses its Dexterity bonus to AC (if any). Attackers receive a +4 bonus on attack rolls to perform combat maneuvers against a stunned opponent."
         },
         {
-			"color":"125,10,10", "name":"Unconscious",
+			"color":"125,10,10", "name":"Unconscious","icon":"unconscious.png",
 			"description":"Unconscious creatures are knocked out and helpless. Unconsciousness can result from having negative hit points (but not more than the creature’s Constitution score), or from nonlethal damage in excess of current hit points."
         }
     ] 

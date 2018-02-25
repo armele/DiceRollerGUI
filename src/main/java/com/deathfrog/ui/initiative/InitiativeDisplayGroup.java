@@ -194,6 +194,18 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			}
 		});	
 		
+		MenuItem removeChar = new MenuItem(contextMenu, SWT.CASCADE);
+		removeChar.setText("Remove Character");
+		removeChar.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + removeChar);
+				initMgr.removeCharacterCard(me);
+			}
+		});
+		
+		new MenuItem(contextMenu, SWT.SEPARATOR);
+		
 		// Menu for adding a new attribute.
 		MenuItem addAttrMenu = new MenuItem(contextMenu, SWT.CASCADE);
 		addAttrMenu.setText("Add Attribute");
@@ -205,16 +217,6 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				vl.editName(true);
 			}
 		});			
-		
-		MenuItem removeChar = new MenuItem(contextMenu, SWT.CASCADE);
-		removeChar.setText("Remove Character");
-		removeChar.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				log.debug("Selected: " + removeChar);
-				initMgr.removeCharacterCard(me);
-			}
-		});
 		
 		// Menu for removing attributes
 		MenuItem remAttrMenu = new MenuItem(contextMenu, SWT.CASCADE);
@@ -228,6 +230,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			}
 		});
 		
+		new MenuItem(contextMenu, SWT.SEPARATOR);
+		
 		// Menu for adding statuses
 		MenuItem statusMenu = new MenuItem(contextMenu, SWT.CASCADE);
 		statusMenu.setText("Toggle Status");
@@ -237,6 +241,21 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
 				log.debug("Selected: " + statusMenu);
+			}
+		});
+		
+		MenuItem clearAll = new MenuItem(statusSubmenu, SWT.CASCADE);
+		clearAll.setText("Clear All");
+		new MenuItem(statusSubmenu, SWT.SEPARATOR);
+		clearAll.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				for (String text : initMgr.getStatusMetadata().keySet()) {
+					StatusMetadata statMeta = initMgr.getStatusMetadata().get(text);
+					statusOff(statMeta);
+				}
+				syncStatusMenuState();
+				redraw();
 			}
 		});
 		
@@ -355,10 +374,44 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			// This allows the menu to correctly display status selection icons after initial load from save state;
 			if (me.statuses.containsKey(miStatus.getText())) {
 				miStatus.setImage(StatusLabel.selectedIcon);
-			} else {
-				miStatus.setImage(StatusLabel.unselectedIcon);	
+			} else{
+				// Set the unselected icon only if the menu text is the name of a valid status.  (Allows "clear all" to have no icon.)
+				if (initMgr.getStatusMetadata().keySet().contains(miStatus.getText())) {
+					miStatus.setImage(StatusLabel.unselectedIcon);	
+				}
 			}
 		}
+	}
+	
+	/**
+	 * @param statusName
+	 */
+	protected void statusOn(StatusMetadata statMeta) {
+		StatusLabel addedStatus = new StatusLabel(this);
+		addedStatus.setStatMeta(statMeta);
+		statuses.put(statMeta.getName(), addedStatus);		
+	}
+	
+	/**
+	 * @param statusName
+	 */
+	protected void statusOff(StatusMetadata statMeta) {
+		statuses.remove(statMeta.getName());
+		SWTResourceManager.releaseColorResource(statMeta.getSWTColor(null));
+	}
+	
+	/**
+	 * 
+	 */
+	protected void redraw() {
+		//layout of parent works
+		uiGroup.getParent().layout(true, true);
+
+		//marks the composite's screen are as invalidates, which will force a redraw on next paint request 
+		uiGroup.redraw(); 
+
+		//tells the application to do all outstanding paint requests immediately
+		uiGroup.update(); 		
 	}
 	
 	/**
@@ -369,23 +422,13 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected boolean toggleStatus(StatusMetadata statMeta) {
 		boolean on = false;
 		if (statuses.containsKey(statMeta.getName())) {
-			statuses.remove(statMeta.getName());
-			SWTResourceManager.releaseColorResource(statMeta.getSWTColor(null));
+			statusOff(statMeta);
 		} else {
-			StatusLabel addedStatus = new StatusLabel(this);
-			addedStatus.setStatMeta(statMeta);
-			statuses.put(statMeta.getName(), addedStatus);
+			statusOn(statMeta);
 			on = true;
 		}
 		
-		//layout of parent works
-		uiGroup.getParent().layout(true, true);
-
-		//marks the composite's screen are as invalidates, which will force a redraw on next paint request 
-		uiGroup.redraw(); 
-
-		//tells the application to do all outstanding paint requests immediately
-		uiGroup.update(); 
+		redraw();
 		
 		return on;
 	}
