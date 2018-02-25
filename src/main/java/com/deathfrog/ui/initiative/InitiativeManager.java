@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
@@ -223,7 +225,19 @@ public class InitiativeManager {
 					
 					Control turnCtl = idgList.get(turnIndex).getControl();
 					Rectangle idgSpot = turnCtl.getBounds();
-					pEv.gc.drawImage(getTurnArrow(),0,idgSpot.y + 10);
+					
+					if (getTurnArrow() != null) {
+						// If our turn arrow graphic is set, draw the graphic.
+						pEv.gc.drawImage(getTurnArrow(),0,idgSpot.y + 10);
+					} else {
+						// Otherwise, log an error and draw a green circle instead.
+						log.error("No turn arrow graphic is set.");
+						Color backup = pEv.gc.getForeground();
+						pEv.gc.setForeground(pEv.display.getSystemColor(SWT.COLOR_GREEN));
+						pEv.gc.drawOval(10,10,0,idgSpot.y + 10);
+						pEv.gc.setForeground(backup);
+					}
+					
 					viewPort.showControl(turnCtl);
 				}
 			}}); 
@@ -303,10 +317,15 @@ public class InitiativeManager {
 
 		});			
 		
+		
 		// TODO: Make this configurable.
-		turnArrow = new Image(imShell.getDisplay(), 
-			    InitiativeManager.class.getResourceAsStream(
-			      "/turnArrow.png"));
+		String turnMarkerFile = "turnArrow.png";
+		InputStream is = InitiativeManager.class.getResourceAsStream("/com/deathfrog/utils/" + turnMarkerFile);
+		if (is != null) {
+			turnArrow = new Image(imShell.getDisplay(),  is);
+		} else {
+			log.error("No turn marker file found: " + turnMarkerFile);
+		}
 		
 		readContent();
 		
