@@ -59,12 +59,13 @@ import com.google.gson.annotations.Expose;
  */
 public class InitiativeManager {
 	protected static Logger log = LogManager.getLogger(InitiativeManager.class);
-	protected int ANCHOR_X = 50;
-	protected int ANCHOR_Y = 10;
-	protected double CARD_WIDTH = 320.0;
-	protected double CARD_HEIGHT = 90.0;
-	protected double FONT_HEIGHT = 12.0;
-	protected int CONTROLBAR_HEIGHT = 40;
+	protected static int ANCHOR_X = 50;
+	protected static int ANCHOR_Y = 10;
+	protected static double CARD_WIDTH = 320.0;
+	protected static double CARD_HEIGHT = 90.0;
+	protected static double FONT_HEIGHT = 12.0;
+	protected static int CONTROLBAR_HEIGHT = 40;
+	protected static int READY_INSET = 40;
 	
 	@Expose(serialize = true, deserialize = true)
 	protected double scale = 1.0;
@@ -408,7 +409,7 @@ public class InitiativeManager {
 	}
 	
 	/**
-	 * @return
+	 * @return the window which contains the character cards.
 	 */
 	public Composite getCharacterWindow() {
 		return characterWindow;
@@ -432,7 +433,7 @@ public class InitiativeManager {
 			// Report a mouse event from one child to all siblings, the first time it is coming from a new source.
 			for (InitiativeDisplayGroup idg : idgList) {
 				if (!source.equals(idg)) {
-					log.debug("childEventHandler: " + source);
+					// log.debug("childEventHandler: " + source);
 					idg.siblingEventHandler(source, childEvent);
 				}
 			}
@@ -571,7 +572,7 @@ public class InitiativeManager {
 		for (InitiativeDisplayGroup idg : idgList) {
 			int xPos = ANCHOR_X;
 			int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * i * scale));
-			idg.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));	
+			idg.setBounds(xPos + (idg.isReadied() ? READY_INSET : 0), yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));	
 			idg.setUiState(InitiativeDisplayGroup.UI_STATE_NORMAL);
 			i++;
 		}
@@ -616,6 +617,7 @@ public class InitiativeManager {
 		    
 		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getInitiativeGroups()) {
 		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes());
+		    	idg.setReadied(dummyGroup.isReadied());
 		    	
 		    	if (dummyGroup.statuses != null) {
 			    	for (String status : dummyGroup.statuses.keySet()) {

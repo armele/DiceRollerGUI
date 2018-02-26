@@ -11,6 +11,8 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
@@ -69,6 +71,9 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected String character = null;
 	
 	@Expose(serialize = true, deserialize = true)
+	protected boolean readied = false;
+	
+	@Expose(serialize = true, deserialize = true)
 	protected ArrayList<ValueLabel> attributes = new ArrayList<ValueLabel>();
 	@Expose(serialize = true, deserialize = true)
 	protected HashMap<String, StatusLabel> statuses = new HashMap<String, StatusLabel>();
@@ -79,6 +84,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected Group dragShadow = null;
 	protected Rectangle closeBox = null;
 	protected InitiativeDisplayGroup me = null;
+	boolean suppressContextMenu = false;  // Used to indicate that the context menu should be suppressed (for example, when the right-click action is being used for other purposes);
 
 	/**
 	 * @return
@@ -99,6 +105,35 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 */
 	public void setUiState(int state) {
 		uiState = state;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean isSuppressContextMenu() {
+		return suppressContextMenu;
+	}
+
+	/**
+	 * @param suppressContextMenu
+	 */
+	public void setSuppressContextMenu(boolean suppressContextMenu) {
+		this.suppressContextMenu = suppressContextMenu;
+	}
+
+	
+	/**
+	 * @return
+	 */
+	public boolean isReadied() {
+		return readied;
+	}
+
+	/**
+	 * @param readied
+	 */
+	public void setReadied(boolean readied) {
+		this.readied = readied;
 	}
 
 	/**
@@ -170,15 +205,29 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 					startLoc = statLbl.paint(e, parent.getScale(), startLoc);
 				}
 				
+				if (isReadied()) {
+					// TODO: Paint the "ready" icon.
+				}
 			}
 		});
 
 	}
 
 	/**
-	 * Create the right-click menus for the group.
+	 * Create the right-click menus for the group, and set up the menu suppression where required.
 	 */
 	protected void menuConfig() {
+		uiGroup.addMenuDetectListener(new MenuDetectListener() {
+
+			@Override
+			public void menuDetected(MenuDetectEvent mde) {
+				log.debug("Menu Detect Listener (" + suppressContextMenu + "): " + mde);
+				mde.doit = !suppressContextMenu;
+				suppressContextMenu = false;
+			}
+			
+		});
+		
 		// Set up a right-click context menu.
 		contextMenu = new Menu(getControl());
 		uiGroup.setMenu(contextMenu);
@@ -231,6 +280,19 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		});
 		
 		new MenuItem(contextMenu, SWT.SEPARATOR);
+		
+		// Menu for toggling readiness
+		MenuItem readyMenu = new MenuItem(contextMenu, SWT.CASCADE);
+		readyMenu.setText("Toggle Ready State");
+		readyMenu.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				log.debug("Selected: " + readyMenu);
+				me.setReadied(!me.isReadied());
+				initMgr.straightenCards();
+			}
+		});
+		
 		
 		// Menu for adding statuses
 		MenuItem statusMenu = new MenuItem(contextMenu, SWT.CASCADE);
@@ -317,7 +379,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		// Load attributes for this initiative card from the default file.
 
 		try {
-			// TODO: Make default property file name configurable.
+			// TODO: Make an-application modifiable override capability.
 			Scanner attributeFile = new Scanner(LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/DefaultAttributes.json"));
 			if (attributeFile != null) {
 				JsonArray ja = JsonUtils.readJsonStream(attributeFile, "attributes");
@@ -455,7 +517,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	public void mouseDoubleClick(MouseEvent e) {
 		// no-op
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -493,6 +555,28 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 				uiGroup.setVisible(false);
 			}
+		} else if (uiState == UI_STATE_NORMAL && e.button == RIGHT_BUTTON) {
+			
+			// Check to see if this click is in the status icon region. if so, toggle off the status.
+			boolean found = false;
+			for (StatusLabel statLbl : statuses.values()) {
+				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
+					suppressContextMenu = true;
+					statusOff(statLbl.getStatMeta());
+					found = true;
+					break;
+				}
+			}
+			if (found) {
+				redraw();
+				syncStatusMenuState();
+			}
+			
+			if (txtTitleEdit.getBounds().contains(new Point(e.x, e.y))) {
+				suppressContextMenu = true;
+				editTitle();
+			}
+			// log.info("Right MouseDown Complete: " + suppressContextMenu);
 		}
 
 		initMgr.childEventHandler(this, e);
@@ -614,7 +698,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 * @param childEvent
 	 */
 	public void siblingEventHandler(InitiativeDisplayGroup source, MouseEvent childEvent) {
-		log.debug("Sibling event handler: " + childEvent);
+		// log.debug("Sibling event handler: " + childEvent);
 		attributeEditEvent(null); // Any mouse event from a sibling should end in edits in progress.
 		txtTitleEdit.setVisible(false); // And stop an in-progress name edit.
 	}

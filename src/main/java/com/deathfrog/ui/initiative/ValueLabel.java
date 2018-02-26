@@ -16,6 +16,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 
@@ -97,6 +98,10 @@ public class ValueLabel {
 					log.debug("Edit mode enabled from label.");
 					initiativeCard.attributeEditEvent(me);
 					editValue(true);
+				} else if (initiativeCard.getUiState() == InitiativeDisplayGroup.UI_STATE_NORMAL && e.button == InitiativeDisplayGroup.RIGHT_BUTTON) {
+					initiativeCard.setSuppressContextMenu(true);
+					initiativeCard.attributeEditEvent(me);
+					editName(true);
 				}
 			}
 
@@ -324,6 +329,14 @@ public class ValueLabel {
 		lblName.setMenu(contextMenu);
 		lblValue.setMenu(contextMenu);
 		valueLabelControl.setMenu(contextMenu);
+		
+		// Inherit the menu listeners of the parent.  This allows the menu suppression logic at the card level to work.
+		for (Listener hearThat : initiativeCard.getControl().getListeners(SWT.MenuDetect) ) {
+			lblName.addListener(SWT.MenuDetect, hearThat);
+			lblValue.addListener(SWT.MenuDetect, hearThat);
+			valueLabelControl.addListener(SWT.MenuDetect, hearThat);
+		}
+		
 	}
 
 }
