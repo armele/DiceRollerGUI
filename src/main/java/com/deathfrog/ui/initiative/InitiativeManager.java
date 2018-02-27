@@ -87,6 +87,8 @@ public class InitiativeManager {
 	@Expose(serialize = true, deserialize = true)
 	protected ArrayList<InitiativeDisplayGroup> idgList = new ArrayList<InitiativeDisplayGroup>();
 	
+	protected Image readyPicture = null;
+	
 	protected Font fontCreatedForScaling = null;  // Track for disposal
 	
 	/**
@@ -238,6 +240,24 @@ public class InitiativeManager {
 						pEv.gc.drawOval(10,10,0,idgSpot.y + 10);
 						pEv.gc.setForeground(backup);
 					}
+					
+					// Cycle through the cards and draw any decorations that are outside the cards (but associated with them)
+					for (InitiativeDisplayGroup idg : idgList) {				
+						// If the player is in a "ready" state, draw the ready icon.
+						if (idg.isReadied() && idg.getControl().isVisible()) {
+							int readySize = (int) (InitiativeManager.READY_INSET * scale);
+							if (readyPicture == null) {
+								readyPicture = SWTResourceManager.createImageResource(characterWindow, "ready.png");
+							}
+
+							pEv.gc.drawImage(readyPicture,
+									/* image source dimensions */ 		0, 0, readyPicture.getBounds().width, readyPicture.getBounds().height,
+									/* image destination dimensions */	idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y, readySize, readySize
+									);
+
+						}
+					}
+					
 					
 					viewPort.showControl(turnCtl);
 				}
@@ -504,7 +524,7 @@ public class InitiativeManager {
 		
 
 		SWTResourceManager.releaseFontResource(c.getFont());
-		c.setFont(SWTResourceManager.createFontResource(c.getDisplay(),fD[0]));		     	
+		c.setFont(SWTResourceManager.createFontResource(c,fD[0]));		     	
 		c.requestLayout();
 		
 		InitiativeDisplayGroup idg = controlMap.get(c);
@@ -572,7 +592,7 @@ public class InitiativeManager {
 		for (InitiativeDisplayGroup idg : idgList) {
 			int xPos = ANCHOR_X;
 			int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * i * scale));
-			idg.setBounds(xPos + (idg.isReadied() ? READY_INSET : 0), yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));	
+			idg.setBounds(xPos + (idg.isReadied() ? (int)(READY_INSET * scale) : 0), yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));	
 			idg.setUiState(InitiativeDisplayGroup.UI_STATE_NORMAL);
 			i++;
 		}

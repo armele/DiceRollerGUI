@@ -248,7 +248,7 @@ public class ValueLabel {
 		fD[0].setHeight((int) (LBL_FONT_HEIGHT * scale)); 
 		
 		SWTResourceManager.releaseFontResource(lblName.getFont());
-		lblName.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));
+		lblName.setFont(SWTResourceManager.createFontResource(lblValue,fD[0]));
 		
         GC gc = new GC(lblName);
         Point labelSize = gc.textExtent(lblName.getText());
@@ -257,11 +257,11 @@ public class ValueLabel {
         lblName.setBounds(0, 0, labelSize.x, labelSize.y);
         
 		SWTResourceManager.releaseFontResource(txtName.getFont());
-		txtName.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));        
+		txtName.setFont(SWTResourceManager.createFontResource(lblValue,fD[0]));        
 		SWTResourceManager.releaseFontResource(lblValue.getFont());
-		lblValue.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));
+		lblValue.setFont(SWTResourceManager.createFontResource(lblValue,fD[0]));
 		SWTResourceManager.releaseFontResource(txtValue.getFont());
-		txtValue.setFont(SWTResourceManager.createFontResource(lblValue.getDisplay(),fD[0]));
+		txtValue.setFont(SWTResourceManager.createFontResource(lblValue,fD[0]));
         
         gc = new GC(lblValue);
         Point valueSize = gc.textExtent(lblValue.getText());

@@ -205,9 +205,6 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 					startLoc = statLbl.paint(e, parent.getScale(), startLoc);
 				}
 				
-				if (isReadied()) {
-					// TODO: Paint the "ready" icon.
-				}
 			}
 		});
 
@@ -393,10 +390,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				}
 			}
 		} catch (FileNotFoundException fe) {
-			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(fe));
 		} catch (IOException ie) {
-			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(ie));
 		}
 	}
@@ -554,6 +549,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				dragShadow.moveAbove(null);
 
 				uiGroup.setVisible(false);
+				initMgr.getCharacterWindow().redraw();
 			}
 		} else if (uiState == UI_STATE_NORMAL && e.button == RIGHT_BUTTON) {
 			
@@ -663,7 +659,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			}
 			
 			// Show the tool tip for the close box
-			if (closeBox.contains(new Point(e.x, e.y))) {
+			if (closeBox != null && closeBox.contains(new Point(e.x, e.y))) {
 				uiGroup.setToolTipText("Remove this character from the board.");
 				found = true;
 			}

@@ -1,14 +1,10 @@
 package com.deathfrog.ui.initiative;
 
-import java.io.InputStream;
-import java.util.HashMap;
-
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Control;
 
-import com.deathfrog.utils.ui.LaunchPad;
 import com.deathfrog.utils.ui.SWTResourceManager;
 
 /**
@@ -17,7 +13,6 @@ import com.deathfrog.utils.ui.SWTResourceManager;
  */
 public class StatusMetadata {
 	protected static int LINE_WRAP_WIDTH = 50;
-	protected static HashMap<String, Image> iconMap = new HashMap<String, Image>();
 	
 	protected String name;
 	protected String color;
@@ -60,17 +55,7 @@ public class StatusMetadata {
 	 * @return
 	 */
 	public Image getIcon(Control c) {
-		Image icon = iconMap.get(iconName);
-		
-		if (icon == null) {
-			InputStream iconStream = LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/" + iconName);
-			if (iconStream != null) {
-				icon = new Image(c.getDisplay(), iconStream);
-				iconMap.put(iconName, icon);
-			}
-		}
-		
-		return icon;
+		return SWTResourceManager.createImageResource(c, getIconName());
 	}
 	
 
@@ -82,7 +67,7 @@ public class StatusMetadata {
 		if  ((swtColor == null || swtColor.isDisposed()) && c != null) {
 			String[] rgb = getColor().split(",");
 			RGB colorspec = new RGB(new Integer(rgb[0]), new Integer(rgb[1]), new Integer(rgb[2]));
-			swtColor = SWTResourceManager.createColorResource(c.getDisplay(), colorspec);
+			swtColor = SWTResourceManager.createColorResource(c, colorspec);
 		}
 		
 		return swtColor;
