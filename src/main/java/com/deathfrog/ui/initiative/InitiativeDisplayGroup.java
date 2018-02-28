@@ -329,6 +329,29 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		return character;
 	}
 
+
+	
+	/**
+	 * Have the card position itself based on its index from the parent, and whether or not it is in "skinny" view.
+	 * @param loc
+	 * @param index
+	 * @param skinnyView
+	 * @return the height of the card once sized
+	 */
+	public double doSizing(Point loc, int index, boolean skinnyView) {
+		boolean amIBig = !skinnyView || (index == initMgr.getTurnIndex());
+		double cardHeight = (amIBig ? InitiativeManager.CARD_HEIGHT : initMgr.getCardHeight());
+		cardHeight = cardHeight * initMgr.getScale();
+		
+		for (ValueLabel vl : attributes) {
+			vl.getValueLabelControl().setVisible(amIBig);
+		}
+		
+		this.setBounds(loc.x + (this.isReadied() ? (int)(InitiativeManager.READY_INSET * initMgr.getScale()) : 0), loc.y, 
+				(int)(InitiativeManager.CARD_WIDTH * initMgr.getScale()), (int)cardHeight);	
+		
+		return cardHeight;
+	}
 	/**
 	 * Add a new attribute to the collect, and handle any setup necessary.
 	 * 
@@ -651,7 +674,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			// Show the tool tips for the status markers
 			boolean found = false;
 			for (StatusLabel statLbl : statuses.values()) {
-				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
+				Rectangle displayArea = statLbl.getStatusDisplayArea();
+				if (displayArea != null && displayArea.contains(new Point(e.x, e.y))) {
 					uiGroup.setToolTipText(statLbl.getStatMeta().toString());
 					found = true;
 					break;

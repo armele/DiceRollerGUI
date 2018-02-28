@@ -9,7 +9,6 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
@@ -28,8 +27,7 @@ public class ValueLabel {
 	private static final int LBL_PAD = 5;
 	private static final int TXT_MINEDITSIZE = 25;
 	static final int LBL_FONT_HEIGHT = 8;
-	
-	protected Font fontCreatedForScaling = null;  // Track for disposal
+
 	protected InitiativeDisplayGroup initiativeCard = null;
 	protected Composite valueLabelControl = null;
 	

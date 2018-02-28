@@ -24,6 +24,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Color;
@@ -63,6 +65,7 @@ public class InitiativeManager {
 	protected static int ANCHOR_Y = 10;
 	protected static double CARD_WIDTH = 320.0;
 	protected static double CARD_HEIGHT = 90.0;
+	protected static double CARD_SKINNY_HEIGHT = 30.0;
 	protected static double FONT_HEIGHT = 12.0;
 	protected static int CONTROLBAR_HEIGHT = 40;
 	protected static int READY_INSET = 40;
@@ -86,6 +89,9 @@ public class InitiativeManager {
 	
 	@Expose(serialize = true, deserialize = true)
 	protected ArrayList<InitiativeDisplayGroup> idgList = new ArrayList<InitiativeDisplayGroup>();
+	
+	@Expose(serialize = true, deserialize = true)
+	protected boolean skinnyView = false;
 	
 	protected Image readyPicture = null;
 	
@@ -115,8 +121,22 @@ public class InitiativeManager {
 	/**
 	 * @return
 	 */
+	public int getTurnIndex() {
+		return turnIndex;
+	}
+	
+	/**
+	 * @return
+	 */
 	public Image getTurnArrow() {
 		return turnArrow;
+	}
+	
+	/**
+	 * @return
+	 */
+	public double getCardHeight() {
+		return (skinnyView ? CARD_SKINNY_HEIGHT : CARD_HEIGHT );
 	}
 	
 	/**
@@ -185,8 +205,26 @@ public class InitiativeManager {
 		prevTurn.setText("Prev.");	
 		
 		Button nextTurn = new Button(imShell, SWT.NONE);
-		nextTurn.setBounds(350, 14, 60, 20);
+		nextTurn.setBounds(345, 14, 60, 20);
 		nextTurn.setText("Next");		
+		
+		Button btnSkinnyView = new Button(imShell, SWT.CHECK);
+		btnSkinnyView.setBounds(420, 14, 90, 20);
+		btnSkinnyView.setText("Skinny View");	
+		btnSkinnyView.setSelection(skinnyView);
+		btnSkinnyView.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// no-op
+			}
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				skinnyView = !skinnyView;
+				btnSkinnyView.setSelection(skinnyView);
+				straightenCards();
+			}});
 		
 		zoomSpinner = new Spinner(imShell, SWT.NONE);
 		zoomSpinner.setBounds(200, 14, 60, 20);
@@ -307,7 +345,14 @@ public class InitiativeManager {
 				} else {
 					turnIndex--;
 				}
-				characterWindow.redraw();
+				
+				// In skinnyView things need to be resized on "prev/next turn" action because
+				// the current initiative card will be expanded.
+				if (skinnyView) {
+					straightenCards();
+				} else {
+					characterWindow.redraw();
+				}
 			}
 
 			@Override
@@ -329,7 +374,15 @@ public class InitiativeManager {
 				} else {
 					turnIndex++;
 				}
-				characterWindow.redraw();
+				
+				// In skinnyView things need to be resized on "prev/next turn" action because
+				// the current initiative card will be expanded.
+				if (skinnyView) {
+					straightenCards();
+				} else {
+					characterWindow.redraw();
+				}
+
 			}
 
 			@Override
@@ -364,9 +417,9 @@ public class InitiativeManager {
 		log.debug("Adding card: " + name);
 		int listsize = controlMap.size();
 		int xPos = ANCHOR_X;
-		int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * listsize * scale));
+		int yPos = (int) (ANCHOR_Y + (getCardHeight() * listsize * scale));
 		InitiativeDisplayGroup characterInitiativeCard = new InitiativeDisplayGroup(name, getInitiativeManager());
-		characterInitiativeCard.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));
+		characterInitiativeCard.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(getCardHeight() * scale));
 		controlMap.put(characterInitiativeCard.getControl(), characterInitiativeCard);
 		
 		if (attributeList == null) {
@@ -518,7 +571,7 @@ public class InitiativeManager {
 	 * @param zoomScale
 	 */
 	protected void scaleControl(Control c, double zoomScale) {
-		c.setBounds(c.getBounds().x, c.getBounds().y, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * zoomScale));
+		c.setBounds(c.getBounds().x, c.getBounds().y, (int)(CARD_WIDTH * scale), (int)(getCardHeight() * zoomScale));
 		FontData[] fD = c.getFont().getFontData();
 		fD[0].setHeight((int) (FONT_HEIGHT * zoomScale));
 		
@@ -588,11 +641,12 @@ public class InitiativeManager {
 		);
 				
 		int i = 0;
+		int xPos = InitiativeManager.ANCHOR_X;
+		int yPos = InitiativeManager.ANCHOR_Y;
 		
 		for (InitiativeDisplayGroup idg : idgList) {
-			int xPos = ANCHOR_X;
-			int yPos = (int) (ANCHOR_Y + (CARD_HEIGHT * i * scale));
-			idg.setBounds(xPos + (idg.isReadied() ? (int)(READY_INSET * scale) : 0), yPos, (int)(CARD_WIDTH * scale), (int)(CARD_HEIGHT * scale));	
+			Point location = new Point(xPos, yPos);
+			yPos = yPos + (int) idg.doSizing(location, i, skinnyView);
 			idg.setUiState(InitiativeDisplayGroup.UI_STATE_NORMAL);
 			i++;
 		}
