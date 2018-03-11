@@ -20,8 +20,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -294,11 +292,16 @@ public class InitiativeManager {
 								readyPicture = SWTResourceManager.createImageResource(characterWindow, "ready.png");
 							}
 
-							pEv.gc.drawImage(readyPicture,
-									/* image source dimensions */ 		0, 0, readyPicture.getBounds().width, readyPicture.getBounds().height,
-									/* image destination dimensions */	idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y, readySize, readySize
-									);
-
+							if (readyPicture != null) {
+								pEv.gc.drawImage(readyPicture,
+										/* image source dimensions */ 		0, 0, readyPicture.getBounds().width, readyPicture.getBounds().height,
+										/* image destination dimensions */	idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y, readySize, readySize
+										);
+							} else {
+								log.error("No graphic found for the ready picture - you may need to re-build...");
+								pEv.gc.drawText("Ready!", idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y);
+								pEv.gc.drawText("(no graphic)", idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y + 12);
+							}
 						}
 						
 						// Draw the roll values, if applicable.
@@ -471,6 +474,8 @@ public class InitiativeManager {
 		} else {
 			log.error("No turn marker file found: " + turnMarkerFile);
 		}
+		
+		characterWindow.setBackgroundImage(SWTResourceManager.createImageResource(characterWindow, "patraeltile.png"));
 		
 		readContent();
 		
