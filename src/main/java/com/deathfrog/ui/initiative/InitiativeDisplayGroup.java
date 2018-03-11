@@ -78,6 +78,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	@Expose(serialize = true, deserialize = true)
 	protected HashMap<String, StatusLabel> statuses = new HashMap<String, StatusLabel>();
 	
+	protected int rollValue = 0;
+	
 	protected Point priorLoc = null; // Tracked in the Parent coordinate grid
 										// (InitiativeManager)
 	protected int uiState = UI_STATE_NORMAL;
@@ -134,6 +136,15 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	 */
 	public void setReadied(boolean readied) {
 		this.readied = readied;
+	}
+
+	
+	public int getRollValue() {
+		return rollValue;
+	}
+
+	public void setRollValue(int rollValue) {
+		this.rollValue = rollValue;
 	}
 
 	/**
@@ -704,6 +715,27 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	}
 
 	/**
+	 * @param attributeName
+	 * @return
+	 */
+	public String getAttributeValue(String attributeName) {
+		String value = null;
+		
+		for (ValueLabel vl : attributes) {
+			if (vl.getName().equals(attributeName)) {
+				value = vl.getValue();
+				break;
+			}
+		}
+		
+		if (value == null || value.length() == 0) {
+			value = "0";
+		}
+		
+		return value;
+	}
+	
+	/**
 	 * @param xpos
 	 * @param ypos
 	 * @param width
@@ -759,6 +791,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				vl.editName(false);
 			}
 		}
+		initMgr.populateRollerCombo();
 	}
 
 }

@@ -20,6 +20,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
@@ -35,6 +37,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -44,6 +47,7 @@ import org.eclipse.swt.widgets.Spinner;
 
 import com.deathfrog.utils.GameException;
 import com.deathfrog.utils.JsonUtils;
+import com.deathfrog.utils.dice.Die;
 import com.deathfrog.utils.ui.LaunchPad;
 import com.deathfrog.utils.ui.SWTResourceManager;
 import com.google.gson.Gson;
@@ -67,6 +71,7 @@ public class InitiativeManager {
 	protected static double CARD_HEIGHT = 90.0;
 	protected static double CARD_SKINNY_HEIGHT = 30.0;
 	protected static double FONT_HEIGHT = 12.0;
+	protected static double ROLL_FONT_HEIGHT = 18.0;
 	protected static int CONTROLBAR_HEIGHT = 40;
 	protected static int READY_INSET = 40;
 	
@@ -83,6 +88,7 @@ public class InitiativeManager {
 	protected Shell imShell = null;
 	protected ScrolledComposite viewPort = null;
 	protected Composite characterWindow = null;
+	protected Combo cmbRollChoice = null;
 	protected HashMap<Control, InitiativeDisplayGroup> controlMap = new HashMap<Control, InitiativeDisplayGroup>();
 	protected TreeMap<String, StatusMetadata> statusMetadata = new TreeMap<String, StatusMetadata>();
 	protected Image turnArrow = null;
@@ -294,6 +300,36 @@ public class InitiativeManager {
 									);
 
 						}
+						
+						// Draw the roll values, if applicable.
+						if (idg.getRollValue() > 0) {
+							StringBuffer rollValue = new StringBuffer();
+							rollValue.append(idg.getRollValue());
+							rollValue.append(" + ");
+							String value = idg.getAttributeValue(cmbRollChoice.getText());
+							rollValue.append(value);
+							
+							try {
+								Integer numericvalue = new Integer(value);
+								int total = idg.getRollValue() + numericvalue;
+								rollValue.append(" = ");
+								rollValue.append(total);
+							} catch (NumberFormatException nfe) {
+								rollValue.append(" = ?");
+							}
+							
+							FontData[] fD = idg.getControl().getFont().getFontData();
+							if (skinnyView) {
+								fD[0].setHeight((int) CARD_SKINNY_HEIGHT - 5);
+							} else {
+								fD[0].setHeight((int) (ROLL_FONT_HEIGHT * scale));
+							}
+							
+							SWTResourceManager.releaseFontResource(pEv.gc.getFont());
+							pEv.gc.setFont(SWTResourceManager.createFontResource(idg.getControl(),fD[0]));		
+							
+							pEv.gc.drawText(rollValue.toString(), idg.getControl().getBounds().x + idg.getControl().getBounds().width, idg.getControl().getBounds().y + 5);
+						}
 					}
 					
 					
@@ -305,7 +341,42 @@ public class InitiativeManager {
 		viewPort.setContent(characterWindow);
 		
 		viewPort.setMinSize(getChildrenMaxLocation());
+		
+		cmbRollChoice = new Combo(imShell, SWT.NONE);
+		cmbRollChoice.setBounds(550, 14, 105, 23);
 
+		Button btnRoll = new Button(imShell, SWT.NONE);
+		btnRoll.setBounds(661, 14, 32, 25);
+		btnRoll.setText("Roll");
+		// btnRoll.setImage(new Image(imShell.getDisplay(), SWTResourceManager.createImageResource(btnRoll, "die.png").getImageData().scaledTo(btnRoll.getBounds().width, btnRoll.getBounds().height)));
+
+		btnRoll.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (cmbRollChoice.getText().length() == 0) {
+					for (InitiativeDisplayGroup idg : idgList) {
+						idg.setRollValue(0);
+					}
+				} else {
+					for (InitiativeDisplayGroup idg : idgList) {
+						Die d = new Die(20);
+						idg.setRollValue(d.roll());
+					}
+				}
+				manageSizing();
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});	
+		
 		imShell.addListener( SWT.Resize, event -> {
 			manageSizing();
 			} );
@@ -406,6 +477,44 @@ public class InitiativeManager {
 		return imShell;
 	}
 	
+	
+	/**
+	 * Set up the options in the roller combo box with the possible attributes from all character cards.
+	 */
+	protected void populateRollerCombo() {
+		String currentText = cmbRollChoice.getText();
+		ArrayList<String> comboChoices = new ArrayList<String>();
+		// Reset the available choices in the roller combo...
+		for (InitiativeDisplayGroup idg : idgList) {
+			for (ValueLabel vl : idg.getAttributes()) {
+				if (!comboChoices.contains(vl.getName())) {
+					comboChoices.add(vl.getName());
+				}
+			}
+		}
+		
+		cmbRollChoice.removeAll();
+		comboChoices.sort(new Comparator<String>() {
+
+			@Override
+			public int compare(String obj1, String obj2) {
+			    if (obj1 == null) {
+			        return -1;
+			    }
+			    if (obj2 == null) {
+			        return 1;
+			    }
+			    if (obj1.equals( obj2 )) {
+			        return 0;
+			    }
+			    return obj1.compareTo(obj2);
+			}});
+
+		for (String choice : comboChoices) {
+			cmbRollChoice.add(choice);
+		}
+		cmbRollChoice.setText(currentText);
+	}
 
 	/**
 	 * Add a new character card to the list.
@@ -433,7 +542,7 @@ public class InitiativeManager {
 		scaleControl(characterInitiativeCard.getControl(), scale);
 		characterInitiativeCard.requestLayout(scale);
 		idgList.add(characterInitiativeCard);
-
+		
 		
 		return characterInitiativeCard;
 	}
@@ -704,7 +813,7 @@ public class InitiativeManager {
 		    }
 		    
 		    manageSizing();
-
+		    populateRollerCombo();
 		} catch (JsonSyntaxException jse) {
 			// TODO: Display error messages to the user when appropriate.
 			log.error(GameException.fullExceptionInfo(jse));
