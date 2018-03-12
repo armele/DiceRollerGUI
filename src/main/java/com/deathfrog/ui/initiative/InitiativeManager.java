@@ -73,6 +73,7 @@ public class InitiativeManager {
 	protected static double CARD_HEIGHT = 90.0;
 	protected static double CARD_SKINNY_HEIGHT = 30.0;
 	protected static double FONT_HEIGHT = 12.0;
+	protected static final int LBL_FONT_HEIGHT = 8;
 	protected static double ROLL_FONT_HEIGHT = 18.0;
 	protected static int CONTROLBAR_HEIGHT = 40;
 	protected static int READY_INSET = 40;

@@ -16,7 +16,7 @@ public class StatusLabel {
 	protected static Logger log = LogManager.getLogger(StatusLabel.class);
 	
 	protected static int STATUS_LABEL_CORNERSIZE = 4;
-	protected static int STATUS_LABEL_SIZE = 24;
+	protected static int STATUS_LABEL_SIZE = 32;
 	public static Image selectedIcon = null;
 	public static Image unselectedIcon = null;
 	

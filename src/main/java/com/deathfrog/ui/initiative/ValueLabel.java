@@ -26,7 +26,6 @@ public class ValueLabel {
 	protected static Logger log = LogManager.getLogger(ValueLabel.class);
 	private static final int LBL_PAD = 5;
 	private static final int TXT_MINEDITSIZE = 25;
-	static final int LBL_FONT_HEIGHT = 8;
 
 	protected InitiativeDisplayGroup initiativeCard = null;
 	protected Composite valueLabelControl = null;
@@ -243,7 +242,7 @@ public class ValueLabel {
 		currentScale = scale;
 		FontData[] fD = lblName.getFont().getFontData();
 		 // Note that scaling the font and then measuring by the font eliminates the need to scale the controls any other way.
-		fD[0].setHeight((int) (LBL_FONT_HEIGHT * scale)); 
+		fD[0].setHeight((int) (InitiativeManager.LBL_FONT_HEIGHT * scale)); 
 		
 		SWTResourceManager.releaseFontResource(lblName.getFont());
 		lblName.setFont(SWTResourceManager.createFontResource(lblValue,fD[0]));
