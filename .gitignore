@@ -7,3 +7,5 @@ target/
 *.class
 MerisylLaunchPad.log
 Output.json
+Paladins.json
+MerisylCampaign.json

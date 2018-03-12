@@ -24,6 +24,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellEvent;
@@ -39,7 +40,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -165,7 +169,7 @@ public class InitiativeManager {
 
 			@Override
 			public void shellClosed(ShellEvent e) {
-				persistContent();
+				persistContent(null);  // Save state to default save file on close.
 				
 			}
 
@@ -204,14 +208,6 @@ public class InitiativeManager {
 		lblZoom.setText("Zoom");
 		lblZoom.setBounds(160, 14, 40, 20);
 		
-		Button prevTurn = new Button(imShell, SWT.NONE);
-		prevTurn.setBounds(280, 14, 60, 20);
-		prevTurn.setText("Prev.");	
-		
-		Button nextTurn = new Button(imShell, SWT.NONE);
-		nextTurn.setBounds(345, 14, 60, 20);
-		nextTurn.setText("Next");		
-		
 		Button btnSkinnyView = new Button(imShell, SWT.CHECK);
 		btnSkinnyView.setBounds(420, 14, 90, 20);
 		btnSkinnyView.setText("Skinny View");	
@@ -247,6 +243,168 @@ public class InitiativeManager {
 		viewPort.setExpandHorizontal( true );
 		viewPort.setExpandVertical( true );
 		
+		createCharacterWindow();
+		
+		viewPort.setContent(characterWindow);
+		
+		viewPort.setMinSize(getChildrenMaxLocation());
+		
+		cmbRollChoice = new Combo(imShell, SWT.NONE);
+		cmbRollChoice.setBounds(550, 14, 105, 23);
+
+		Button btnRoll = new Button(imShell, SWT.NONE);
+		btnRoll.setBounds(661, 14, 32, 25);
+		btnRoll.setText("Roll");
+		// btnRoll.setImage(new Image(imShell.getDisplay(), SWTResourceManager.createImageResource(btnRoll, "die.png").getImageData().scaledTo(btnRoll.getBounds().width, btnRoll.getBounds().height)));
+
+		btnRoll.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (cmbRollChoice.getText().length() == 0) {
+					for (InitiativeDisplayGroup idg : idgList) {
+						idg.setRollValue(0);
+					}
+				} else {
+					for (InitiativeDisplayGroup idg : idgList) {
+						Die d = new Die(20);
+						idg.setRollValue(d.roll());
+					}
+				}
+				manageSizing();
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});	
+		
+		imShell.addListener( SWT.Resize, event -> {
+			manageSizing();
+			} );
+		
+		// Set up the functionality to add new character initiative cards.
+		addPlayer.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				int listsize = controlMap.size();
+				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1), null);
+				manageSizing();
+				idg.editTitle();
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});		
+		
+		createTurnManagement();
+		
+		createMenuBar();
+		
+		readContent(null); // defaults to the last auto-saved file.
+		
+		return imShell;
+	}
+	
+	/**
+	 * Sets up controls for iterating through turns.
+	 */
+	protected void createTurnManagement() {
+		Button prevTurn = new Button(imShell, SWT.NONE);
+		prevTurn.setBounds(280, 14, 60, 20);
+		prevTurn.setText("Prev.");	
+		
+		Button nextTurn = new Button(imShell, SWT.NONE);
+		nextTurn.setBounds(345, 14, 60, 20);
+		nextTurn.setText("Next");		
+		
+		// Iterate through the turns (backward)
+		prevTurn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (turnIndex == 0) {
+					turnIndex = idgList.size() - 1;
+				} else {
+					turnIndex--;
+				}
+				
+				// In skinnyView things need to be resized on "prev/next turn" action because
+				// the current initiative card will be expanded.
+				if (skinnyView) {
+					straightenCards();
+				} else {
+					characterWindow.redraw();
+				}
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});		
+		// Iterate through the turns (forward)
+		nextTurn.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (turnIndex == idgList.size() - 1) {
+					turnIndex = 0;
+				} else {
+					turnIndex++;
+				}
+				
+				// In skinnyView things need to be resized on "prev/next turn" action because
+				// the current initiative card will be expanded.
+				if (skinnyView) {
+					straightenCards();
+				} else {
+					characterWindow.redraw();
+				}
+
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});			
+		
+		
+		// TODO: Make this configurable.
+		String turnMarkerFile = "turnArrow.png";
+		InputStream is = InitiativeManager.class.getResourceAsStream("/com/deathfrog/utils/" + turnMarkerFile);
+		if (is != null) {
+			turnArrow = new Image(imShell.getDisplay(),  is);
+		} else {
+			log.error("No turn marker file found: " + turnMarkerFile);
+		}		
+	}
+	
+	/**
+	 * Set up the character window, including the paint listener for that window.
+	 */
+	protected void createCharacterWindow() {
 		characterWindow = new Composite(viewPort, SWT.NONE);
 		
 		// Draw the turn arrows.
@@ -339,149 +497,55 @@ public class InitiativeManager {
 					viewPort.showControl(turnCtl);
 				}
 			}}); 
-
-		
-		viewPort.setContent(characterWindow);
-		
-		viewPort.setMinSize(getChildrenMaxLocation());
-		
-		cmbRollChoice = new Combo(imShell, SWT.NONE);
-		cmbRollChoice.setBounds(550, 14, 105, 23);
-
-		Button btnRoll = new Button(imShell, SWT.NONE);
-		btnRoll.setBounds(661, 14, 32, 25);
-		btnRoll.setText("Roll");
-		// btnRoll.setImage(new Image(imShell.getDisplay(), SWTResourceManager.createImageResource(btnRoll, "die.png").getImageData().scaledTo(btnRoll.getBounds().width, btnRoll.getBounds().height)));
-
-		btnRoll.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (cmbRollChoice.getText().length() == 0) {
-					for (InitiativeDisplayGroup idg : idgList) {
-						idg.setRollValue(0);
-					}
-				} else {
-					for (InitiativeDisplayGroup idg : idgList) {
-						Die d = new Die(20);
-						idg.setRollValue(d.roll());
-					}
-				}
-				manageSizing();
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-			}
-
-		});	
-		
-		imShell.addListener( SWT.Resize, event -> {
-			manageSizing();
-			} );
-		
-		// Set up the functionality to add new character initiative cards.
-		addPlayer.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				int listsize = controlMap.size();
-				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1), null);
-				manageSizing();
-				idg.editTitle();
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-			}
-
-		});		
-		
-		// Iterate through the turns (backward)
-		prevTurn.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (turnIndex == 0) {
-					turnIndex = idgList.size() - 1;
-				} else {
-					turnIndex--;
-				}
-				
-				// In skinnyView things need to be resized on "prev/next turn" action because
-				// the current initiative card will be expanded.
-				if (skinnyView) {
-					straightenCards();
-				} else {
-					characterWindow.redraw();
-				}
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-			}
-
-		});		
-		// Iterate through the turns (forward)
-		nextTurn.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (turnIndex == idgList.size() - 1) {
-					turnIndex = 0;
-				} else {
-					turnIndex++;
-				}
-				
-				// In skinnyView things need to be resized on "prev/next turn" action because
-				// the current initiative card will be expanded.
-				if (skinnyView) {
-					straightenCards();
-				} else {
-					characterWindow.redraw();
-				}
-
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-			}
-
-		});			
-		
-		
-		// TODO: Make this configurable.
-		String turnMarkerFile = "turnArrow.png";
-		InputStream is = InitiativeManager.class.getResourceAsStream("/com/deathfrog/utils/" + turnMarkerFile);
-		if (is != null) {
-			turnArrow = new Image(imShell.getDisplay(),  is);
-		} else {
-			log.error("No turn marker file found: " + turnMarkerFile);
-		}
 		
 		characterWindow.setBackgroundImage(SWTResourceManager.createImageResource(characterWindow, "patraeltile.png"));
-		
-		readContent();
-		
-		return imShell;
 	}
 	
+	/**
+	 * Set up the menu bar.
+	 */
+	protected void createMenuBar() {
+		Menu menu = new Menu(imShell, SWT.BAR);
+		imShell.setMenuBar(menu);
+		
+		MenuItem miFile = new MenuItem(menu, SWT.CASCADE);
+		miFile.setText("&File");
+		
+		Menu menuFile = new Menu(miFile);
+		miFile.setMenu(menuFile);
+		
+		MenuItem mntmload = new MenuItem(menuFile, SWT.NONE);
+		mntmload.setText("&Load");
+		mntmload.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				FileDialog loadFile = new FileDialog(imShell, SWT.OPEN);
+				String[] filterExtensions = {"*.json"};
+				loadFile.setFilterExtensions(filterExtensions);
+				loadFile.open();
+				String fileName = loadFile.getFileName();
+				if (fileName != null && fileName.length() > 0) {
+					readContent(fileName);
+				}
+			}
+		});
+		
+		MenuItem mntmsave = new MenuItem(menuFile, SWT.NONE);
+		mntmsave.setText("&Save");
+		mntmsave.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				FileDialog loadFile = new FileDialog(imShell, SWT.SAVE);
+				String[] filterExtensions = {"*.json"};
+				loadFile.setFilterExtensions(filterExtensions);
+				loadFile.open();
+				String fileName = loadFile.getFileName();
+				if (fileName != null && fileName.length() > 0) {
+					persistContent(fileName);
+				}
+			}
+		});
+	}
 	
 	/**
 	 * Set up the options in the roller combo box with the possible attributes from all character cards.
@@ -771,9 +835,13 @@ public class InitiativeManager {
 	/**
 	 * Saves the current configuration of the initiative board to a JSON file.
 	 */
-	public void persistContent() {
+	public void persistContent(String filename) {
 		
-		try (Writer writer = new FileWriter("Output.json")) {
+		if (filename == null)  {
+			filename = "Output.json";
+		}
+		
+		try (Writer writer = new FileWriter(filename)) {
 		    final GsonBuilder builder = new GsonBuilder();
 		    builder.excludeFieldsWithoutExposeAnnotation();
 		    final Gson gson = builder.create();
@@ -787,12 +855,23 @@ public class InitiativeManager {
 	
 	/**
 	 * Read the prior state from the file.
+	 * @param filename
 	 */
-	public void readContent() {
+	public void readContent(String filename) {
 		loadStatuses();
 		
-		// TODO: Make save state file name configurable.
-		try (Reader reader = new FileReader("Output.json")) {
+		if (filename == null)  {
+			filename = "Output.json";
+		}
+		
+		idgList.clear();
+		controlMap.clear();
+		for (Control c : characterWindow.getChildren()) {
+			c.setVisible(false);
+			c.dispose();
+		}
+		
+		try (Reader reader = new FileReader(filename)) {
 		    final GsonBuilder builder = new GsonBuilder();
 		    builder.excludeFieldsWithoutExposeAnnotation();
 		    final Gson gson = builder.create();
