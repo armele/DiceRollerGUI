@@ -585,28 +585,6 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				uiGroup.setVisible(false);
 				initMgr.getCharacterWindow().redraw();
 			}
-		} else if (uiState == UI_STATE_NORMAL && e.button == RIGHT_BUTTON) {
-			
-			// Check to see if this click is in the status icon region. if so, toggle off the status.
-			boolean found = false;
-			for (StatusLabel statLbl : statuses.values()) {
-				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
-					suppressContextMenu = true;
-					statusOff(statLbl.getStatMeta());
-					found = true;
-					break;
-				}
-			}
-			if (found) {
-				redraw();
-				syncStatusMenuState();
-			}
-			
-			if (txtTitleEdit.getBounds().contains(new Point(e.x, e.y))) {
-				suppressContextMenu = true;
-				editTitle();
-			}
-			// log.info("Right MouseDown Complete: " + suppressContextMenu);
 		}
 
 		initMgr.childEventHandler(this, e);
@@ -639,6 +617,31 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 			priorLoc = null;
 			initMgr.straightenCards();
+		}
+		
+		// Per playtesting request, move status-clearing to "mouse up" rather than "mouse down"
+		if (uiState == UI_STATE_NORMAL && e.button == RIGHT_BUTTON) {
+			
+			// Check to see if this click is in the status icon region. if so, toggle off the status.
+			boolean found = false;
+			for (StatusLabel statLbl : statuses.values()) {
+				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
+					suppressContextMenu = true;
+					statusOff(statLbl.getStatMeta());
+					found = true;
+					break;
+				}
+			}
+			if (found) {
+				redraw();
+				syncStatusMenuState();
+			}
+			
+			if (txtTitleEdit.getBounds().contains(new Point(e.x, e.y))) {
+				suppressContextMenu = true;
+				editTitle();
+			}
+			// log.info("Right MouseDown Complete: " + suppressContextMenu);
 		}
 
 		initMgr.childEventHandler(this, e);
