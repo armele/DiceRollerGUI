@@ -22,6 +22,7 @@ import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseWheelListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -40,8 +41,10 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -157,6 +160,36 @@ public class InitiativeManager {
 	public Shell createContents() {
 		
 		imShell = new Shell();
+		imShell.addMouseWheelListener(new MouseWheelListener() {
+			public void mouseScrolled(MouseEvent arg0) {
+				// When the mouse is scrolled in the tool area, modify the zoom percentage.
+				zoomSpinner.setSelection(zoomSpinner.getSelection() + arg0.count);
+			}
+		});
+		
+		imShell.getDisplay().addFilter(SWT.KeyDown, new Listener() {
+			@Override
+			public void handleEvent(Event event) {
+				switch (event.keyCode) {
+				case SWT.PAGE_DOWN:
+				case SWT.ARROW_DOWN:
+					moveTurn(1);
+					break;
+				case SWT.PAGE_UP: 
+				case SWT.ARROW_UP:
+					moveTurn(-1);
+					break;
+				default:
+					break;
+					
+				}
+				
+				char c = event.character;
+                System.out.println("Pressed: " + c);
+				
+			}
+		});
+		
 		imShell.setImage(LaunchPad.getIcon());
 		imShell.setSize(800, 540);
 		imShell.setText("Initiative Manager");
@@ -256,7 +289,6 @@ public class InitiativeManager {
 		Button btnRoll = new Button(imShell, SWT.NONE);
 		btnRoll.setBounds(661, 14, 32, 25);
 		btnRoll.setText("Roll");
-		// btnRoll.setImage(new Image(imShell.getDisplay(), SWTResourceManager.createImageResource(btnRoll, "die.png").getImageData().scaledTo(btnRoll.getBounds().width, btnRoll.getBounds().height)));
 
 		btnRoll.addMouseListener(new MouseListener() {
 
@@ -320,6 +352,32 @@ public class InitiativeManager {
 	}
 	
 	/**
+	 * Advance the initiative turn marker by the number of people indicated by index.
+	 */
+	protected void moveTurn(int index) {
+		turnIndex = turnIndex + index;
+		
+		// Make sure the turn marker "wraps around" at the ends of the list.
+		if (turnIndex < 0) {
+			turnIndex = idgList.size() - 1;
+		} else if (turnIndex > idgList.size() - 1) {
+			turnIndex = 0;
+		}
+		
+		// In skinnyView things need to be resized on "prev/next turn" action because
+		// the current initiative card will be expanded.
+		if (skinnyView) {
+			straightenCards();
+		} else {
+			characterWindow.redraw();
+		}
+		
+		for (InitiativeDisplayGroup idg : idgList) {
+			idg.setRollValue(0);
+		}
+	}
+	
+	/**
 	 * Sets up controls for iterating through turns.
 	 */
 	protected void createTurnManagement() {
@@ -340,19 +398,7 @@ public class InitiativeManager {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				if (turnIndex == 0) {
-					turnIndex = idgList.size() - 1;
-				} else {
-					turnIndex--;
-				}
-				
-				// In skinnyView things need to be resized on "prev/next turn" action because
-				// the current initiative card will be expanded.
-				if (skinnyView) {
-					straightenCards();
-				} else {
-					characterWindow.redraw();
-				}
+				moveTurn(-1);
 			}
 
 			@Override
@@ -369,20 +415,7 @@ public class InitiativeManager {
 
 			@Override
 			public void mouseDown(MouseEvent e) {
-				if (turnIndex == idgList.size() - 1) {
-					turnIndex = 0;
-				} else {
-					turnIndex++;
-				}
-				
-				// In skinnyView things need to be resized on "prev/next turn" action because
-				// the current initiative card will be expanded.
-				if (skinnyView) {
-					straightenCards();
-				} else {
-					characterWindow.redraw();
-				}
-
+				moveTurn(1);
 			}
 
 			@Override
