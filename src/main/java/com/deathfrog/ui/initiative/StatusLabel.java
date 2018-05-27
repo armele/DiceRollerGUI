@@ -9,7 +9,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 
-import com.deathfrog.utils.ui.LaunchPad;
 import com.google.gson.annotations.Expose;
 
 public class StatusLabel {
@@ -17,9 +16,6 @@ public class StatusLabel {
 	
 	protected static int STATUS_LABEL_CORNERSIZE = 4;
 	protected static int STATUS_LABEL_SIZE = 32;
-	public static Image selectedIcon = null;
-	public static Image unselectedIcon = null;
-	
 	
 	@Expose(serialize = true, deserialize = true)
 	protected StatusMetadata statMeta = null;
@@ -33,14 +29,6 @@ public class StatusLabel {
 	 */
 	public StatusLabel(InitiativeDisplayGroup idgParent) {
 		parent = idgParent;
-		
-		if (selectedIcon == null) {
-			selectedIcon = new Image(idgParent.getControl().getDisplay(), LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/selected.png"));
-		}
-		
-		if (unselectedIcon == null) {
-			unselectedIcon = new Image(idgParent.getControl().getDisplay(), LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/unselected.png"));
-		}
 	}
 
 	/**

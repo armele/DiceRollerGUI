@@ -5,6 +5,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Control;
 
+import com.deathfrog.utils.ui.LaunchPad;
 import com.deathfrog.utils.ui.SWTResourceManager;
 
 /**

@@ -25,6 +25,7 @@ import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.RowData;
@@ -87,7 +88,10 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected Rectangle closeBox = null;
 	protected InitiativeDisplayGroup me = null;
 	boolean suppressContextMenu = false;  // Used to indicate that the context menu should be suppressed (for example, when the right-click action is being used for other purposes);
-
+	
+	public static Image selectedIcon = null;
+	public static Image unselectedIcon = null;
+	
 	/**
 	 * @return
 	 */
@@ -218,6 +222,15 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				
 			}
 		});
+		
+
+		if (selectedIcon == null) {
+			selectedIcon = new Image(initMgr.getCharacterWindow().getDisplay(), LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/selected.png"));
+		}
+		
+		if (unselectedIcon == null) {
+			unselectedIcon = new Image(initMgr.getCharacterWindow().getDisplay(), LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/unselected.png"));
+		}
 
 	}
 
@@ -400,6 +413,14 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		vl.setMenu(null);
 		vl.getValueLabelControl().setVisible(false);
 		vl.getValueLabelControl().dispose();
+		
+		//Fix Bug - "Remove Attribute" menu will show attributes already removed; then crash if selected.
+		//This code disposes of the menu item associated with the removed attribute.
+		for (MenuItem mi : attributeSubmenu.getItems()) {
+			if (vl.getName().equals(mi.getText())) {
+				mi.dispose();
+			}
+		}
 	}
 	
 	/**
@@ -439,15 +460,16 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			StatusMetadata statMeta = initMgr.getStatusMetadata().get(text);
 			MenuItem miStatus = new MenuItem(statusSubmenu, SWT.CASCADE);
 			miStatus.setText(text);
+			miStatus.setImage(unselectedIcon);	// Initialize these menus as "unselected" initially.
 			miStatus.addSelectionListener(new SelectionAdapter() {
 				@Override
 				public void widgetSelected(SelectionEvent arg0) {
 					log.debug("Selected: " + miStatus);
 					boolean on = toggleStatus(statMeta);
 					if (on) {
-						miStatus.setImage(StatusLabel.selectedIcon);
+						miStatus.setImage(selectedIcon);
 					} else {
-						miStatus.setImage(StatusLabel.unselectedIcon);	
+						miStatus.setImage(unselectedIcon);	
 					}
 				}
 			});
@@ -464,11 +486,11 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			
 			// This allows the menu to correctly display status selection icons after initial load from save state;
 			if (me.statuses.containsKey(miStatus.getText())) {
-				miStatus.setImage(StatusLabel.selectedIcon);
+				miStatus.setImage(selectedIcon);
 			} else{
 				// Set the unselected icon only if the menu text is the name of a valid status.  (Allows "clear all" to have no icon.)
 				if (initMgr.getStatusMetadata().keySet().contains(miStatus.getText())) {
-					miStatus.setImage(StatusLabel.unselectedIcon);	
+					miStatus.setImage(unselectedIcon);	
 				}
 			}
 		}

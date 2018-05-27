@@ -369,8 +369,7 @@ public class InitiativeManager {
 		if (skinnyView) {
 			straightenCards();
 		} else {
-			characterWindow.redraw();
-		}
+			characterWindow.redraw();	}
 		
 		for (InitiativeDisplayGroup idg : idgList) {
 			idg.setRollValue(0);
@@ -532,7 +531,7 @@ public class InitiativeManager {
 				}
 			}}); 
 		
-		characterWindow.setBackgroundImage(SWTResourceManager.createImageResource(characterWindow, "patraeltile.png"));
+		// characterWindow.setBackgroundImage(SWTResourceManager.createImageResource(characterWindow, "patraeltile.png"));
 	}
 	
 	/**
