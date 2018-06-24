@@ -499,7 +499,7 @@ public class InitiativeManager {
 	 * ensure that each card knows whether or not it is their turn.
 	 */
 	protected void verifyWhoseTurnItIs() {
-		if (idgList.size() > turnIndex) {
+		if (idgList.size() > turnIndex && idgList.size() > 0) {
 			Control turnCtl = idgList.get(turnIndex).getControl();
 			for (InitiativeDisplayGroup idg : idgList) {
 				boolean lastTurnState = idg.isMyTurn();
