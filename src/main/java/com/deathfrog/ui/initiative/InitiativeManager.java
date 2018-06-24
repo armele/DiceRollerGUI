@@ -338,6 +338,7 @@ public class InitiativeManager {
 		tavern = new Composite(characterWindow, SWT.NONE);
 		Menu tavernContext = new Menu(tavern);
 		tavern.setMenu(tavernContext);
+		tavern.setToolTipText("Drag initiative cards here to relax and have a brew when they aren't participating in your combat. Right-click to retrieve.");
 		tavern.addPaintListener(new PaintListener() {
 			
 			@Override
