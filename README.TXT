@@ -2,8 +2,7 @@ README.TXT
 
 TODO
 ----
-Allow escape key in initiative manager to cancel in-progress edits.
-Bug: Cannot edit character name if "Edit Character Name" submenu item appears over a different character entry (possibly interrupted by mouse move in another IDG).
+
 
 
 Notes
@@ -12,5 +11,6 @@ Use of the SWT designer tool requires the WindowBuilder Eclipse plugin, availabl
 
 Version History
 ---------------
+v.1  - Added initiative tracking functionality.
 v.02 - Added functionality to specify a minimum value for a die roll. Introduced structure to support future random NPC generation.  
 v.01 - Simple dice roller utility.

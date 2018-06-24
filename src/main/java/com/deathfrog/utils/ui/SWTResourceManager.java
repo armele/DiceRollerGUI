@@ -4,6 +4,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -23,6 +25,8 @@ import org.eclipse.swt.widgets.Control;
  *
  */
 public class SWTResourceManager {
+	protected static Logger log = LogManager.getLogger(SWTResourceManager.class);
+	
 	protected static HashMap<Object, Integer> referenceCounts = new HashMap<Object, Integer>();
 	protected static HashMap<FontData, Font> fontResources = new HashMap<FontData, Font>();
 	protected static HashMap<RGB, Color> colorResources = new HashMap<RGB, Color>();
@@ -145,9 +149,13 @@ public class SWTResourceManager {
 			if (imageStream != null) {
 				image = new Image(c.getDisplay(), imageStream);
 			}
-			Integer refCount = new Integer(1);
-			referenceCounts.put(image, refCount);
-			imageResources.put(imageName, image);
+			if (image == null) {
+				log.error("No image file found: " + imageName);
+			} else {
+				Integer refCount = new Integer(1);
+				referenceCounts.put(image, refCount);
+				imageResources.put(imageName, image);
+			}
 		} else {
 			Integer refCount = referenceCounts.get(image);
 			refCount++;

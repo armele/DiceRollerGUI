@@ -4,7 +4,7 @@
   <groupId>com.deathfrog.utils</groupId>
   <artifactId>dmUtilities</artifactId>
   <packaging>jar</packaging>
-  <version>.02</version>
+  <version>.1</version>
   <name>DM Utilities</name>
   <url>http://maven.apache.org</url>
   <build>

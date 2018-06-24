@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
+import java.io.Serializable;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
@@ -63,6 +64,45 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.annotations.Expose;
 
 
+/**
+ * Inner class for serialization of JSON info about window position.
+ * 
+ * @author Al Mele
+ *
+ */
+class WindowPosition implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	@Expose(serialize = true, deserialize = true)
+	protected int x;
+	@Expose(serialize = true, deserialize = true)
+	protected int y;
+	@Expose(serialize = true, deserialize = true)
+	protected int width;
+	@Expose(serialize = true, deserialize = true)
+	protected int height;
+	
+	public void setFromRectangle(Rectangle bounds) {
+		x = bounds.x;
+		y = bounds.y;
+		width = bounds.width;
+		height = bounds.height;
+	}
+	
+	/**
+	 * Is this a valid window position?
+	 * @return
+	 */
+	public boolean isValid() {
+		boolean valid = false;
+		
+		if (x != 0 && y != 0 && width > 100 && height > 100) {
+			valid = true;
+		}
+		
+		return(valid);
+	}
+}
 
 /**
  * @author Al Mele
@@ -77,6 +117,7 @@ public class InitiativeManager {
 	protected static double CARD_SKINNY_HEIGHT = 30.0;
 	protected static double FONT_HEIGHT = 12.0;
 	protected static final int LBL_FONT_HEIGHT = 8;
+	protected static final int SROLLBAR_WIDTH = 18;
 	protected static double ROLL_FONT_HEIGHT = 18.0;
 	protected static int CONTROLBAR_HEIGHT = 40;
 	protected static int READY_INSET = 40;
@@ -98,12 +139,19 @@ public class InitiativeManager {
 	protected HashMap<Control, InitiativeDisplayGroup> controlMap = new HashMap<Control, InitiativeDisplayGroup>();
 	protected TreeMap<String, StatusMetadata> statusMetadata = new TreeMap<String, StatusMetadata>();
 	protected Image turnArrow = null;
+	protected Composite tavern = null;
 	
 	@Expose(serialize = true, deserialize = true)
 	protected ArrayList<InitiativeDisplayGroup> idgList = new ArrayList<InitiativeDisplayGroup>();
+
+	@Expose(serialize = true, deserialize = true)
+	protected ArrayList<InitiativeDisplayGroup> tavernList = new ArrayList<InitiativeDisplayGroup>();	
 	
 	@Expose(serialize = true, deserialize = true)
 	protected boolean skinnyView = false;
+	
+	@Expose(serialize = true, deserialize = true)	
+	protected WindowPosition windowLocation = new WindowPosition();
 	
 	protected Image readyPicture = null;
 	
@@ -152,8 +200,163 @@ public class InitiativeManager {
 	}
 	
 	/**
+	 * Return the Tavern object.
+	 * 
 	 * @return
 	 */
+	public Composite getTavern() {
+		return tavern;
+	}
+
+	/**
+	 * 
+	 */
+	protected void createToolbarFunctions() {
+		Button addPlayer = new Button(imShell, SWT.NONE);
+		addPlayer.setBounds(14, 14, 120, 20);
+		addPlayer.setText("Add Character");
+		
+		// Set up the functionality to add new character initiative cards.
+		addPlayer.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				int listsize = controlMap.size();
+				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1), null, false);
+				manageSizing();
+				idg.editTitle();
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});		
+		
+		Label lblZoom = new Label(imShell, SWT.NONE);
+		lblZoom.setText("Zoom");
+		lblZoom.setBounds(160, 14, 40, 20);
+		
+		Button btnSkinnyView = new Button(imShell, SWT.CHECK);
+		btnSkinnyView.setBounds(420, 14, 90, 20);
+		btnSkinnyView.setText("Skinny View");	
+		btnSkinnyView.setSelection(skinnyView);
+		btnSkinnyView.addSelectionListener(new SelectionListener() {
+
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// no-op
+			}
+
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				skinnyView = !skinnyView;
+				btnSkinnyView.setSelection(skinnyView);
+				straightenCards();
+			}});
+		
+		zoomSpinner = new Spinner(imShell, SWT.NONE);
+		zoomSpinner.setBounds(200, 14, 60, 20);
+		zoomSpinner.setMaximum(1000);
+		zoomSpinner.setMinimum(100);
+		zoomSpinner.setSelection(100);
+		zoomSpinner.setIncrement(10);
+		zoomSpinner.addModifyListener(event -> {
+			Double spinVal = new Double(zoomSpinner.getSelection());
+			scale = (spinVal / 100.0);
+			manageSizing();
+			} );
+		
+		cmbRollChoice = new Combo(imShell, SWT.NONE);
+		cmbRollChoice.setBounds(550, 14, 105, 23);
+
+		Button btnRoll = new Button(imShell, SWT.NONE);
+		btnRoll.setBounds(661, 14, 32, 25);
+		btnRoll.setText("Roll");
+
+		btnRoll.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (cmbRollChoice.getText().length() == 0) {
+					for (InitiativeDisplayGroup idg : idgList) {
+						idg.setRollValue(0);
+					}
+					log.debug("Rolls cleared.");
+				} else {
+					for (InitiativeDisplayGroup idg : idgList) {
+						Die d = new Die(20);
+						idg.setRollValue(d.roll());
+					}
+					log.debug("Rolls made!");
+				}
+				
+				manageSizing();
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});	
+		
+	}
+	
+	/**
+	 * Set up the tavern context menu to list who is in the tavern.
+	 */
+	protected void syncTavernMenu() {
+		for (MenuItem mi : tavern.getMenu().getItems()) {
+			mi.dispose();
+		}
+		
+		for (InitiativeDisplayGroup idg : tavernList) {
+			MenuItem tavernNPC = new MenuItem(tavern.getMenu(), SWT.CASCADE);
+			tavernNPC.setText(idg.getCharacter());
+			tavernNPC.addSelectionListener(new SelectionAdapter() {
+				@Override
+				public void widgetSelected(SelectionEvent arg0) {
+					log.debug("Selected: " + tavernNPC);
+					moveFromTavern(tavernNPC.getText());
+				}
+			});
+		}
+	}
+	
+	/**
+	 * Set up the "tavern" - where initiative cards not needed for the current combat can hang out.
+	 */
+	protected void createTavern() {
+		tavern = new Composite(characterWindow, SWT.NONE);
+		Menu tavernContext = new Menu(tavern);
+		tavern.setMenu(tavernContext);
+		tavern.addPaintListener(new PaintListener() {
+			
+			@Override
+			public void paintControl(PaintEvent pEv) {
+				String tavernImageFile = "tavern.png";
+				Image tavernImage = SWTResourceManager.createImageResource(tavern, tavernImageFile);
+				
+				if (tavernImage != null) {
+					pEv.gc.drawImage(tavernImage, 
+							0, 0, tavernImage.getBounds().width, tavernImage.getBounds().height, // Source image information
+							0, 0, tavern.getBounds().width, tavernImage.getBounds().height		 // Target location for image within the composite
+							);
+				} else {
+					log.error("Image Missing: " + tavernImageFile);
+				}
+	
+			}}); 
+	}
+	
 	/**
 	 * @wbp.parser.entryPoint
 	 */
@@ -191,7 +394,7 @@ public class InitiativeManager {
 		});
 		
 		imShell.setImage(LaunchPad.getIcon());
-		imShell.setSize(800, 540);
+		// imShell.setSize(800, 540);
 		imShell.setText("Initiative Manager");
 		imShell.addShellListener(new ShellListener(){
 
@@ -234,121 +437,73 @@ public class InitiativeManager {
 			}
 		});
 		
-		Button addPlayer = new Button(imShell, SWT.NONE);
-		addPlayer.setBounds(14, 14, 120, 20);
-		addPlayer.setText("Add Character");
-		
-		Label lblZoom = new Label(imShell, SWT.NONE);
-		lblZoom.setText("Zoom");
-		lblZoom.setBounds(160, 14, 40, 20);
-		
-		Button btnSkinnyView = new Button(imShell, SWT.CHECK);
-		btnSkinnyView.setBounds(420, 14, 90, 20);
-		btnSkinnyView.setText("Skinny View");	
-		btnSkinnyView.setSelection(skinnyView);
-		btnSkinnyView.addSelectionListener(new SelectionListener() {
-
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				// no-op
-			}
-
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				skinnyView = !skinnyView;
-				btnSkinnyView.setSelection(skinnyView);
-				straightenCards();
-			}});
-		
-		zoomSpinner = new Spinner(imShell, SWT.NONE);
-		zoomSpinner.setBounds(200, 14, 60, 20);
-		zoomSpinner.setMaximum(1000);
-		zoomSpinner.setMinimum(100);
-		zoomSpinner.setSelection(100);
-		zoomSpinner.setIncrement(10);
-		zoomSpinner.addModifyListener(event -> {
-			Double spinVal = new Double(zoomSpinner.getSelection());
-			scale = (spinVal / 100.0);
-			manageSizing();
-			} );
-		
 		viewPort = new ScrolledComposite( imShell, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER );
-		viewPort.setBounds(0, CONTROLBAR_HEIGHT, imShell.getBounds().width - 14, imShell.getBounds().height);
+		viewPort.setBounds(0, CONTROLBAR_HEIGHT, imShell.getBounds().width - SROLLBAR_WIDTH, imShell.getBounds().height);
 		viewPort.setExpandHorizontal( true );
 		viewPort.setExpandVertical( true );
+		viewPort.getVerticalBar().addSelectionListener( new SelectionAdapter() {
+			  public void widgetSelected( SelectionEvent event ) {
+				   manageSizing();
+				  }});
+		
 		
 		createCharacterWindow();
 		
 		viewPort.setContent(characterWindow);
 		
 		viewPort.setMinSize(getChildrenMaxLocation());
-		
-		cmbRollChoice = new Combo(imShell, SWT.NONE);
-		cmbRollChoice.setBounds(550, 14, 105, 23);
-
-		Button btnRoll = new Button(imShell, SWT.NONE);
-		btnRoll.setBounds(661, 14, 32, 25);
-		btnRoll.setText("Roll");
-
-		btnRoll.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (cmbRollChoice.getText().length() == 0) {
-					for (InitiativeDisplayGroup idg : idgList) {
-						idg.setRollValue(0);
-					}
-				} else {
-					for (InitiativeDisplayGroup idg : idgList) {
-						Die d = new Die(20);
-						idg.setRollValue(d.roll());
-					}
-				}
-				manageSizing();
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-			}
-
-		});	
+	
 		
 		imShell.addListener( SWT.Resize, event -> {
 			manageSizing();
 			} );
 		
-		// Set up the functionality to add new character initiative cards.
-		addPlayer.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				int listsize = controlMap.size();
-				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1), null);
-				manageSizing();
-				idg.editTitle();
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-			}
-
-		});		
+		createToolbarFunctions();
 		
 		createTurnManagement();
 		
 		createMenuBar();
 		
+		createTavern();
+		
 		readContent(null); // defaults to the last auto-saved file.
 		
 		return imShell;
+	}
+	
+	
+	/**
+	 * Clear any previously rolled stat values from all cards
+	 */
+	protected void clearRollValues() {
+		for (InitiativeDisplayGroup idg : idgList) {
+			idg.setRollValue(0);
+		}
+
+	}
+	
+	/**
+	 * Cycles through the control list and compares it to the turn index to 
+	 * ensure that each card knows whether or not it is their turn.
+	 */
+	protected void verifyWhoseTurnItIs() {
+		if (idgList.size() > turnIndex) {
+			Control turnCtl = idgList.get(turnIndex).getControl();
+			for (InitiativeDisplayGroup idg : idgList) {
+				boolean lastTurnState = idg.isMyTurn();
+				
+				// Tell each card if it is their turn or not.
+				if (idg.getControl().equals(turnCtl)) {
+					idg.setMyTurn(true);
+				} else {
+					idg.setMyTurn(false);
+				}
+				
+				if (lastTurnState != idg.isMyTurn()) {
+					idg.getControl().redraw();
+				}
+			}
+		}
 	}
 	
 	/**
@@ -364,16 +519,18 @@ public class InitiativeManager {
 			turnIndex = 0;
 		}
 		
+		clearRollValues();
+		
 		// In skinnyView things need to be resized on "prev/next turn" action because
 		// the current initiative card will be expanded.
 		if (skinnyView) {
 			straightenCards();
+			verifyWhoseTurnItIs();
 		} else {
-			characterWindow.redraw();	}
-		
-		for (InitiativeDisplayGroup idg : idgList) {
-			idg.setRollValue(0);
+			verifyWhoseTurnItIs();
+			manageSizing();
 		}
+		
 	}
 	
 	/**
@@ -426,12 +583,7 @@ public class InitiativeManager {
 		
 		// TODO: Make this configurable.
 		String turnMarkerFile = "turnArrow.png";
-		InputStream is = InitiativeManager.class.getResourceAsStream("/com/deathfrog/utils/" + turnMarkerFile);
-		if (is != null) {
-			turnArrow = new Image(imShell.getDisplay(),  is);
-		} else {
-			log.error("No turn marker file found: " + turnMarkerFile);
-		}		
+		turnArrow = SWTResourceManager.createImageResource(characterWindow, turnMarkerFile);
 	}
 	
 	/**
@@ -443,6 +595,79 @@ public class InitiativeManager {
 		// Draw the turn arrows.
 		characterWindow.addPaintListener(new PaintListener() {
 
+			/**
+			 * Take care of any painting that needs to be done at the card level.
+			 * 
+			 * @param pEv
+			 */
+			protected void paintCardDecorations(PaintEvent pEv) {
+				for (InitiativeDisplayGroup idg : idgList) {	
+					// log.debug("Painting card decorations.");
+					
+					// If the player is in a "ready" state, draw the ready icon.
+					if (idg.isReadied() && idg.getControl().isVisible()) {
+						int readySize = (int) (InitiativeManager.READY_INSET * scale);
+						if (readyPicture == null) {
+							readyPicture = SWTResourceManager.createImageResource(characterWindow, "ready.png");
+						}
+
+						if (readyPicture != null) {
+							pEv.gc.drawImage(readyPicture,
+									/* image source dimensions */ 		0, 0, readyPicture.getBounds().width, readyPicture.getBounds().height,
+									/* image destination dimensions */	idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y, readySize, readySize
+									);
+						} else {
+							log.error("No graphic found for the ready picture - you may need to re-build...");
+							pEv.gc.drawText("Ready!", idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y);
+							pEv.gc.drawText("(no graphic)", idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y + 12);
+						}
+					}
+					
+					// Draw the roll values, if applicable.
+					if (idg.getRollValue() > 0) {
+						StringBuffer rollValue = new StringBuffer();
+						rollValue.append(idg.getRollValue());
+						rollValue.append(" + ");
+						String value = idg.getAttributeValue(cmbRollChoice.getText());
+						rollValue.append(value);
+						
+						try {
+							Integer numericvalue = new Integer(value);
+							int total = idg.getRollValue() + numericvalue;
+							rollValue.append(" = ");
+							rollValue.append(total);
+						} catch (NumberFormatException nfe) {
+							rollValue.append(" = ?");
+						}
+						
+						FontData[] fD = idg.getControl().getFont().getFontData();
+						if (skinnyView) {
+							fD[0].setHeight((int) CARD_SKINNY_HEIGHT - 5);
+						} else {
+							fD[0].setHeight((int) (ROLL_FONT_HEIGHT * scale));
+						}
+						
+						SWTResourceManager.releaseFontResource(pEv.gc.getFont());
+						pEv.gc.setFont(SWTResourceManager.createFontResource(idg.getControl(),fD[0]));		
+						
+						pEv.gc.drawText(rollValue.toString(), idg.getControl().getBounds().x + idg.getControl().getBounds().width, idg.getControl().getBounds().y + 5);
+					}
+				}
+			}
+			
+			/**
+			 * Draws the tavern-related graphics.
+			 * 
+			 * @param pEv
+			 */
+			protected void paintTavern(PaintEvent pEv) {
+				// Position the tavern on the screen.
+				if (tavern != null && !tavern.isDisposed()) {
+					tavern.setBounds(viewPort.getBounds().width - (int)(190) - SROLLBAR_WIDTH, viewPort.getOrigin().y, (int)(190), (int)(150));  // TODO: Decide on tavern scaling.
+					tavern.redraw();
+				}
+			}
+			
 			@Override
 			public void paintControl(PaintEvent pEv) {
 				// If a card has been deleted out of the initiative list, the
@@ -460,6 +685,10 @@ public class InitiativeManager {
 					}
 					
 					Control turnCtl = idgList.get(turnIndex).getControl();
+					
+					// Force the card whose turn it is to be visible within the viewport
+					viewPort.showControl(turnCtl);
+					
 					Rectangle idgSpot = turnCtl.getBounds();
 					
 					if (getTurnArrow() != null) {
@@ -475,59 +704,10 @@ public class InitiativeManager {
 					}
 					
 					// Cycle through the cards and draw any decorations that are outside the cards (but associated with them)
-					for (InitiativeDisplayGroup idg : idgList) {				
-						// If the player is in a "ready" state, draw the ready icon.
-						if (idg.isReadied() && idg.getControl().isVisible()) {
-							int readySize = (int) (InitiativeManager.READY_INSET * scale);
-							if (readyPicture == null) {
-								readyPicture = SWTResourceManager.createImageResource(characterWindow, "ready.png");
-							}
-
-							if (readyPicture != null) {
-								pEv.gc.drawImage(readyPicture,
-										/* image source dimensions */ 		0, 0, readyPicture.getBounds().width, readyPicture.getBounds().height,
-										/* image destination dimensions */	idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y, readySize, readySize
-										);
-							} else {
-								log.error("No graphic found for the ready picture - you may need to re-build...");
-								pEv.gc.drawText("Ready!", idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y);
-								pEv.gc.drawText("(no graphic)", idg.getControl().getBounds().x - readySize, idg.getControl().getBounds().y + 12);
-							}
-						}
-						
-						// Draw the roll values, if applicable.
-						if (idg.getRollValue() > 0) {
-							StringBuffer rollValue = new StringBuffer();
-							rollValue.append(idg.getRollValue());
-							rollValue.append(" + ");
-							String value = idg.getAttributeValue(cmbRollChoice.getText());
-							rollValue.append(value);
-							
-							try {
-								Integer numericvalue = new Integer(value);
-								int total = idg.getRollValue() + numericvalue;
-								rollValue.append(" = ");
-								rollValue.append(total);
-							} catch (NumberFormatException nfe) {
-								rollValue.append(" = ?");
-							}
-							
-							FontData[] fD = idg.getControl().getFont().getFontData();
-							if (skinnyView) {
-								fD[0].setHeight((int) CARD_SKINNY_HEIGHT - 5);
-							} else {
-								fD[0].setHeight((int) (ROLL_FONT_HEIGHT * scale));
-							}
-							
-							SWTResourceManager.releaseFontResource(pEv.gc.getFont());
-							pEv.gc.setFont(SWTResourceManager.createFontResource(idg.getControl(),fD[0]));		
-							
-							pEv.gc.drawText(rollValue.toString(), idg.getControl().getBounds().x + idg.getControl().getBounds().width, idg.getControl().getBounds().y + 5);
-						}
-					}
+					paintCardDecorations(pEv);
 					
-					
-					viewPort.showControl(turnCtl);
+					// Paint tavern-related graphics
+					paintTavern(pEv);
 				}
 			}}); 
 		
@@ -624,14 +804,21 @@ public class InitiativeManager {
 	 * @param arrayList 
 	 * @return
 	 */
-	protected InitiativeDisplayGroup addCharacterCard(String name, ArrayList<ValueLabel> attributeList) {
+	protected InitiativeDisplayGroup addCharacterCard(String name, ArrayList<ValueLabel> attributeList, boolean tavern) {
 		log.debug("Adding card: " + name);
 		int listsize = controlMap.size();
 		int xPos = ANCHOR_X;
 		int yPos = (int) (ANCHOR_Y + (getCardHeight() * listsize * scale));
 		InitiativeDisplayGroup characterInitiativeCard = new InitiativeDisplayGroup(name, getInitiativeManager());
 		characterInitiativeCard.setBounds(xPos, yPos, (int)(CARD_WIDTH * scale), (int)(getCardHeight() * scale));
-		controlMap.put(characterInitiativeCard.getControl(), characterInitiativeCard);
+		
+		if (tavern) {
+			tavernList.add(characterInitiativeCard);
+			characterInitiativeCard.getControl().setVisible(false);
+		} else {
+			controlMap.put(characterInitiativeCard.getControl(), characterInitiativeCard);
+			idgList.add(characterInitiativeCard);
+		}
 		
 		if (attributeList == null) {
 			characterInitiativeCard.loadDefaultAttributes();
@@ -642,9 +829,7 @@ public class InitiativeManager {
 		}
 		
 		scaleControl(characterInitiativeCard.getControl(), scale);
-		characterInitiativeCard.requestLayout(scale);
-		idgList.add(characterInitiativeCard);
-		
+		characterInitiativeCard.requestLayout(scale);	
 		
 		return characterInitiativeCard;
 	}
@@ -659,6 +844,44 @@ public class InitiativeManager {
 		initiativeDisplayGroup.getControl().dispose();	
 		manageSizing();
 	}	
+	
+	/**
+	 * Given a character card, remove it from the initiative order and place them in the tavern.
+	 * 
+	 * @param initiativeDisplayGroup
+	 */
+	public void moveToTavern(InitiativeDisplayGroup initiativeDisplayGroup) {
+		controlMap.remove(initiativeDisplayGroup.getControl());
+		idgList.remove(initiativeDisplayGroup);
+		tavernList.add(initiativeDisplayGroup);
+		this.syncTavernMenu();
+		manageSizing();
+	}
+	
+	/**
+	 * Given a character card, remove it from the tavern and put them at the bottom of the initiative order.
+	 * 
+	 * @param initiativeDisplayGroup
+	 */
+	public void moveFromTavern(String cardToGetFromTavern) {
+		InitiativeDisplayGroup cardToMove = null;
+		
+		for (InitiativeDisplayGroup idg : tavernList) {
+			if (idg.getCharacter().equals(cardToGetFromTavern)) {
+				cardToMove = idg;
+				break;
+			}
+		}
+		
+		if (cardToMove != null) {
+			controlMap.put(cardToMove.getControl(), cardToMove);
+			idgList.add(cardToMove);
+			cardToMove.getControl().setVisible(true);
+			tavernList.remove(cardToMove);
+			this.syncTavernMenu();
+			manageSizing();
+		}
+	}
 	
 	/**
 	 * Open the window.
@@ -748,8 +971,15 @@ public class InitiativeManager {
 	/**
 	 * @return
 	 */
-	public ArrayList<InitiativeDisplayGroup> getInitiativeGroups() {
+	public ArrayList<InitiativeDisplayGroup> getInitiativeCards() {
 		return idgList;
+	}
+	
+	/**
+	 * @return
+	 */
+	public ArrayList<InitiativeDisplayGroup> getTavernCards() {
+		return tavernList;
 	}
 	
 	/**
@@ -808,7 +1038,9 @@ public class InitiativeManager {
 			
 			// Handle scaling of the character cards, and ask that they in turn scale their contents.
 			for (Control c : characterWindow.getChildren()) {
-				scaleControl(c, scale);
+				if (c instanceof Group) {
+					scaleControl(c, scale);
+				}
 			}	
 			
 			priorScale = scale;
@@ -818,12 +1050,13 @@ public class InitiativeManager {
 		Point pt = getChildrenMaxLocation();
 		
 		// Set the viewport to the size of the parent shell.
-		viewPort.setBounds(0, CONTROLBAR_HEIGHT, imShell.getBounds().width - 14 /* Scrollbar width - inelegant */, (imShell.getBounds().height - CONTROLBAR_HEIGHT));
+		viewPort.setBounds(0, CONTROLBAR_HEIGHT, imShell.getBounds().width - SROLLBAR_WIDTH, (imShell.getBounds().height - CONTROLBAR_HEIGHT));
 		
 		// Set the minimum size so the viewport can decide if scrolling needs to be allowed.
 		viewPort.setMinSize(pt);	
 		
 		straightenCards();
+		windowLocation.setFromRectangle(imShell.getBounds());
 	}
 	
 	/**
@@ -862,7 +1095,9 @@ public class InitiativeManager {
 			i++;
 		}
 		
+		verifyWhoseTurnItIs();
 	    characterWindow.redraw();
+	    
 	}
 	
 	/**
@@ -900,8 +1135,10 @@ public class InitiativeManager {
 		idgList.clear();
 		controlMap.clear();
 		for (Control c : characterWindow.getChildren()) {
-			c.setVisible(false);
-			c.dispose();
+			if (c instanceof Group) {
+				c.setVisible(false);
+				c.dispose();
+			}
 		}
 		
 		try (Reader reader = new FileReader(filename)) {
@@ -912,11 +1149,17 @@ public class InitiativeManager {
 		    InitiativeManager dummyManager = gson.fromJson(reader, InitiativeManager.class);
 		    this.scale = dummyManager.scale;
 		    this.turnIndex = dummyManager.turnIndex;
+		    if (dummyManager.windowLocation != null && dummyManager.windowLocation.isValid()) {
+		    	imShell.setBounds(dummyManager.windowLocation.x, dummyManager.windowLocation.y, 
+		    			dummyManager.windowLocation.width, dummyManager.windowLocation.height);
+		    } else {
+		    	imShell.setSize(800, 640);
+		    }
 		    
 		    zoomSpinner.setSelection((int)(scale * 100));
 		    
-		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getInitiativeGroups()) {
-		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes());
+		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getInitiativeCards()) {
+		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes(), false);
 		    	idg.setReadied(dummyGroup.isReadied());
 		    	
 		    	if (dummyGroup.statuses != null) {
@@ -929,6 +1172,20 @@ public class InitiativeManager {
 		    	idg.requestLayout(scale);
 		    }
 		    
+		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getTavernCards()) {
+		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes(), true);
+		    	idg.setReadied(dummyGroup.isReadied());
+		    	
+		    	if (dummyGroup.statuses != null) {
+			    	for (String status : dummyGroup.statuses.keySet()) {
+			    		idg.toggleStatus(statusMetadata.get(status));
+			    	}
+			    	idg.syncStatusMenuState();
+		    	}
+		    	
+		    	idg.requestLayout(scale);
+		    }
+		    syncTavernMenu();
 		    manageSizing();
 		    populateRollerCombo();
 		} catch (JsonSyntaxException jse) {

@@ -22,6 +22,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.GC;
@@ -78,6 +79,8 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	protected ArrayList<ValueLabel> attributes = new ArrayList<ValueLabel>();
 	@Expose(serialize = true, deserialize = true)
 	protected HashMap<String, StatusLabel> statuses = new HashMap<String, StatusLabel>();
+	
+	protected boolean myTurn = false;
 	
 	protected int rollValue = 0;
 	
@@ -141,8 +144,21 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	public void setReadied(boolean readied) {
 		this.readied = readied;
 	}
-
 	
+	/**
+	 * @return
+	 */
+	public boolean isMyTurn() {
+		return myTurn;
+	}
+
+	/**
+	 * @param myTurn
+	 */
+	public void setMyTurn(boolean myTurn) {
+		this.myTurn = myTurn;
+	}
+
 	public int getRollValue() {
 		return rollValue;
 	}
@@ -218,6 +234,17 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				Point startLoc = new Point(uiGroup.getSize().x - (closeBox.width + 5), 0);
 				for (StatusLabel statLbl : statuses.values()) {
 					startLoc = statLbl.paint(e, parent.getScale(), startLoc);
+				}
+				
+				if (myTurn) {
+					Rectangle boundingBox = uiGroup.getBounds();
+					Color backup = e.gc.getForeground();
+					int backupLineWidth = e.gc.getLineWidth();
+					e.gc.setForeground(e.display.getSystemColor(SWT.COLOR_GREEN));
+					e.gc.setLineWidth(4);
+					e.gc.drawRectangle(2, 2, boundingBox.width - 4, boundingBox.height - 4);
+					e.gc.setForeground(backup);
+					e.gc.setLineWidth(backupLineWidth);
 				}
 				
 			}
@@ -608,6 +635,27 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				initMgr.getCharacterWindow().redraw();
 			}
 		}
+		
+		// Stifle the context menu for right-clicks in the title edit box (because that action is going to 
+		// signal an edit of the name, upon mouse-up.
+		if (uiState == UI_STATE_NORMAL && e.button == RIGHT_BUTTON) {
+			boolean needsSuppression = false;
+			for (StatusLabel statLbl : statuses.values()) {
+				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
+					needsSuppression = true;
+				}
+			}
+			
+			if (txtTitleEdit.getBounds().contains(new Point(e.x, e.y))) {
+				needsSuppression = true;
+			}
+			
+			if (needsSuppression) {
+				suppressContextMenu = true;
+			} else {
+				suppressContextMenu = false;
+			}
+		}
 
 		initMgr.childEventHandler(this, e);
 	}
@@ -621,7 +669,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	@Override
 	public void mouseUp(MouseEvent e) {
 		Device device = Display.getCurrent();
-
+		
 		if (uiState == UI_STATE_DRAG && e.button == LEFT_BUTTON) {
 			log.info("Stop Drag: " + uiGroup);
 
@@ -631,12 +679,21 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			uiGroup.setCursor(cursor);
 
 			if (dragShadow != null) {
-				uiGroup.setBounds(dragShadow.getBounds());
-				uiGroup.setVisible(true);
+				// Check and see if this card was dropped into the Tavern area. Convert the event to the character window mapping system, first.
+				Point eventPt = Display.getCurrent().map((Control)e.getSource(), initMgr.getCharacterWindow(), e.x, e.y);
+				Rectangle tavernBounds = Display.getCurrent().map(initMgr.getCharacterWindow(), initMgr.getCharacterWindow(), initMgr.getTavern().getBounds());
+				
+				if (tavernBounds.contains(eventPt)) {
+					log.info("Card dropped into Tavern: " + this.getCharacter());
+					initMgr.moveToTavern(this);
+				} else {		
+					uiGroup.setBounds(dragShadow.getBounds());
+					uiGroup.setVisible(true);
+				}
 				dragShadow.dispose();
 				dragShadow = null;
 			}
-
+			
 			priorLoc = null;
 			initMgr.straightenCards();
 		}
@@ -684,7 +741,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			Point offset = new Point(eventPt.x - priorLoc.x, eventPt.y - priorLoc.y);
 			Point newLoc = new Point(dragShadow.getBounds().x + offset.x, dragShadow.getBounds().y + offset.y);
 
-			for (InitiativeDisplayGroup idg : initMgr.getInitiativeGroups()) {
+			for (InitiativeDisplayGroup idg : initMgr.getInitiativeCards()) {
 				if (!this.equals(idg)) {
 					Control c = idg.getControl();
 					if (c.getBounds().y < newLoc.y && !(idg.getUiState() == UI_STATE_NUDGEUP)) {
