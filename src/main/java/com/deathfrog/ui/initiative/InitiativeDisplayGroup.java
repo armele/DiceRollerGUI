@@ -626,7 +626,13 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 				dragShadow = new Group(initMgr.getCharacterWindow(), uiGroup.getStyle());
 				dragShadow.setText(character);
-				dragShadow.setBounds(uiGroup.getBounds());
+				GC gc = new GC(dragShadow); 
+				Point dsWidth = gc.textExtent(dragShadow.getText());
+				gc.dispose();
+				dragShadow.setBounds(priorLoc.x, priorLoc.y, 
+						2 * (dsWidth.x + dragShadow.getBorderWidth() + (uiGroup.getBounds().width - uiGroup.getClientArea().width)), 	// Width of drag control
+						2 * (dsWidth.y + dragShadow.getBorderWidth())																	// Height of drag control
+						);
 
 				// Put the dragShadow on top of everything else...
 				dragShadow.moveAbove(null);

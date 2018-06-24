@@ -353,6 +353,17 @@ public class InitiativeManager {
 				} else {
 					log.error("Image Missing: " + tavernImageFile);
 				}
+				
+				if (tavernList.size() > 0) {
+					Rectangle boundingBox = tavern.getBounds();
+					Color backup = pEv.gc.getForeground();
+					int backupLineWidth = pEv.gc.getLineWidth();
+					pEv.gc.setForeground(pEv.display.getSystemColor(SWT.COLOR_GREEN));
+					pEv.gc.setLineWidth(4);
+					pEv.gc.drawRectangle(2, 2, boundingBox.width - 4, boundingBox.height - 4);
+					pEv.gc.setForeground(backup);
+					pEv.gc.setLineWidth(backupLineWidth);
+				}
 	
 			}}); 
 	}
