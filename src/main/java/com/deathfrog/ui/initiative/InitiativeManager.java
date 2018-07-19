@@ -1144,6 +1144,7 @@ public class InitiativeManager {
 			filename = "Output.json";
 		}
 		
+		tavernList.clear();
 		idgList.clear();
 		controlMap.clear();
 		for (Control c : characterWindow.getChildren()) {

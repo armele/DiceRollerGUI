@@ -1,6 +1,9 @@
 {
     "attributes": [
         {
+			"label":"Init:"
+		},
+        {
 			"label":"HP:"
 		},
         {
