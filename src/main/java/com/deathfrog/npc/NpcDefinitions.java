@@ -3,6 +3,12 @@ package com.deathfrog.npc;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * This class stores a global map of race and class definitions that can be used across contexts.
+ * 
+ * @author Al Mele
+ *
+ */
 public class NpcDefinitions extends ArrayList<NpcContext> {
 
 	/**

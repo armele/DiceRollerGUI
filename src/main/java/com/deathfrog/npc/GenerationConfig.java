@@ -1,5 +1,9 @@
 package com.deathfrog.npc;
 
+/**
+ * @author Al Mele
+ *
+ */
 public class GenerationConfig {
 	protected String fixedClass = null;
 	protected String fixedRace = null;

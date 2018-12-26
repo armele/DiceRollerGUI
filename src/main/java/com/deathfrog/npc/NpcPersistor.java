@@ -19,6 +19,15 @@ import org.xml.sax.SAXException;
 import com.deathfrog.utils.GameException;
 import com.deathfrog.utils.PercentileList;
 
+/**
+ * This class handles reading the configuration file (definitions.xml by default) and storing all of the information for each context defined 
+ * in that configuraiton file necessary for generating an NPC randomly.
+ * 
+ * The "prase" method
+ * 
+ * @author Al Mele
+ *
+ */
 public class NpcPersistor {
 	protected static Logger log = LogManager.getLogger(NpcPersistor.class);
 	
@@ -183,6 +192,8 @@ public class NpcPersistor {
 	/**
 	 * Given an XML document, find all contexts defined within it and load them
 	 * into the NPC Definitions object for use.
+	 * 
+	 * A "context" in this example can be thought of as an adventure world or universe.
 	 * 
 	 * @param doc
 	 * @param npcdef

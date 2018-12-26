@@ -74,7 +74,54 @@
 				<choice name="Undine" chance="3"></choice>	
 				<choice name="Vishkanyas" chance="3"></choice>									
 			</picklist>
-		
+			<picklist name="Deity"> <!--  This is a Golarion deity list; a good Sigil list would need to be significantly larger. -->
+				<choice name="Apsu" chance = "5" alignment="LG"/>
+				<choice name="Easivra" chance = "5" alignment="LG"/>
+				<choice name="Erastil" chance = "10" alignment="LG"/>
+				<choice name="Iomedae" chance = "10" alignment="LG"/>
+				<choice name="Torag" chance = "10" alignment="LG"/>
+				<choice name="Kurgess" chance = "6" alignment="NG"/>
+				<choice name="Sarenrae" chance = "12" alignment="NG"/>
+				<choice name="Shelyn" chance = "12" alignment="NG"/>
+				<choice name="Cayden Cailean" chance = "15" alignment="CG"/>
+				<choice name="Desna" chance = "15" alignment="CG"/>
+				<choice name="Milani" chance = "8" alignment="CG"/>
+				<choice name="Abadar" chance = "10" alignment="LN"/>
+				<choice name="Alseta" chance = "5" alignment="LN"/>
+				<choice name="Erecura" chance = "5" alignment="LN"/>
+				<choice name="Irori" chance = "10" alignment="LN"/>
+				<choice name="Gozreh" chance = "10" alignment="N"/>
+				<choice name="Nethys" chance = "10" alignment="N"/>
+				<choice name="Brigh" chance = "5" alignment="N"/>
+				<choice name="Feronia" chance = "5" alignment="N"/>
+				<choice name="Naderi" chance = "5" alignment="N"/>
+				<choice name="Nivi Rhombodazzle" chance = "5" alignment="N"/>
+				<choice name="Sivanah" chance = "5" alignment="N"/>
+				<choice name="Pharasma" chance = "10" alignment="N"/>
+				<choice name="Calistria" chance = "10" alignment="CN"/>
+				<choice name="Gorum" chance = "10" alignment="CN"/>
+				<choice name="Besmara" chance = "5" alignment="CN"/>
+				<choice name="Groetus" chance = "5" alignment="CN"/>
+				<choice name="Hanspur" chance = "5" alignment="CN"/>
+				<choice name="Asmodeus" chance = "6" alignment="LE"/>
+				<choice name="Achaekek" chance = "2" alignment="LE"/>
+				<choice name="Lissala" chance = "2" alignment="LE"/>
+				<choice name="Zon-Kuthon" chance = "6" alignment="LE"/>
+				<choice name="Ahriman" chance = "2" alignment="NE"/>
+				<choice name="Alazhra" chance = "2" alignment="NE"/>
+				<choice name="Arazni" chance = "2" alignment="NE"/>
+				<choice name="Zyphus" chance = "2" alignment="NE"/>
+				<choice name="Norgorber" chance = "6" alignment="NE"/>
+				<choice name="Urgathoa" chance = "6" alignment="NE"/>
+				<choice name="Lamashtu" chance = "6" alignment="CE"/>
+				<choice name="Rovagug" chance = "6" alignment="CE"/>
+				<choice name="Camazotz" chance = "2" alignment="CE"/>
+				<choice name="Dahak" chance = "2" alignment="CE"/>
+				<choice name="Ghlaunder" chance = "2" alignment="CE"/>
+				<choice name="Gyronna" chance = "2" alignment="CE"/>
+				<choice name="Kitumu" chance = "2" alignment="CE"/>
+				<choice name="Ydersius" chance = "2" alignment="CE"/>
+			</picklist>			
 		</context>
 		
 		<context name="Merisyl - Adventurer">
@@ -178,7 +225,22 @@
 				<choice name="8" chance="3"></choice>				
 				<choice name="9" chance="2"></choice>
 				<choice name="10" chance="1"></choice>	
-			</picklist>							
+			</picklist>	
+				
+			<picklist name="Deity">
+				<choice name="Ator" chance = "20"/>
+				<choice name="Caltolav" chance = "12"/>
+				<choice name="Endrell" chance = "10"/>
+				<choice name="Haryxmi" chance = "5"/>
+				<choice name="Khirr" chance = "5"/>
+				<choice name="Nuvria" chance = "15"/>
+				<choice name="Patrael" chance = "10"/>
+				<choice name="Premyzic" chance = "10"/>
+				<choice name="Szalavalar" chance = "10"/>
+				<choice name="Vivlorean" chance = "10"/>
+				<choice name="Zelagiur" chance = "5"/>
+				<choice name="None" chance = "3"/>
+			</picklist>					
 		</context>
 			
 		<context name="Merisyl - Commoner">
@@ -281,7 +343,28 @@
 				<choice name="Potions and Magical Remedies" chance="4"></choice>
 				<choice name="Scribe" chance="4"></choice>
 				<choice name="Basket Maker" chance="4"></choice>
-			</picklist>						
+			</picklist>		
+			<picklist name="Level">
+				<choice name="1" chance="70"></choice>
+				<choice name="2" chance="20"></choice>
+				<choice name="3" chance="5"></choice>
+				<choice name="4" chance="3"></choice>		
+				<choice name="5" chance="2"></choice>
+			</picklist>		
+			<picklist name="Deity">
+				<choice name="Ator" chance = "20"/>
+				<choice name="Caltolav" chance = "12"/>
+				<choice name="Endrell" chance = "10"/>
+				<choice name="Haryxmi" chance = "5"/>
+				<choice name="Khirr" chance = "5"/>
+				<choice name="Nuvria" chance = "15"/>
+				<choice name="Patrael" chance = "10"/>
+				<choice name="Premyzic" chance = "10"/>
+				<choice name="Szalavalar" chance = "10"/>
+				<choice name="Vivlorean" chance = "10"/>
+				<choice name="Zelagiur" chance = "5"/>
+				<choice name="None" chance = "3"/>
+			</picklist>											
 		</context>			
 	</contextlist>
 	

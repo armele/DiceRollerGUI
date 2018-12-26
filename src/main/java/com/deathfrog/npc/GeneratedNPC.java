@@ -6,8 +6,8 @@ import java.util.HashMap;
  * Represents a fully generated NPC
  * TODO: Diety
  * TODO: Alignment
- * DONE: Pastable format
  * TODO: Make age optional
+ * DONE: Pastable format
  * DONE: CMB / CMD
  * DONE: BAB
  * DONE: Hit Points
@@ -24,6 +24,7 @@ public class GeneratedNPC {
 	protected String pattern = null;
 	protected HashMap<EStat, Integer> stats = new HashMap<EStat, Integer>();
 	protected Integer level = null;
+	protected String deity = null;
 	protected Integer hitpoints = null;
 	
 	/**
@@ -43,6 +44,12 @@ public class GeneratedNPC {
 	 */
 	public PathfinderRaceDefinition getPfRace() {
 		return pfRace;
+	}
+	public String getDeity() {
+		return deity;
+	}
+	public void setDeity(String deity) {
+		this.deity = deity;
 	}
 	/**
 	 * @param pfRace the pfRace to set
@@ -69,10 +76,14 @@ public class GeneratedNPC {
 	 * @return
 	 */
 	public EStat getPrimaryStat() {
+		EStat[] prioritizedStats = this.getPfClass().getStatPriority();
 		EStat stat = null;
 		
-		if (pfClass != null) {
-			stat = this.getPfClass().getStatPriority()[0];
+		if (pfClass != null && prioritizedStats != null && prioritizedStats.length > 0) {
+			stat = prioritizedStats[0];
+		} else {
+			// If no primary statistic is defined for the class in the configuration, assume strength.
+			stat = EStat.STR;
 		}
 		
 		return stat;
@@ -218,6 +229,13 @@ public class GeneratedNPC {
 			}
 		}
 		sb.append(")");
+		
+		// Add worship information.
+		if (this.getDeity() != null && this.getDeity().length() > 0) {
+			sb.append("  Deity: " );
+			sb.append(this.getDeity());
+		}
+		
 		
 		return sb.toString();
 	}

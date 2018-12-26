@@ -11,7 +11,9 @@ import com.deathfrog.utils.PercentileList;
 import com.deathfrog.utils.dice.Dice;
 
 /**
- * Saves the name of the context as well as any associated percentile lists for that context.
+ * Saves the name of the context as well as any associated percentile lists specific to that context.
+ * 
+ * You can think of the "context" as the adventure world from which the character will be generated.
  * 
  * @author Al Mele
  *
@@ -19,6 +21,7 @@ import com.deathfrog.utils.dice.Dice;
 public class NpcContext implements Comparable<NpcContext> {
 	protected static Logger log = LogManager.getLogger(NpcContext.class);
 	public static final String RACE = "Race";
+	public static final String DEITY = "Deity";
 	public static final String CLASS = "Class";
 	public static final String LEVEL = "Level";
 	public static final String STATPRIORITY = "statpriority";
@@ -183,10 +186,19 @@ public class NpcContext implements Comparable<NpcContext> {
 			}						
 		}
 		
+		@SuppressWarnings("unchecked")
+		PercentileList<String> deities = (PercentileList<String>) this.getContextLists().get(DEITY);
+		if (deities != null) {
+			npc.setDeity(deities.pick());
+		}
+		
 		determineLevelBasedItems(npc);
 	}
 	
 	/**
+	 * This is the primary entry point of the logic to generate an NPC.  It assumes that the context of the world
+	 * in which the NPC will be generated has already been loaded.
+	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
