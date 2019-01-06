@@ -208,11 +208,15 @@ public class ValueLabel {
 			txtName.selectAll();
 			txtName.redraw();
 		} else {
-			name = txtName.getText();
-			lblName.setText(name);
-			txtName.setVisible(false);
-			lblName.setVisible(true);
-			positionControls(currentScale);
+			// Only turn off edit mode if it was actually on (text name was visible).
+			if (txtName.isVisible()) {
+				name = txtName.getText();
+				lblName.setText(name);
+				txtName.setVisible(false);
+				lblName.setVisible(true);
+				positionControls(currentScale);
+				initiativeCard.getInitiativeManager().refreshMirror(false);
+			}
 		}
 	}
 	
@@ -227,11 +231,15 @@ public class ValueLabel {
 			txtValue.selectAll();
 			txtValue.redraw();
 		} else {
-			value = txtValue.getText();
-			lblValue.setText(value);
-			txtValue.setVisible(false);
-			lblValue.setVisible(true);
-			positionControls(currentScale);
+			// Only turn off edit mode if it was actually on (text value was visible)
+			if (txtValue.isVisible()) {
+				value = txtValue.getText();
+				lblValue.setText(value);
+				txtValue.setVisible(false);
+				lblValue.setVisible(true);
+				positionControls(currentScale);
+				initiativeCard.getInitiativeManager().refreshMirror(false);
+			}
 		}
 	}
 	

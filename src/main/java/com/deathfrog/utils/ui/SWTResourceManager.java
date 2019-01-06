@@ -120,6 +120,8 @@ public class SWTResourceManager {
 	 * Disposes of all managed resources remaining.
 	 */
 	public static void disposeAll() {
+		log.debug("Disposing of all resources.");
+		
 		for (Font f : fontResources.values()) {
 			f.dispose();
 		}
@@ -192,6 +194,8 @@ public class SWTResourceManager {
 			referenceCounts.put(resource, refCount);
 			
 			if (refCount == 0) {
+				// log.debug("Reference count to 0; disposing of resource: " + resource);
+				
 				resource.dispose();
 				referenceCounts.remove(resource);
 				

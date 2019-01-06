@@ -152,6 +152,8 @@ public class LaunchPad {
 				if (initManWin != null) {
 					initManWin.close();
 				}
+				
+				SWTResourceManager.disposeAll();
 			}
 		});
 		

@@ -57,6 +57,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 
 	protected static int UI_STATE_NORMAL = 0;
 	protected static int UI_STATE_DRAG = 1;
+	protected static int UI_STATE_MIRROR = 2;
 	protected static int UI_STATE_NUDGEUP = -30;
 	protected static int UI_STATE_NUDGEDOWN = 30;
 	
@@ -95,6 +96,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	public static Image selectedIcon = null;
 	public static Image unselectedIcon = null;
 	
+	
 	/**
 	 * @return
 	 */
@@ -110,10 +112,21 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 	}
 
 	/**
+	 * @return
+	 */
+	public InitiativeManager getInitiativeManager() {
+		return initMgr;
+	}
+
+	/**
 	 * @param state
 	 */
 	public void setUiState(int state) {
-		uiState = state;
+		if (initMgr instanceof MirroredInitiativeManager) {
+			uiState = UI_STATE_MIRROR;
+		} else {
+			uiState = state;
+		}
 	}
 
 	/**
@@ -130,6 +143,20 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		this.suppressContextMenu = suppressContextMenu;
 	}
 
+	/**
+	 * 
+	 */
+	public Menu getContextMenu() {
+		return contextMenu;
+	}
+	
+	/**
+	 * @param newContextMenu
+	 */
+	public void setContextMenu(Menu newContextMenu) {
+		contextMenu = newContextMenu;
+		uiGroup.setMenu(contextMenu);
+	}
 	
 	/**
 	 * @return
@@ -207,6 +234,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				character = txtTitleEdit.getText();
 				uiGroup.setText(character);
 				txtTitleEdit.setVisible(false);
+				initMgr.refreshMirror(false);
 
 			}
 		});
@@ -259,6 +287,10 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			unselectedIcon = new Image(initMgr.getCharacterWindow().getDisplay(), LaunchPad.class.getResourceAsStream("/com/deathfrog/utils/unselected.png"));
 		}
 
+		if (parent instanceof MirroredInitiativeManager) {
+			log.debug("Configuring initiative display group as a mirrored group.");
+			uiState = UI_STATE_MIRROR;
+		}
 	}
 
 	/**
@@ -568,6 +600,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 			on = true;
 		}
 		
+		initMgr.refreshMirror(false);
 		redraw();
 		
 		return on;
@@ -713,6 +746,7 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				if (statLbl.getStatusDisplayArea().contains(new Point(e.x, e.y))) {
 					suppressContextMenu = true;
 					statusOff(statLbl.getStatMeta());
+					initMgr.refreshMirror(false);
 					found = true;
 					break;
 				}
@@ -814,10 +848,6 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 				value = vl.getValue();
 				break;
 			}
-		}
-		
-		if (value == null || value.length() == 0) {
-			value = "0";
 		}
 		
 		return value;

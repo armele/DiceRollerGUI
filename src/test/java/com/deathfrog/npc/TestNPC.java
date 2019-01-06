@@ -26,7 +26,7 @@ public class TestNPC {
 		Assert.assertEquals(3, npcDef.size()); 
 		NpcContext context = npcDef.get(0);
 		Assert.assertEquals("Sigil", context.getName());
-		Assert.assertEquals(2, context.getContextLists().size());
+		Assert.assertEquals(3, context.getContextLists().size());
 		
 		PercentileList<PathfinderClassDefinition> clist = (PercentileList<PathfinderClassDefinition>) context.getContextLists().get("Class");
 		Assert.assertEquals(320, clist.totalWeight());

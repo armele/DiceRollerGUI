@@ -27,7 +27,6 @@ import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
 import org.eclipse.swt.graphics.Color;
@@ -102,6 +101,21 @@ class WindowPosition implements Serializable {
 		
 		return(valid);
 	}
+	
+	/**
+	 * Copy this window position object.
+	 * 
+	 * @return
+	 */
+	public WindowPosition copy() {
+		WindowPosition wp = new WindowPosition();
+		wp.x = this.x;
+		wp.y = this.y;
+		wp.width = this.width;
+		wp.height = this.height;
+		
+		return wp;
+	}
 }
 
 /**
@@ -156,6 +170,9 @@ public class InitiativeManager {
 	protected Image readyPicture = null;
 	
 	protected Font fontCreatedForScaling = null;  // Track for disposal
+	
+	protected MirroredInitiativeManager mirror = null; // Mirror the main initiative manager window to a second synchronized window.
+	protected MenuItem mntmMirror = null;  // Menu item that controls mirror presence.
 	
 	/**
 	 * @return
@@ -227,7 +244,7 @@ public class InitiativeManager {
 			public void mouseDown(MouseEvent e) {
 				int listsize = controlMap.size();
 				InitiativeDisplayGroup idg = addCharacterCard("New Character " + (listsize+1), null, false);
-				manageSizing();
+				manageSizing(true);
 				idg.editTitle();
 			}
 
@@ -241,6 +258,7 @@ public class InitiativeManager {
 		lblZoom.setText("Zoom");
 		lblZoom.setBounds(160, 14, 40, 20);
 		
+		/*
 		Button btnSkinnyView = new Button(imShell, SWT.CHECK);
 		btnSkinnyView.setBounds(420, 14, 90, 20);
 		btnSkinnyView.setText("Skinny View");	
@@ -258,6 +276,7 @@ public class InitiativeManager {
 				btnSkinnyView.setSelection(skinnyView);
 				straightenCards();
 			}});
+		*/
 		
 		zoomSpinner = new Spinner(imShell, SWT.NONE);
 		zoomSpinner.setBounds(200, 14, 60, 20);
@@ -268,14 +287,14 @@ public class InitiativeManager {
 		zoomSpinner.addModifyListener(event -> {
 			Double spinVal = new Double(zoomSpinner.getSelection());
 			scale = (spinVal / 100.0);
-			manageSizing();
+			manageSizing(false);
 			} );
 		
 		cmbRollChoice = new Combo(imShell, SWT.NONE);
-		cmbRollChoice.setBounds(550, 14, 105, 23);
+		cmbRollChoice.setBounds(420, 14, 105, 23);
 
 		Button btnRoll = new Button(imShell, SWT.NONE);
-		btnRoll.setBounds(661, 14, 32, 25);
+		btnRoll.setBounds(531, 14, 32, 25);
 		btnRoll.setText("Roll");
 
 		btnRoll.addMouseListener(new MouseListener() {
@@ -299,7 +318,7 @@ public class InitiativeManager {
 					log.debug("Rolls made!");
 				}
 				
-				manageSizing();
+				manageSizing(false);
 			}
 
 			@Override
@@ -382,6 +401,16 @@ public class InitiativeManager {
 			}
 		});
 		
+		imShell.addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(Event event) {
+            		if (mirror != null && mirror.isOpen()) {
+            			mirror.imShell.setFocus();
+            			imShell.setFocus();
+            		}
+                };
+		});
+		
 		imShell.getDisplay().addFilter(SWT.KeyDown, new Listener() {
 			@Override
 			public void handleEvent(Event event) {
@@ -399,8 +428,8 @@ public class InitiativeManager {
 					
 				}
 				
-				char c = event.character;
-                System.out.println("Pressed: " + c);
+				// char c = event.character;
+                // System.out.println("Pressed: " + c);
 				
 			}
 		});
@@ -440,22 +469,13 @@ public class InitiativeManager {
 				
 			}});
 		
-		// Clean up after ourselves...
-		imShell.addDisposeListener(new DisposeListener() {
-
-			@Override
-			public void widgetDisposed(DisposeEvent e) {
-				SWTResourceManager.disposeAll();
-			}
-		});
-		
 		viewPort = new ScrolledComposite( imShell, SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER );
 		viewPort.setBounds(0, CONTROLBAR_HEIGHT, imShell.getBounds().width - SROLLBAR_WIDTH, imShell.getBounds().height);
 		viewPort.setExpandHorizontal( true );
 		viewPort.setExpandVertical( true );
 		viewPort.getVerticalBar().addSelectionListener( new SelectionAdapter() {
 			  public void widgetSelected( SelectionEvent event ) {
-				   manageSizing();
+				   manageSizing(false);
 				  }});
 		
 		
@@ -467,7 +487,7 @@ public class InitiativeManager {
 	
 		
 		imShell.addListener( SWT.Resize, event -> {
-			manageSizing();
+			manageSizing(false);
 			} );
 		
 		createToolbarFunctions();
@@ -519,30 +539,48 @@ public class InitiativeManager {
 	}
 	
 	/**
-	 * Advance the initiative turn marker by the number of people indicated by index.
+	 * Adjust the current active turn by <param>index</param> spots.
+	 * If the <code>silent</code> parameter is true, do not signal any of the painting
+	 * activities normally associated with such an adjustment.
+	 * 
+	 * @param index
+	 * @param silent
 	 */
-	protected void moveTurn(int index) {
+	protected void moveTurn(int index, boolean silent) {
 		turnIndex = turnIndex + index;
 		
 		// Make sure the turn marker "wraps around" at the ends of the list.
 		if (turnIndex < 0) {
-			turnIndex = idgList.size() - 1;
+			if (idgList.size() > 0) {
+				turnIndex = idgList.size() - 1;
+			} else {
+				turnIndex = 0;
+			}
 		} else if (turnIndex > idgList.size() - 1) {
 			turnIndex = 0;
 		}
 		
-		clearRollValues();
-		
-		// In skinnyView things need to be resized on "prev/next turn" action because
-		// the current initiative card will be expanded.
-		if (skinnyView) {
-			straightenCards();
-			verifyWhoseTurnItIs();
-		} else {
-			verifyWhoseTurnItIs();
-			manageSizing();
+		// Do not cause any painting activities when called "silent".
+		if (!silent) {
+			clearRollValues();
+			
+			// In skinnyView things need to be resized on "prev/next turn" action because
+			// the current initiative card will be expanded.
+			if (skinnyView) {
+				straightenCards();
+				verifyWhoseTurnItIs();
+			} else {
+				verifyWhoseTurnItIs();
+				manageSizing(false);
+			}
 		}
-		
+	}
+	
+	/**
+	 * Advance the initiative turn marker by the number of people indicated by index.
+	 */
+	protected void moveTurn(int index) {
+		moveTurn(index, false);
 	}
 	
 	/**
@@ -641,6 +679,12 @@ public class InitiativeManager {
 						rollValue.append(idg.getRollValue());
 						rollValue.append(" + ");
 						String value = idg.getAttributeValue(cmbRollChoice.getText());
+						
+						// Attributes not set are treated as 0 for the purpose of rolling.
+						if (value == null || value.length() == 0) {
+							value = "0";
+						}
+						
 						rollValue.append(value);
 						
 						try {
@@ -682,19 +726,10 @@ public class InitiativeManager {
 			
 			@Override
 			public void paintControl(PaintEvent pEv) {
-				// If a card has been deleted out of the initiative list, the
-				// arrow index must be reset to be no further along than the last card.
-				if (turnIndex >= idgList.size()) {
-					turnIndex = idgList.size() - 1;
-				}
+				moveTurn(0, true); // Ensure the turn counter is bounded by the size of the list, in the case of additions or removals.
 				
 				// If we have an empty list, don't try to paint an initiative arrow.
-				if (idgList.size() != 0) {
-					
-					// The first card added to a list will automatically be the one with the active turn.
-					if (turnIndex < 0) {
-						turnIndex = 0;
-					}
+				if (idgList.size() != 0) {  
 					
 					Control turnCtl = idgList.get(turnIndex).getControl();
 					
@@ -727,17 +762,24 @@ public class InitiativeManager {
 	}
 	
 	/**
-	 * Set up the menu bar.
+	 * Sets up the "File" menu selections.
+	 * @param menu
 	 */
-	protected void createMenuBar() {
-		Menu menu = new Menu(imShell, SWT.BAR);
-		imShell.setMenuBar(menu);
-		
+	protected void setupFileMenu(Menu menu) {
 		MenuItem miFile = new MenuItem(menu, SWT.CASCADE);
 		miFile.setText("&File");
 		
 		Menu menuFile = new Menu(miFile);
 		miFile.setMenu(menuFile);
+	
+		MenuItem mntmNew = new MenuItem(menuFile, SWT.NONE);
+		mntmNew.setText("&New");
+		mntmNew.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				clearContent();
+			}
+		});		
 		
 		MenuItem mntmload = new MenuItem(menuFile, SWT.NONE);
 		mntmload.setText("&Load");
@@ -770,6 +812,80 @@ public class InitiativeManager {
 				}
 			}
 		});
+	}
+	
+	
+	/**
+	 * Set up the mirrored window.
+	 */
+	protected void createMirror() {	
+		if (mirror != null) {
+			log.debug("Closing prior mirror window.");
+			mirror.close();
+		} else {
+			log.debug("Creating new mirror window.");
+			try
+			{
+				mirror = new MirroredInitiativeManager();
+				mirror.setParent(this);
+				
+				mirror.open();  // Note that this will not return until the mirror window is disposed of.
+			} catch (RuntimeException re) {
+				log.error("Error creating mirror: " + GameException.fullExceptionInfo(re));
+			}
+		}
+	}
+	
+	/**
+	 * Set up the "Options" menu selections.
+	 * 
+	 * @param options
+	 */
+	protected void setupOptionsMenu(Menu menu) {
+		MenuItem miOptions = new MenuItem(menu, SWT.CASCADE);
+		miOptions.setText("&Options");
+		
+		Menu menuOptions = new Menu(miOptions);
+		miOptions.setMenu(menuOptions);
+
+		mntmMirror = new MenuItem(menuOptions, SWT.CHECK);
+		mntmMirror.setText("&Mirror");
+		mntmMirror.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				if (mntmMirror.getSelection()) {
+					log.debug("Mirror creation selected in menu.");
+					createMirror();
+				} else {
+					if (mirror != null && !mirror.getShell().isDisposed()) {
+						log.debug("Removing the mirror window.");
+						mirror.close();
+						mirror = null;
+					}
+				}
+			}
+		});		
+		
+		MenuItem mntmSkinnyView = new MenuItem(menuOptions, SWT.CHECK);
+		mntmSkinnyView.setText("&Skinny View");
+		mntmSkinnyView.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				skinnyView = mntmSkinnyView.getSelection();
+				straightenCards();
+			}
+		});	
+	}
+	
+	/**
+	 * Set up the menu bar.
+	 */
+	protected void createMenuBar() {
+		Menu menu = new Menu(imShell, SWT.BAR);
+		imShell.setMenuBar(menu);
+		
+		setupFileMenu(menu);
+		setupOptionsMenu(menu);
 	}
 	
 	/**
@@ -854,7 +970,7 @@ public class InitiativeManager {
 		controlMap.remove(initiativeDisplayGroup.getControl());
 		idgList.remove(initiativeDisplayGroup);
 		initiativeDisplayGroup.getControl().dispose();	
-		manageSizing();
+		manageSizing(true);
 	}	
 	
 	/**
@@ -867,7 +983,7 @@ public class InitiativeManager {
 		idgList.remove(initiativeDisplayGroup);
 		tavernList.add(initiativeDisplayGroup);
 		this.syncTavernMenu();
-		manageSizing();
+		manageSizing(true);
 	}
 	
 	/**
@@ -891,7 +1007,7 @@ public class InitiativeManager {
 			cardToMove.getControl().setVisible(true);
 			tavernList.remove(cardToMove);
 			this.syncTavernMenu();
-			manageSizing();
+			manageSizing(true);
 		}
 	}
 	
@@ -901,6 +1017,14 @@ public class InitiativeManager {
 	public void open() {
 		Display display = Display.getDefault();
 		imShell = createContents();
+		
+		imShell.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(DisposeEvent e) {
+				close();	
+				
+			}
+		});
+		
 		imShell.open();
 		imShell.layout();
 		while (!imShell.isDisposed()) {
@@ -911,12 +1035,24 @@ public class InitiativeManager {
 	}
 	
 	/**
-	 * 
+	 * Clean up resources and close the window.
 	 */
 	public void close() {
 		
 		if (imShell != null && !imShell.isDisposed()) {
+			for (Control c : characterWindow.getChildren()) {
+				if (c instanceof Group) {
+					c.setVisible(false);
+					c.dispose();
+				}
+			}
+			
 			imShell.close();
+			
+			if (mirror != null && mirror.isOpen()) {
+				mirror.close();
+				mirror = null;
+			}
 		}
 	}
 	
@@ -1042,7 +1178,7 @@ public class InitiativeManager {
 	/**
 	 * Take care of whatever maintenance is associated with managing window sizes.
 	 */
-	protected void manageSizing() {
+	protected void manageSizing(boolean forceMirrorRefresh) {
 		log.debug("Managing sizing...");
 		
 		// Handle scaling only if the scale has actually changed...
@@ -1069,6 +1205,10 @@ public class InitiativeManager {
 		
 		straightenCards();
 		windowLocation.setFromRectangle(imShell.getBounds());
+		
+		// Synchronize to the mirrored window;
+		refreshMirror(forceMirrorRefresh);
+		
 	}
 	
 	/**
@@ -1110,6 +1250,21 @@ public class InitiativeManager {
 		verifyWhoseTurnItIs();
 	    characterWindow.redraw();
 	    
+	    refreshMirror(false);
+	}
+	
+	/**
+	 * If mirroring is active, refresh the mirror
+	 * 
+	 * @param forceRefresh if true indicates that the mirror should recreate its contents regardless of whether or
+	 * not it detects any differences in the content.  When false, allows the mirror to compare and determine if 
+	 * a content update is required.
+	 */
+	protected void refreshMirror(boolean forceRefresh) {
+		// Synchronize to the mirrored window, if it exists.
+		if (mirror != null && mirror.isOpen()) {
+			mirror.reflect(false);
+		}	  
 	}
 	
 	/**
@@ -1134,16 +1289,9 @@ public class InitiativeManager {
 	}
 	
 	/**
-	 * Read the prior state from the file.
-	 * @param filename
+	 * Clean up the main lists managed by the initiative manager.
 	 */
-	public void readContent(String filename) {
-		loadStatuses();
-		
-		if (filename == null)  {
-			filename = "Output.json";
-		}
-		
+	protected void clearContent()  {		
 		tavernList.clear();
 		idgList.clear();
 		controlMap.clear();
@@ -1152,6 +1300,62 @@ public class InitiativeManager {
 				c.setVisible(false);
 				c.dispose();
 			}
+		}
+		
+		zoomSpinner.setSelection((int)(scale * 100));
+		
+	    syncTavernMenu();
+	    manageSizing(false);
+	    populateRollerCombo();
+	}
+	
+	/**
+	 * Clone all the character cards from an initiative manager source provided.
+	 * 
+	 * @param sourceManager
+	 */
+	protected void cloneCharacterCards(InitiativeManager sourceManager) {
+	    for (InitiativeDisplayGroup dummyGroup : sourceManager.getInitiativeCards()) {
+	    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes(), false);
+	    	idg.setReadied(dummyGroup.isReadied());
+	    	
+	    	if (dummyGroup.statuses != null) {
+		    	for (String status : dummyGroup.statuses.keySet()) {
+		    		idg.toggleStatus(statusMetadata.get(status));
+		    	}
+		    	idg.syncStatusMenuState();
+	    	}
+	    	
+	    	idg.requestLayout(scale);
+	    }
+	    
+	    for (InitiativeDisplayGroup dummyGroup : sourceManager.getTavernCards()) {
+	    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes(), true);
+	    	idg.setReadied(dummyGroup.isReadied());
+	    	
+	    	if (dummyGroup.statuses != null) {
+		    	for (String status : dummyGroup.statuses.keySet()) {
+		    		idg.toggleStatus(statusMetadata.get(status));
+		    	}
+		    	idg.syncStatusMenuState();
+	    	}
+	    	
+	    	idg.requestLayout(scale);
+	    }
+	    syncTavernMenu();
+	}
+	
+	/**
+	 * Read the prior state from the file.
+	 * @param filename
+	 */
+	public void readContent(String filename) {
+		clearContent();
+		
+		loadStatuses();
+		
+		if (filename == null)  {
+			filename = "Output.json";
 		}
 		
 		try (Reader reader = new FileReader(filename)) {
@@ -1171,35 +1375,9 @@ public class InitiativeManager {
 		    
 		    zoomSpinner.setSelection((int)(scale * 100));
 		    
-		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getInitiativeCards()) {
-		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes(), false);
-		    	idg.setReadied(dummyGroup.isReadied());
-		    	
-		    	if (dummyGroup.statuses != null) {
-			    	for (String status : dummyGroup.statuses.keySet()) {
-			    		idg.toggleStatus(statusMetadata.get(status));
-			    	}
-			    	idg.syncStatusMenuState();
-		    	}
-		    	
-		    	idg.requestLayout(scale);
-		    }
+		    cloneCharacterCards(dummyManager);
 		    
-		    for (InitiativeDisplayGroup dummyGroup : dummyManager.getTavernCards()) {
-		    	InitiativeDisplayGroup idg = this.addCharacterCard(dummyGroup.getCharacter(), dummyGroup.getAttributes(), true);
-		    	idg.setReadied(dummyGroup.isReadied());
-		    	
-		    	if (dummyGroup.statuses != null) {
-			    	for (String status : dummyGroup.statuses.keySet()) {
-			    		idg.toggleStatus(statusMetadata.get(status));
-			    	}
-			    	idg.syncStatusMenuState();
-		    	}
-		    	
-		    	idg.requestLayout(scale);
-		    }
-		    syncTavernMenu();
-		    manageSizing();
+		    manageSizing(true);
 		    populateRollerCombo();
 		} catch (JsonSyntaxException jse) {
 			// TODO: Display error messages to the user when appropriate.
@@ -1214,7 +1392,6 @@ public class InitiativeManager {
 	 * Set up the status metadata.
 	 */
 	public void loadStatuses() {
-		// Load attributes for this initiative card from the default file.
 
 		try {
 			// TODO: Make default property file name configurable.
