@@ -47,6 +47,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 
@@ -88,6 +89,29 @@ class WindowPosition implements Serializable {
 		height = bounds.height;
 	}
 	
+	
+	/**
+	 * Examines all monitors and investigates the point provided to ensure that it is visible on some monitor.
+	 */
+	private boolean displayInMonitorBounds( Display toSearch, Point toFind) {
+		boolean found = false;
+
+		final Monitor[] monitors = toSearch.getMonitors();
+
+		for (int index = 0; index < monitors.length; index++) {
+			final Monitor current = monitors[index];
+
+			final Rectangle clientArea = current.getClientArea();
+
+			if (clientArea.contains(toFind)) {
+				found = true;
+			}
+
+		}
+
+		return found;
+	}
+	
 	/**
 	 * Is this a valid window position?
 	 * @return
@@ -98,6 +122,8 @@ class WindowPosition implements Serializable {
 		if (x != 0 && y != 0 && width > 100 && height > 100) {
 			valid = true;
 		}
+		
+		valid = valid && displayInMonitorBounds(Display.getDefault(), new Point(x, y));
 		
 		return(valid);
 	}
@@ -226,6 +252,99 @@ public class InitiativeManager {
 	}
 
 	/**
+	 * Sets up the controls that interact with the attributes on the character cards.
+	 */
+	protected void createAttributeControls() {
+		cmbRollChoice = new Combo(imShell, SWT.NONE);
+		cmbRollChoice.setBounds(420, 12, 105, 23);
+
+		Button btnRoll = new Button(imShell, SWT.NONE);
+		btnRoll.setBounds(531, 12, 32, 25);
+		btnRoll.setText("Roll");
+
+		btnRoll.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (cmbRollChoice.getText().length() == 0) {
+					for (InitiativeDisplayGroup idg : idgList) {
+						idg.setRollValue(0);
+					}
+					log.debug("Rolls cleared.");
+				} else {
+					for (InitiativeDisplayGroup idg : idgList) {
+						Die d = new Die(20);
+						idg.setRollValue(d.roll());
+					}
+					log.debug("Rolls made!");
+				}
+				
+				manageSizing(false);
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});	
+		
+		Button btnSort = new Button(imShell, SWT.NONE);
+		btnSort.setBounds(565, 12, 32, 25);
+		btnSort.setText("Sort");
+
+		btnSort.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				if (cmbRollChoice.getText().length() > 0) {
+					// Order the character initiative cards based on the property value of the selected property
+					idgList.sort(new Comparator<InitiativeDisplayGroup>() {
+						@Override
+						public int compare(InitiativeDisplayGroup lhs, InitiativeDisplayGroup rhs) {
+							String sortfield = cmbRollChoice.getText();
+							Integer lhVal = lhs.getAttributeValueAsInteger(sortfield);
+							Integer rhVal = rhs.getAttributeValueAsInteger(sortfield);
+							
+							int comparator = 0;
+					        // Implemented as a descending sort (highest values on top)
+							if (lhVal == rhVal) {
+								comparator = 0;
+							} else if (lhVal < rhVal) {
+								comparator = 1;
+							} else if (lhVal > rhVal) {
+								comparator = -1;
+							}
+
+					        return comparator;
+						}
+					}
+					);
+					
+					arrangeCardsInListOrder();
+					refreshMirror(false);
+					
+					log.debug("Sort requested by: " + cmbRollChoice.getText());
+				}
+				
+				manageSizing(false);
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+
+		});	
+	}
+	
+	/**
 	 * 
 	 */
 	protected void createToolbarFunctions() {
@@ -290,42 +409,7 @@ public class InitiativeManager {
 			manageSizing(false);
 			} );
 		
-		cmbRollChoice = new Combo(imShell, SWT.NONE);
-		cmbRollChoice.setBounds(420, 14, 105, 23);
-
-		Button btnRoll = new Button(imShell, SWT.NONE);
-		btnRoll.setBounds(531, 14, 32, 25);
-		btnRoll.setText("Roll");
-
-		btnRoll.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-			}
-
-			@Override
-			public void mouseDown(MouseEvent e) {
-				if (cmbRollChoice.getText().length() == 0) {
-					for (InitiativeDisplayGroup idg : idgList) {
-						idg.setRollValue(0);
-					}
-					log.debug("Rolls cleared.");
-				} else {
-					for (InitiativeDisplayGroup idg : idgList) {
-						Die d = new Die(20);
-						idg.setRollValue(d.roll());
-					}
-					log.debug("Rolls made!");
-				}
-				
-				manageSizing(false);
-			}
-
-			@Override
-			public void mouseUp(MouseEvent e) {
-			}
-
-		});	
+		createAttributeControls();
 		
 	}
 	
@@ -789,9 +873,11 @@ public class InitiativeManager {
 				FileDialog loadFile = new FileDialog(imShell, SWT.OPEN);
 				String[] filterExtensions = {"*.json"};
 				loadFile.setFilterExtensions(filterExtensions);
-				loadFile.open();
-				String fileName = loadFile.getFileName();
+				
+				String fileName = loadFile.open();
 				if (fileName != null && fileName.length() > 0) {
+					log.info("Opening file: " + fileName);
+					
 					readContent(fileName);
 				}
 			}
@@ -805,10 +891,12 @@ public class InitiativeManager {
 				FileDialog loadFile = new FileDialog(imShell, SWT.SAVE);
 				String[] filterExtensions = {"*.json"};
 				loadFile.setFilterExtensions(filterExtensions);
-				loadFile.open();
-				String fileName = loadFile.getFileName();
-				if (fileName != null && fileName.length() > 0) {
-					persistContent(fileName);
+				String filename = loadFile.open();
+				
+				log.info("Saving file to: " + filename);
+				
+				if (filename != null && filename.length() > 0) {
+					persistContent(filename);
 				}
 			}
 		});
@@ -1212,7 +1300,23 @@ public class InitiativeManager {
 	}
 	
 	/**
-	 * Organize the cards based on their sorted order.
+	 * Will take the list of cards and assign them appropriate display positions based on the current list order.
+	 */
+	protected void arrangeCardsInListOrder() {
+		int i = 0;
+		int xPos = InitiativeManager.ANCHOR_X;
+		int yPos = InitiativeManager.ANCHOR_Y;
+		
+		for (InitiativeDisplayGroup idg : idgList) {
+			Point location = new Point(xPos, yPos);
+			yPos = yPos + (int) idg.doSizing(location, i, skinnyView);
+			idg.setUiState(InitiativeDisplayGroup.UI_STATE_NORMAL);
+			i++;
+		}
+	}
+	
+	/**
+	 * Organize the cards in the list based on their current display order.
 	 */
 	public void straightenCards() {
 		// Order the character initiative cards based on their relative Y positions
@@ -1236,16 +1340,7 @@ public class InitiativeManager {
 		}
 		);
 				
-		int i = 0;
-		int xPos = InitiativeManager.ANCHOR_X;
-		int yPos = InitiativeManager.ANCHOR_Y;
-		
-		for (InitiativeDisplayGroup idg : idgList) {
-			Point location = new Point(xPos, yPos);
-			yPos = yPos + (int) idg.doSizing(location, i, skinnyView);
-			idg.setUiState(InitiativeDisplayGroup.UI_STATE_NORMAL);
-			i++;
-		}
+		arrangeCardsInListOrder();
 		
 		verifyWhoseTurnItIs();
 	    characterWindow.redraw();

@@ -853,6 +853,33 @@ public class InitiativeDisplayGroup implements MouseListener, MouseMoveListener 
 		return value;
 	}
 	
+	
+	/**
+	 * @param attributeName
+	 * @return
+	 */
+	public Integer getAttributeValueAsInteger(String attributeName) {
+		String value = null;
+		Integer numvalue = null;
+		
+		for (ValueLabel vl : attributes) {
+			if (vl.getName().equals(attributeName)) {
+				value = vl.getValue();
+				break;
+			}
+		}
+		
+		try
+		{
+			numvalue = new Integer(value);
+			// This is a numeric sort function; anything which doesn't parse as a number counts as 0.
+		} catch (NumberFormatException nex) {
+			numvalue = 0;
+		}
+		
+		return numvalue;
+	}
+	
 	/**
 	 * @param xpos
 	 * @param ypos
