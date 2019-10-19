@@ -72,10 +72,10 @@ public class StatusLabel {
 			e.gc.setBackground(e.gc.getDevice().getSystemColor(SWT.COLOR_GREEN));
 		}
 		
-		statusDisplayArea = new Rectangle((int) (startLoc.x - (STATUS_LABEL_SIZE * scale)), startLoc.y, (int)(STATUS_LABEL_SIZE * scale), (int)(STATUS_LABEL_SIZE * scale));
-		
 		// If no icon, use a color label.
 		if (statMeta.getIconName() == null) {
+			statusDisplayArea = new Rectangle((int) (startLoc.x - (STATUS_LABEL_SIZE * scale)), startLoc.y, (int)(STATUS_LABEL_SIZE * scale), (int)(STATUS_LABEL_SIZE * scale));
+			
 			// Draw the filled label area
 			e.gc.fillRoundRectangle(statusDisplayArea.x, statusDisplayArea.y, 							// Upper left Corner
 					statusDisplayArea.width, statusDisplayArea.height, 		   							// width and height
@@ -97,6 +97,7 @@ public class StatusLabel {
 			// Draw an image into the display area.
 			Image icon = statMeta.getIcon(parent.getControl());
 			if (icon != null) {
+				statusDisplayArea = new Rectangle((int) (startLoc.x - (icon.getBounds().width * scale)), startLoc.y, (int)(icon.getBounds().width * scale), (int)(icon.getBounds().height * scale));				
 				e.gc.drawImage(icon, 0, 0, icon.getBounds().width, icon.getBounds().height, statusDisplayArea.x, statusDisplayArea.y, statusDisplayArea.width, statusDisplayArea.height);
 			} else {
 				log.error("Image Missing: " + statMeta.getIconName());
